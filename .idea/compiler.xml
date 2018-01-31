@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="school-common" />
+        <module name="school-db" />
+        <module name="school-utils" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="school-common" target="1.8" />
+      <module name="school-db" target="1.8" />
+      <module name="school-pa-security" target="1.8" />
+      <module name="school-security" target="1.8" />
+      <module name="school-utils" target="1.8" />
+      <module name="schooldb" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
