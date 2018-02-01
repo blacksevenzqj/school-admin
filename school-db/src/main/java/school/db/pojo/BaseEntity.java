@@ -1,47 +1,46 @@
 package school.db.pojo;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import school.utils.StringHelper;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Entity 基类
- *
- * @author zhangxd
  */
 public abstract class BaseEntity implements Serializable {
 
     /**
-     * 实体编号（唯一标识）
+     * 删除标记0：正常
      */
-    private String id;
+    public static final String DEL_FLAG_NORMAL = "0";
+    /**
+     * 删除标记1：删除
+     */
+    public static final String DEL_FLAG_DELETE = "-1";
 
     /**
-     * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。
-     * 设置为true后强制执行插入语句，ID不会自动生成，需从手动传入。
+     * 创建日期
      */
-    private boolean isNewRecord = false;
+    @JsonIgnore
+    protected Date createDate;
+    /**
+     * 更新日期
+     */
+    @JsonIgnore
+    protected Date updateDate;
+    /**
+     * 删除标记(0:正常; -1:删除;)
+     */
+    @JsonIgnore
+    protected String delFlag;
+
 
     public BaseEntity() {
-
+        setDelFlag(DEL_FLAG_NORMAL);
     }
-
-    public BaseEntity(String id) {
-        this();
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
 
     /**
      * 插入之前执行方法，子类实现
@@ -53,25 +52,34 @@ public abstract class BaseEntity implements Serializable {
      */
     public abstract void preUpdate();
 
-    /**
-     * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。
-     * 设置为true后强制执行插入语句，ID不会自动生成，需从手动传入。
-     *
-     * @return 是否是新记录
-     */
     @JsonIgnore
-    public boolean getIsNewRecord() {
-        return isNewRecord || StringHelper.isBlank(getId());
+    public abstract boolean isNewRecord();
+
+
+    public Date getCreateDate() {
+        return createDate == null ? null : (Date) createDate.clone();
     }
 
-    /**
-     * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。
-     * 设置为true后强制执行插入语句，ID不会自动生成，需从手动传入。
-     *
-     * @param isNewRecord 是否为新数据
-     */
-    public void setIsNewRecord(boolean isNewRecord) {
-        this.isNewRecord = isNewRecord;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate == null ? null : (Date) createDate.clone();
+    }
+
+    public Date getUpdateDate() {
+        return updateDate == null ? null : (Date) updateDate.clone();
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate == null ? null : (Date) updateDate.clone();
+    }
+
+    @JsonIgnore
+    @Length(min = 1, max = 1)
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
     }
 
     @Override

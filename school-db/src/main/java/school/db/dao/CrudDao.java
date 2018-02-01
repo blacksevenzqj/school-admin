@@ -5,7 +5,6 @@ import java.util.Map;
 
 /**
  * DAO支持类实现
- * @param <T> the type parameter
  */
 public interface CrudDao<T> extends BaseDao {
 

@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import school.db.dao.CrudDao;
-import school.db.pojo.DataEntity;
+import school.db.pojo.BaseEntity;
 import school.db.pojo.Paging;
 
 import java.util.List;
@@ -13,11 +13,9 @@ import java.util.Map;
 
 /**
  * Service基类
- * @param <D> the type parameter
- * @param <T> the type parameter
  */
 @Transactional(readOnly = true)
-public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity> {
+public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
 
     /**
      * 持久层对象
@@ -31,7 +29,6 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity> {
 
     /**
      * 获取单条数据
-     *
      * @param id 主键
      * @return 数据实体
      */
@@ -41,7 +38,6 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity> {
 
     /**
      * 获取单条数据
-     *
      * @param entity 实体对象
      * @return 实体对象
      */
@@ -51,7 +47,6 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity> {
 
     /**
      * 查询列表数据
-     *
      * @param entity 实体对象
      * @return 实体对象列表
      */
@@ -61,7 +56,6 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity> {
 
     /**
      * 查询列表数据
-     *
      * @param queryMap 查询条件
      * @return 实体对象列表
      */
@@ -71,7 +65,6 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity> {
 
     /**
      * 查询分页数据
-     *
      * @param page   分页对象
      * @param entity 实体对象
      * @return 分页数据
@@ -84,7 +77,6 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity> {
 
     /**
      * 查询分页数据
-     *
      * @param page     分页对象
      * @param queryMap 查询条件
      * @return 分页数据
@@ -97,13 +89,12 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity> {
 
     /**
      * 保存数据（插入或更新）
-     *
      * @param entity 实体对象
      * @return 实体对象
      */
     @Transactional(readOnly = false)
     public T save(T entity) {
-        if (entity.getIsNewRecord()) {
+        if (entity.isNewRecord()) {
             entity.preInsert();
             dao.insert(entity);
         } else {
@@ -115,7 +106,6 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity> {
 
     /**
      * 删除数据
-     *
      * @param entity 实体对象
      */
     @Transactional(readOnly = false)
@@ -125,7 +115,6 @@ public abstract class CrudService<D extends CrudDao<T>, T extends DataEntity> {
 
     /**
      * 删除数据
-     *
      * @param id 主键
      */
     @Transactional(readOnly = false)
