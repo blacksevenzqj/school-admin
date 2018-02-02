@@ -1,13 +1,12 @@
 package school.admin.modules.sys.entity;
 
-
-import java.io.Serializable;
+import school.db.pojo.IncrementDataEntity;
 import java.util.List;
 
 /**
  * 菜单管理
  */
-public class SysMenuEntity implements Serializable {
+public class SysMenuEntity extends IncrementDataEntity {
 	private static final long serialVersionUID = 1L;
 	
 	/**

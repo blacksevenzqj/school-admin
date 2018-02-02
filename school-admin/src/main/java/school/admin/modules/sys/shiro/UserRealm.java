@@ -15,6 +15,8 @@ import school.admin.modules.sys.dao.SysMenuDao;
 import school.admin.modules.sys.dao.SysUserDao;
 import school.admin.modules.sys.entity.SysMenuEntity;
 import school.admin.modules.sys.entity.SysUserEntity;
+import school.admin.modules.sys.service.SysMenuServiceImpl;
+import school.admin.modules.sys.service.SysUserServiceImpl;
 import school.common.utils.Constant;
 
 import java.util.*;
@@ -26,9 +28,9 @@ import java.util.*;
 public class UserRealm extends AuthorizingRealm {
 
     @Autowired
-    private SysUserDao sysUserDao;
+	SysUserServiceImpl sysUserServiceImpl;
     @Autowired
-    private SysMenuDao sysMenuDao;
+	SysMenuServiceImpl sysMenuServiceImpl;
     
     /**
      * 授权(验证权限时调用)
@@ -42,15 +44,13 @@ public class UserRealm extends AuthorizingRealm {
 		
 		//系统管理员，拥有最高权限
 		if(userId == Constant.SUPER_ADMIN){
-//			List<SysMenuEntity> menuList = sysMenuDao.selectList(null);
-			List<SysMenuEntity> menuList = null;
-
+			List<SysMenuEntity> menuList = sysMenuServiceImpl.findList(null);
 			permsList = new ArrayList<>(menuList.size());
 			for(SysMenuEntity menu : menuList){
 				permsList.add(menu.getPerms());
 			}
 		}else{
-			permsList = sysUserDao.queryAllPerms(userId);
+			permsList = sysUserServiceImpl.queryAllPerms(userId);
 		}
 
 		//用户权限列表
@@ -71,15 +71,14 @@ public class UserRealm extends AuthorizingRealm {
 	 * 认证(登录时调用)
 	 */
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(
-			AuthenticationToken authcToken) throws AuthenticationException {
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken)authcToken;
 
         //查询用户信息
 		SysUserEntity user = new SysUserEntity();
 		user.setUsername(token.getUsername());
-//		user = sysUserDao.selectOne(user);
-        
+		user = sysUserServiceImpl.get(user);
+
         //账号不存在
         if(user == null) {
             throw new UnknownAccountException("账号或密码不正确");

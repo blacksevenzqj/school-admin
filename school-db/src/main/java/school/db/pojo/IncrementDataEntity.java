@@ -13,12 +13,12 @@ public abstract class IncrementDataEntity extends BaseEntity {
      * Integer 类型实体编号（唯一标识）
      */
     @JsonIgnore
-    protected Integer id;
+    protected Long id;
 
     public IncrementDataEntity() {
     }
 
-    public IncrementDataEntity(Integer id) {
+    public IncrementDataEntity(Long id) {
         this.id = id;
     }
 
@@ -39,10 +39,10 @@ public abstract class IncrementDataEntity extends BaseEntity {
         setUpdateDate(new Date());
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

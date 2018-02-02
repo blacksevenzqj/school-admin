@@ -3,6 +3,7 @@ package school.db.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import school.db.dao.CrudDao;
 import school.db.pojo.BaseEntity;
@@ -92,7 +93,7 @@ public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
      * @param entity 实体对象
      * @return 实体对象
      */
-    @Transactional(readOnly = false)
+    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public T save(T entity) {
         if (entity.isNewRecord()) {
             entity.preInsert();
@@ -108,7 +109,7 @@ public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
      * 删除数据
      * @param entity 实体对象
      */
-    @Transactional(readOnly = false)
+    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void delete(T entity) {
         dao.delete(entity);
     }
@@ -117,7 +118,7 @@ public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
      * 删除数据
      * @param id 主键
      */
-    @Transactional(readOnly = false)
+    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void deleteById(String id) {
         dao.deleteById(id);
     }

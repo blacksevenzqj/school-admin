@@ -36,7 +36,7 @@ public class DynamicPlugin implements Interceptor {
     /**
      * 拦截SQL表达式
      */
-    private static final String REGEX = ".*insert\\u0020.*|.*delete\\u0020.*|.*update\\u0020.*";
+    private static final String REGEX = ".*save\\u0020.*|.*insert\\u0020.*|.*delete\\u0020.*|.*update\\u0020.*";
 
     /**
      * 动态数据源缓存

@@ -7,8 +7,6 @@ import javax.sql.DataSource;
 
 /**
  * 动态数据源事务管理器
- *
- * @author zhangxd
  */
 public class DynamicDataSourceTransactionManager extends DataSourceTransactionManager {
 
