@@ -15,7 +15,6 @@ import java.util.Map;
 /**
  * Service基类
  */
-@Transactional(readOnly = true)
 public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
 
     /**
@@ -34,6 +33,9 @@ public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
      * @return 数据实体
      */
     public T get(String id) {
+        return dao.get(id);
+    }
+    public T get(Long id) {
         return dao.get(id);
     }
 
@@ -120,6 +122,10 @@ public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
      */
     @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void deleteById(String id) {
+        dao.deleteById(id);
+    }
+    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void deleteById(Long id) {
         dao.deleteById(id);
     }
 

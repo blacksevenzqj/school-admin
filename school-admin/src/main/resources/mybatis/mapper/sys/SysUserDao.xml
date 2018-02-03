@@ -34,4 +34,16 @@
 		</foreach>
 	</delete>
 
+	<insert id="insert" parameterType="school.admin.modules.sys.entity.SysUserEntity">
+		insert into sys_user
+        (
+          `username`,
+          `password`
+        )
+        VALUES (
+          #{username},
+          #{password}
+        )
+	</insert>
+
 </mapper>

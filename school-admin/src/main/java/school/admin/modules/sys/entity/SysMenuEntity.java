@@ -7,6 +7,7 @@ import java.util.List;
  * 菜单管理
  */
 public class SysMenuEntity extends IncrementDataEntity {
+
 	private static final long serialVersionUID = 1L;
 	
 	/**

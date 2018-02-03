@@ -81,6 +81,9 @@ spring:
     suffix: .html
     request-context-attribute: request
 
+  aop:
+    proxy-target-class: true
+
 
 # Mybatis配置
 mybatis:

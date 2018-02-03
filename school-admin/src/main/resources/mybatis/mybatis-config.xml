@@ -73,8 +73,7 @@
         </plugin>
 
         <!-- 动态数据源拦截器 -->
-        <plugin interceptor="school.db.datasource.DynamicPlugin">
-        </plugin>
+        <plugin interceptor="school.db.datasource.DynamicPlugin"></plugin>
 
     </plugins>
 

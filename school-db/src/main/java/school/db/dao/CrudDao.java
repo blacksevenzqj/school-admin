@@ -15,6 +15,7 @@ public interface CrudDao<T> extends BaseDao {
      * @return T t
      */
     T get(String id);
+    T get(Long id);
 
     /**
      * 获取单条数据
@@ -78,5 +79,6 @@ public interface CrudDao<T> extends BaseDao {
      * @return int int
      */
     int deleteById(String id);
+    int deleteById(Long id);
 
 }

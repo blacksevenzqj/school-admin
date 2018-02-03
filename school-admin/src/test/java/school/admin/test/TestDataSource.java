@@ -33,6 +33,12 @@ public class TestDataSource {
     }
 
     @Test
+    public void sysUserTestSave() {
+        sysUserServiceImpl.testSave();
+    }
+
+
+    @Test
     public void sysLogSave() {
         SysLogEntity sysLog = new SysLogEntity();
         sysLog.setUsername("3333");
@@ -40,6 +46,9 @@ public class TestDataSource {
         sysLogServiceImpl.save(sysLog);
     }
 
-
+    @Test
+    public void sysLogTestSave() {
+        sysLogServiceImpl.testSave();
+    }
 
 }

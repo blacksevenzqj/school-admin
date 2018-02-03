@@ -11,8 +11,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import school.admin.modules.sys.dao.SysMenuDao;
-import school.admin.modules.sys.dao.SysUserDao;
 import school.admin.modules.sys.entity.SysMenuEntity;
 import school.admin.modules.sys.entity.SysUserEntity;
 import school.admin.modules.sys.service.SysMenuServiceImpl;
@@ -29,6 +27,7 @@ public class UserRealm extends AuthorizingRealm {
 
     @Autowired
 	SysUserServiceImpl sysUserServiceImpl;
+
     @Autowired
 	SysMenuServiceImpl sysMenuServiceImpl;
     

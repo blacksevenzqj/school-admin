@@ -1,5 +1,6 @@
 spring:
   profiles:
-    active: dev2
+    active: dev
+#    active: dev_single
 
 
