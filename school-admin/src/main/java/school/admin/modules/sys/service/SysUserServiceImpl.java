@@ -28,6 +28,7 @@ public class SysUserServiceImpl extends CrudService<SysUserDao, SysUserEntity> {
      * 查询用户的所有菜单ID
      */
     @SysLog("测试Shiro的Service层AOP：queryAllMenuId")
+    @Transactional(readOnly = false)
     public List<Long> queryAllMenuId(Long userId){
         return getDao().queryAllMenuId(userId);
     }
