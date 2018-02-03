@@ -75,17 +75,17 @@ public class ShiroConfig {
         return shiroFilter;
     }
 
-    @Bean("lifecycleBeanPostProcessor")
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
-
-    @Bean
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
-        proxyCreator.setProxyTargetClass(true);
-        return proxyCreator;
-    }
+//    @Bean("lifecycleBeanPostProcessor")
+//    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+//        return new LifecycleBeanPostProcessor();
+//    }
+//
+//    @Bean
+//    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+//        DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
+//        proxyCreator.setProxyTargetClass(true);
+//        return proxyCreator;
+//    }
 
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
