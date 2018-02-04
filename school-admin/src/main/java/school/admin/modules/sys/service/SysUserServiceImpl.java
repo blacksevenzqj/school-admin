@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @Service(value = "sysUserServiceImpl")
-public class SysUserServiceImpl extends CrudService<SysUserDao, SysUserEntity> {
+public class SysUserServiceImpl extends CrudService<SysUserDao, SysUserEntity, Long> {
 
     /**
      * 查询用户的所有权限

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 菜单管理
  */
-public interface SysMenuDao extends CrudDao<SysMenuEntity> {
+public interface SysMenuDao extends CrudDao<SysMenuEntity, Long> {
 	
 	/**
 	 * 根据父菜单，查询子菜单

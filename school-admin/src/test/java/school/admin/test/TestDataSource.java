@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import school.admin.common.annotation.SysLog;
 import school.admin.modules.sys.entity.SysLogEntity;
+import school.admin.modules.sys.entity.SysUserEntity;
 import school.admin.modules.sys.service.SysLogServiceImpl;
 import school.admin.modules.sys.service.SysUserServiceImpl;
 
@@ -34,7 +35,12 @@ public class TestDataSource {
 
     @Test
     public void sysUserTestSave() {
-        sysUserServiceImpl.testSave();
+        SysUserEntity sysUserEntity = new SysUserEntity();
+        sysUserEntity.setUsername("999");
+        sysUserEntity = sysUserServiceImpl.save(sysUserEntity);
+        log.info(sysUserEntity.toString());
+//        sysUserServiceImpl.testSave();
+
     }
 
 

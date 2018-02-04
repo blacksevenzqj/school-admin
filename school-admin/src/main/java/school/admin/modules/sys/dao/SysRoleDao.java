@@ -6,7 +6,7 @@ import school.db.dao.CrudDao;
 /**
  * 角色管理
  */
-public interface SysRoleDao extends CrudDao<SysRoleEntity> {
+public interface SysRoleDao extends CrudDao<SysRoleEntity, Long> {
 	
 
 }

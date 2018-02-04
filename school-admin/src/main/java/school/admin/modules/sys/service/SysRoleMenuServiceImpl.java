@@ -14,7 +14,7 @@ import java.util.List;
  * 角色与菜单对应关系
  */
 @Service("sysRoleMenuServiceImpl")
-public class SysRoleMenuServiceImpl extends CrudService<SysRoleMenuDao, SysRoleMenuEntity> {
+public class SysRoleMenuServiceImpl extends CrudService<SysRoleMenuDao, SysRoleMenuEntity, Long> {
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void saveOrUpdate(Long roleId, List<Long> menuIdList) {
@@ -34,12 +34,13 @@ public class SysRoleMenuServiceImpl extends CrudService<SysRoleMenuDao, SysRoleM
 
 			list.add(sysRoleMenuEntity);
 		}
-//		this.insertBatch(list);
+		this.insertBatch(list);
 	}
 
+
+
 	public List<Long> queryMenuIdList(Long roleId) {
-//		return baseMapper.queryMenuIdList(roleId);
-		return null;
+		return getDao().queryMenuIdList(roleId);
 	}
 
 

@@ -15,6 +15,12 @@ import java.util.List;
  * 系统用户
  */
 public class SysUserEntity extends IncrementDataEntity {
+
+	@Override
+	public boolean isNewRecord() {
+		return userId == null;
+	}
+
 	private static final long serialVersionUID = 1L;
 	
 	/**

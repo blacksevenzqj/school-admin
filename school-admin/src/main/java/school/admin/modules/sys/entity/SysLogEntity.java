@@ -8,6 +8,11 @@ import java.util.Date;
  */
 public class SysLogEntity extends IncrementDataEntity {
 
+	@Override
+	public boolean isNewRecord() {
+		return id == null;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private Long id;

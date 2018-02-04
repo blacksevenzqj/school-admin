@@ -7,6 +7,11 @@ import school.db.pojo.IncrementDataEntity;
  */
 public class SysUserRoleEntity extends IncrementDataEntity {
 
+	@Override
+	public boolean isNewRecord() {
+		return id == null;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private Long id;

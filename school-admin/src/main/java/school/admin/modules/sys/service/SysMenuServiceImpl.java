@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @Service(value = "sysMenuServiceImpl")
-public class SysMenuServiceImpl extends CrudService<SysMenuDao, SysMenuEntity> {
+public class SysMenuServiceImpl extends CrudService<SysMenuDao, SysMenuEntity, Long> {
 
     @Autowired
     private SysUserServiceImpl sysUserServiceImpl;

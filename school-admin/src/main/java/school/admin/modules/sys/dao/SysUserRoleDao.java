@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 用户与角色对应关系
  */
-public interface SysUserRoleDao extends CrudDao<SysUserRoleEntity> {
+public interface SysUserRoleDao extends CrudDao<SysUserRoleEntity, Long> {
 	
 	/**
 	 * 根据用户ID，获取角色ID列表

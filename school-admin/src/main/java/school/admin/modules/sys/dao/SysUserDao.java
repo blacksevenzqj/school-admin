@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 系统用户
  */
-public interface SysUserDao extends CrudDao<SysUserEntity> {
+public interface SysUserDao extends CrudDao<SysUserEntity, Long> {
 	
 	/**
 	 * 查询用户的所有权限

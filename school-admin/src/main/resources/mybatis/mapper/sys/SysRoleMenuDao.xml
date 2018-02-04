@@ -15,4 +15,13 @@
 		</foreach>
 	</delete>
 
+
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_role_menu (role_id, menu_id)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.roleId,jdbcType=BIGINT}, #{item.menuId,jdbcType=BIGINT})
+		</foreach>
+	</insert>
+
 </mapper>

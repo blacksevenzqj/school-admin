@@ -17,7 +17,7 @@ import java.util.Map;
  * 角色
  */
 @Service("sysRoleServiceImpl")
-public class SysRoleServiceImpl extends CrudService<SysRoleDao, SysRoleEntity> {
+public class SysRoleServiceImpl extends CrudService<SysRoleDao, SysRoleEntity, Long> {
 
 	@Autowired
 	private SysRoleMenuServiceImpl sysRoleMenuServiceImpl;
@@ -25,27 +25,26 @@ public class SysRoleServiceImpl extends CrudService<SysRoleDao, SysRoleEntity> {
 	@Autowired
 	private SysUserRoleServiceImpl sysUserRoleServiceImpl;
 
-	@Override
-	@DataFilter(subDept = true, user = false)
-	public PageUtils queryPage(Map<String, Object> params) {
-		String roleName = (String)params.get("roleName");
-
-		Page<SysRoleEntity> page = this.selectPage(
-			new Query<SysRoleEntity>(params).getPage(),
-			new EntityWrapper<SysRoleEntity>()
-				.like(StringUtils.isNotBlank(roleName),"role_name", roleName)
-				.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
-		);
-
-		for(SysRoleEntity sysRoleEntity : page.getRecords()){
-			SysDeptEntity sysDeptEntity = sysDeptService.selectById(sysRoleEntity.getDeptId());
-			if(sysDeptEntity != null){
-				sysRoleEntity.setDeptName(sysDeptEntity.getName());
-			}
-		}
-
-		return new PageUtils(page);
-	}
+//	@DataFilter(subDept = true, user = false)
+//	public PageUtils queryPage(Map<String, Object> params) {
+//		String roleName = (String)params.get("roleName");
+//
+//		Page<SysRoleEntity> page = this.selectPage(
+//			new Query<SysRoleEntity>(params).getPage(),
+//			new EntityWrapper<SysRoleEntity>()
+//				.like(StringUtils.isNotBlank(roleName),"role_name", roleName)
+//				.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
+//		);
+//
+//		for(SysRoleEntity sysRoleEntity : page.getRecords()){
+//			SysDeptEntity sysDeptEntity = sysDeptService.selectById(sysRoleEntity.getDeptId());
+//			if(sysDeptEntity != null){
+//				sysRoleEntity.setDeptName(sysDeptEntity.getName());
+//			}
+//		}
+//
+//		return new PageUtils(page);
+//	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void saveSysRole(SysRoleEntity role) {
@@ -58,7 +57,7 @@ public class SysRoleServiceImpl extends CrudService<SysRoleDao, SysRoleEntity> {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void update(SysRoleEntity role) {
 		this.save(role);
-		//更新角色与菜单关系
+		//更新角色与菜单关系：还是 删除 -> 新增
 		sysRoleMenuServiceImpl.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
 	}
 

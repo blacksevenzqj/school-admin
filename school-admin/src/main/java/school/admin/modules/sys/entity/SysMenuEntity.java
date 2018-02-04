@@ -8,6 +8,11 @@ import java.util.List;
  */
 public class SysMenuEntity extends IncrementDataEntity {
 
+	@Override
+	public boolean isNewRecord() {
+		return menuId == null;
+	}
+
 	private static final long serialVersionUID = 1L;
 	
 	/**

@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Service基类
  */
-public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
+public abstract class CrudService<D extends CrudDao<T, E>, T extends BaseEntity, E> {
 
     /**
      * 持久层对象
@@ -32,11 +32,8 @@ public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
      * @param id 主键
      * @return 数据实体
      */
-    public T get(String id) {
-        return dao.get(id);
-    }
-    public T get(Long id) {
-        return dao.get(id);
+    public T get(E id) {
+        return dao.getById(id);
     }
 
     /**
@@ -107,6 +104,12 @@ public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
         return entity;
     }
 
+    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public int insertBatch(List<T> list){
+        return getDao().insertBatch(list);
+    }
+
+
     /**
      * 删除数据
      * @param entity 实体对象
@@ -121,16 +124,12 @@ public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
      * @param id 主键
      */
     @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void deleteById(String id) {
-        dao.deleteById(id);
-    }
-    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void deleteById(Long id) {
+    public void deleteById(E id) {
         dao.deleteById(id);
     }
 
     @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void deleteBatchByIds(Long[] ids) {
+    public void deleteBatchByIds(E[] ids) {
         dao.deleteBatchByIds(ids);
     }
 

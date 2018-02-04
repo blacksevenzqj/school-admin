@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * DAO支持类实现
  */
-public interface CrudDao<T> extends BaseDao {
+public interface CrudDao<T, E> extends BaseDao {
 
     /**
      * 获取单条数据
@@ -16,8 +16,7 @@ public interface CrudDao<T> extends BaseDao {
      * @param id 主键
      * @return T t
      */
-    T get(String id);
-    T get(Long id);
+    T getById(E id);
 
     /**
      * 获取单条数据
@@ -58,6 +57,8 @@ public interface CrudDao<T> extends BaseDao {
      */
     int insert(T entity);
 
+    int insertBatch(List<T> list);
+
     /**
      * 更新数据
      *
@@ -68,7 +69,6 @@ public interface CrudDao<T> extends BaseDao {
 
     /**
      * 删除数据
-     *
      * @param entity T
      * @return int int
      */
@@ -76,13 +76,11 @@ public interface CrudDao<T> extends BaseDao {
 
     /**
      * 删除数据
-     *
      * @param id entity id
      * @return int int
      */
-    int deleteById(String id);
-    int deleteById(Long id);
+    int deleteById(E id);
 
-    void deleteBatchByIds(@Param("ids") Long[] ids);
+    void deleteBatchByIds(@Param("ids") E[] ids);
 
 }

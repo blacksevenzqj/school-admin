@@ -12,7 +12,7 @@ import school.db.service.CrudService;
 
 @Slf4j
 @Service(value = "sysLogServiceImpl")
-public class SysLogServiceImpl extends CrudService<SysLogDao, SysLogEntity> {
+public class SysLogServiceImpl extends CrudService<SysLogDao, SysLogEntity, Long> {
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void testSave(){
