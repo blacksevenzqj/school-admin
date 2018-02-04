@@ -1,5 +1,7 @@
 package school.db.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -80,5 +82,7 @@ public interface CrudDao<T> extends BaseDao {
      */
     int deleteById(String id);
     int deleteById(Long id);
+
+    void deleteBatchByIds(@Param("ids") Long[] ids);
 
 }

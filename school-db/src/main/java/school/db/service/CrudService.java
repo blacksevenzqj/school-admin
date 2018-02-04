@@ -129,4 +129,9 @@ public abstract class CrudService<D extends CrudDao<T>, T extends BaseEntity> {
         dao.deleteById(id);
     }
 
+    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void deleteBatchByIds(Long[] ids) {
+        dao.deleteBatchByIds(ids);
+    }
+
 }

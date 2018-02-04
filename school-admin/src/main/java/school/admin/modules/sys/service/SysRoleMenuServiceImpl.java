@@ -1,6 +1,7 @@
 package school.admin.modules.sys.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import school.admin.modules.sys.dao.SysRoleMenuDao;
 import school.admin.modules.sys.entity.SysRoleMenuEntity;
@@ -15,7 +16,7 @@ import java.util.List;
 @Service("sysRoleMenuServiceImpl")
 public class SysRoleMenuServiceImpl extends CrudService<SysRoleMenuDao, SysRoleMenuEntity> {
 
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void saveOrUpdate(Long roleId, List<Long> menuIdList) {
 		//先删除角色与菜单关系
 		deleteBatch(new Long[]{roleId});
@@ -42,9 +43,9 @@ public class SysRoleMenuServiceImpl extends CrudService<SysRoleMenuDao, SysRoleM
 	}
 
 
-	public int deleteBatch(Long[] roleIds){
-//		return baseMapper.deleteBatch(roleIds);
-		return 0;
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void deleteBatch(Long[] roleIds){
+		this.deleteBatchByIds(roleIds);
 	}
 
 }
