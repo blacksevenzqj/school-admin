@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import school.db.dao.CrudDao;
 import school.db.pojo.BaseEntity;
 import school.db.pojo.Paging;
+import school.db.utils.PageUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,12 @@ public abstract class CrudService<D extends CrudDao<T, E>, T extends BaseEntity,
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
         List<T> list = dao.queryList(queryMap);
         return new PageInfo<>(list);
+    }
+
+    public PageUtils queryPage(int pageNum, int pageSize, Map<String, Object> params) {
+        Paging page = new Paging(pageNum, pageSize);
+        PageInfo PageInfo = queryPage(page, params);
+        return new PageUtils(PageInfo.getList(), PageInfo.getTotal(), PageInfo.getPageSize(), PageInfo.getPages());
     }
 
     /**
