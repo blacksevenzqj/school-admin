@@ -15,4 +15,6 @@ public interface SysUserRoleDao extends CrudDao<SysUserRoleEntity, Long> {
 	 */
 	List<Long> queryRoleIdList(Long userId);
 
+	void deleteByUserId(Long userId);
+
 }

@@ -17,29 +17,30 @@ import java.util.List;
 @Service("sysUserRoleServiceImpl")
 public class SysUserRoleServiceImpl extends CrudService<SysUserRoleDao, SysUserRoleEntity, Long> {
 
-//	public void saveOrUpdate(Long userId, List<Long> roleIdList) {
-//		//先删除用户与角色关系
-//		this.deleteByMap(new MapUtils().put("user_id", userId));
-//
-//		if(roleIdList.size() == 0){
-//			return ;
-//		}
-//
-//		//保存用户与角色关系
-//		List<SysUserRoleEntity> list = new ArrayList<>(roleIdList.size());
-//		for(Long roleId : roleIdList){
-//			SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
-//			sysUserRoleEntity.setUserId(userId);
-//			sysUserRoleEntity.setRoleId(roleId);
-//
-//			list.add(sysUserRoleEntity);
-//		}
-//		this.insertBatch(list);
-//	}
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void saveOrUpdate(Long userId, List<Long> roleIdList) {
+		//先删除用户与角色关系
+		getDao().deleteByUserId(userId);
 
-//	public List<Long> queryRoleIdList(Long userId) {
-//		return baseMapper.queryRoleIdList(userId);
-//	}
+		if(roleIdList.size() == 0){
+			return ;
+		}
+
+		//保存用户与角色关系
+		List<SysUserRoleEntity> list = new ArrayList<>(roleIdList.size());
+		for(Long roleId : roleIdList){
+			SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
+			sysUserRoleEntity.setUserId(userId);
+			sysUserRoleEntity.setRoleId(roleId);
+
+			list.add(sysUserRoleEntity);
+		}
+		this.insertBatch(list);
+	}
+
+	public List<Long> queryRoleIdList(Long userId) {
+		return getDao().queryRoleIdList(userId);
+	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void deleteBatch(Long[] roleIds){

@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import school.admin.common.annotation.SysLog;
 import school.admin.modules.sys.dao.SysUserDao;
-import school.admin.modules.sys.entity.SysLogEntity;
 import school.admin.modules.sys.entity.SysUserEntity;
 import school.db.service.CrudService;
 
