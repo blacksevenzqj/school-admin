@@ -37,10 +37,8 @@ public class SysUserController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("sys:user:list")
-	public R list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-				  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-				  @RequestParam Map<String, Object> params){
-		PageUtils page = sysUserService.queryPage(pageNum, pageSize, params);
+	public R list(@RequestParam Map<String, Object> params){
+		PageUtils page = sysUserService.queryPageMap(params);
 		return R.ok().put("page", page);
 	}
 	

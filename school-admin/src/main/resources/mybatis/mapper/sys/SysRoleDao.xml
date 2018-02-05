@@ -3,6 +3,28 @@
 
 <mapper namespace="school.admin.modules.sys.dao.SysRoleDao">
 
+    <select id="get" resultType="school.admin.modules.sys.entity.SysRoleEntity">
+        SELECT a.* FROM `sys_role` a WHERE a.`role_id` = #{roleId}
+    </select>
+
+    <select id="queryList" resultType="school.admin.modules.sys.entity.SysRoleEntity">
+        select a.* from sys_role a order by a.create_date desc
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="school.admin.modules.sys.entity.SysRoleEntity">
+        insert into sys_role
+        (
+        `role_name`,
+        `remark`,
+        `create_date`
+        )
+        VALUES (
+        #{roleName},
+        #{remark},
+        #{createDate}
+        )
+    </insert>
+
     <delete id="deleteBatchByIds">
         delete from sys_role
         where role_id IN

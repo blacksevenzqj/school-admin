@@ -37,10 +37,6 @@ public class SysRoleEntity extends IncrementDataEntity {
 
 	private List<Long> menuIdList;
 
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
 
 	/**
 	 * 设置：
@@ -88,14 +84,6 @@ public class SysRoleEntity extends IncrementDataEntity {
 	 */
 	public String getRemark() {
 		return remark;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
 	}
 
 	public List<Long> getMenuIdList() {

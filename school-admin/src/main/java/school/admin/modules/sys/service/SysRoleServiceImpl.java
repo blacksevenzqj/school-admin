@@ -25,17 +25,9 @@ public class SysRoleServiceImpl extends CrudService<SysRoleDao, SysRoleEntity, L
 	private SysUserRoleServiceImpl sysUserRoleServiceImpl;
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void saveSysRole(SysRoleEntity role) {
-		role.setCreateTime(new Date());
+	public void saveOrUpdateRole(SysRoleEntity role) {
 		this.save(role);
 		//保存角色与菜单关系
-		sysRoleMenuServiceImpl.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void update(SysRoleEntity role) {
-		this.save(role);
-		//更新角色与菜单关系：还是 删除 -> 新增
 		sysRoleMenuServiceImpl.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
 	}
 
