@@ -1,6 +1,9 @@
 package school.admin.modules.sys.entity;
 
+import school.common.validator.group.UpdateGroup;
 import school.db.pojo.IncrementDataEntity;
+
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -18,6 +21,7 @@ public class SysMenuEntity extends IncrementDataEntity {
 	/**
 	 * 菜单ID
 	 */
+	@NotNull(message="菜单ID不能为空", groups = UpdateGroup.class)
 	private Long menuId;
 
 	/**

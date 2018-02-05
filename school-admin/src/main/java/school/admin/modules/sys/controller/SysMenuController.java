@@ -13,6 +13,8 @@ import school.admin.modules.sys.service.SysMenuServiceImpl;
 import school.common.exception.RRException;
 import school.common.utils.Constant;
 import school.common.utils.R;
+import school.common.validator.ValidatorUtils;
+import school.common.validator.group.UpdateGroup;
 
 import java.util.List;
 
@@ -101,6 +103,7 @@ public class SysMenuController {
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:menu:update")
 	public R update(@RequestBody SysMenuEntity menu){
+		ValidatorUtils.validateEntity(menu, UpdateGroup.class);
 		//数据校验
 		verifyForm(menu);
 		sysMenuServiceImpl.save(menu);
@@ -130,9 +133,6 @@ public class SysMenuController {
 	 * 验证参数是否正确
 	 */
 	private void verifyForm(SysMenuEntity menu){
-        if(menu.getMenuId() == null){
-            throw new RRException("菜单ID不能为空");
-        }
 		if(StringUtils.isBlank(menu.getName())){
 			throw new RRException("菜单名称不能为空");
 		}

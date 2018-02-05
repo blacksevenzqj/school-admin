@@ -63,7 +63,7 @@ public class SysMenuServiceImpl extends CrudService<SysMenuDao, SysMenuEntity, L
         //删除菜单
         deleteById(menuId);
         //删除菜单与角色关联
-//        sysRoleMenuServiceImpl.deleteByMap(new MapUtils().put("menu_id", menuId));
+        sysRoleMenuServiceImpl.deleteByMenuId(menuId);
     }
 
     /**

@@ -7,6 +7,11 @@
 		select menu_id from sys_role_menu where role_id = #{value}
 	</select>
 
+	<delete id="deleteByMenuId">
+		delete from sys_role_menu
+		where menu_id = #{menuId}
+	</delete>
+
 	<delete id="deleteBatchByIds">
 		delete from sys_role_menu
 		where role_id in

@@ -11,7 +11,7 @@
         select a.* from sys_role a order by a.create_date desc
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="school.admin.modules.sys.entity.SysRoleEntity">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="roleId" parameterType="school.admin.modules.sys.entity.SysRoleEntity">
         insert into sys_role
         (
         `role_name`,

@@ -45,6 +45,11 @@ public class SysRoleMenuServiceImpl extends CrudService<SysRoleMenuDao, SysRoleM
 
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void deleteByMenuId(Long menuId){
+		getDao().deleteByMenuId(menuId);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void deleteBatch(Long[] roleIds){
 		this.deleteBatchByIds(roleIds);
 	}

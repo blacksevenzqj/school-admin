@@ -19,4 +19,28 @@
 		select * from sys_menu order by order_num asc
 	</select>
 
+	<insert id="insert" useGeneratedKeys="true" keyProperty="menuId" parameterType="school.admin.modules.sys.entity.SysMenuEntity">
+		insert into sys_menu
+		(
+		`parent_id`,
+		`name`,
+		`url`,
+		`perms`,
+		`type`,
+		`icon`,
+		`order_num`,
+		`create_date`
+		)
+		VALUES (
+		#{parentId},
+		#{name},
+		#{url},
+		#{perms},
+		#{type},
+		#{icon},
+		#{orderNum},
+		#{createDate}
+		)
+	</insert>
+
 </mapper>
