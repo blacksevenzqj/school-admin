@@ -1,22 +1,11 @@
 //package school.business.visa.entity;
 //
 //import lombok.Data;
-//import org.hibernate.annotations.DynamicUpdate;
-//
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.Id;
-//import javax.persistence.Table;
 //import java.math.BigDecimal;
 //import java.util.Date;
 //
 //@Data
-//@Entity
-//@DynamicUpdate
-//@Table(name="qz_base_information")
 //public class BaseInformation {
-//	@Id
-//	@GeneratedValue
 //    private Integer baseInformationId;
 //    private String name; // 名字
 //    private String description; // 描述

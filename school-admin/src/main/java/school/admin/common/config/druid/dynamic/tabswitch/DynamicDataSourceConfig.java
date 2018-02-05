@@ -1,6 +1,7 @@
 package school.admin.common.config.druid.dynamic.tabswitch;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
@@ -25,14 +26,14 @@ public class DynamicDataSourceConfig {
     @Primary
     @Bean(name = "managementDataSource")
     @ConfigurationProperties("spring.datasource.management")
-    public DruidDataSource managementDataSource(){
+    public DataSource  managementDataSource(){
         return new DruidDataSource();
     }
 
     @Bean(name = "businessDataSource")
     @ConfigurationProperties("spring.datasource.business")
-    public DruidDataSource businessDataSource(){
-        return new DruidDataSource();
+    public DataSource  businessDataSource(){
+        return DruidDataSourceBuilder.create().build();  // 一样的
     }
 
     @Bean(name = "dynamicSwitchDataSource")

@@ -6,20 +6,11 @@ import org.springframework.stereotype.Service;
 import school.db.datasource.tabswitch.DataSourceNames;
 import school.db.datasource.tabswitch.annotation.DataSource;
 
-import java.util.List;
 
 
 @Slf4j
 @Service(value = "visaServiceImpl")
 public class VisaServiceImpl {
-
-//    @Autowired
-//    BaseInformationRepository baseInformationRepository;
-
-//    @DataSource(name = "BUSINESS")
-//    public List<BaseInformation> getBaseInformation(Integer baseInformationId){
-//        return baseInformationRepository.findAll();
-//    }
 
     @Autowired
     BaseInformationDao baseInformationDao;
