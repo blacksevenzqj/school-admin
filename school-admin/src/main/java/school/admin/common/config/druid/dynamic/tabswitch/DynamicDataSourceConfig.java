@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import school.admin.common.exception.base.SystemException;
-import school.db.datasource.activities.DynamicDataSourceTransactionManager;
 import school.db.datasource.tabswitch.DynamicSwitchDataSource;
 
 import javax.sql.DataSource;
@@ -51,7 +50,7 @@ public class DynamicDataSourceConfig {
      */
     @Bean(name = "dynamicTransactionManager")
     public DataSourceTransactionManager dynamicTransactionManager(@Qualifier("dynamicSwitchDataSource") DataSource dynamicDataSource) {
-        return new DynamicDataSourceTransactionManager(dynamicDataSource);
+        return new DataSourceTransactionManager(dynamicDataSource);
     }
 
     /**
