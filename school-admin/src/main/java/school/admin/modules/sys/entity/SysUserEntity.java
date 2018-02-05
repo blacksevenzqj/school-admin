@@ -9,7 +9,6 @@ import school.common.validator.group.UpdateGroup;
 import school.db.pojo.IncrementDataEntity;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +26,7 @@ public class SysUserEntity extends IncrementDataEntity {
 	/**
 	 * 用户ID
 	 */
+	@NotNull(message="用户ID不能为空", groups = UpdateGroup.class)
 	private Long userId;
 
 	/**

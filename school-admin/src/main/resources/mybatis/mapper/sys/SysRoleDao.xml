@@ -3,8 +3,8 @@
 
 <mapper namespace="school.admin.modules.sys.dao.SysRoleDao">
 
-    <select id="get" resultType="school.admin.modules.sys.entity.SysRoleEntity">
-        SELECT a.* FROM `sys_role` a WHERE a.`role_id` = #{roleId}
+    <select id="getById" resultType="school.admin.modules.sys.entity.SysRoleEntity">
+        SELECT a.* FROM `sys_role` a WHERE a.`role_id` = #{id}
     </select>
 
     <select id="queryList" resultType="school.admin.modules.sys.entity.SysRoleEntity">
@@ -24,6 +24,15 @@
         #{createDate}
         )
     </insert>
+
+    <update id="update" parameterType="school.admin.modules.sys.entity.SysRoleEntity">
+        UPDATE sys_role
+        <trim prefix="set" suffixOverrides="," suffix=" where role_id = #{roleId} ">
+            <if test="roleName != null and roleName.length()>0"> role_name = #{roleName} , </if>
+            <if test="remark != null and remark.length()>0"> remark = #{remark} ,
+            </if>
+        </trim>
+    </update>
 
     <delete id="deleteBatchByIds">
         delete from sys_role

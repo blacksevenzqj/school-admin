@@ -8,8 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import school.admin.common.annotation.SysLog;
 import school.admin.modules.sys.entity.SysLogEntity;
+import school.admin.modules.sys.entity.SysRoleEntity;
 import school.admin.modules.sys.entity.SysUserEntity;
 import school.admin.modules.sys.service.SysLogServiceImpl;
+import school.admin.modules.sys.service.SysRoleServiceImpl;
 import school.admin.modules.sys.service.SysUserServiceImpl;
 
 import java.util.List;
@@ -25,6 +27,9 @@ public class TestDataSource {
     @Autowired
     SysLogServiceImpl sysLogServiceImpl;
 
+    @Autowired
+    SysRoleServiceImpl sysRoleServiceImpl;
+
     @Test
     public void queryAllMenuId() {
         List<Long> list = sysUserServiceImpl.queryAllMenuId(2L);
@@ -36,7 +41,8 @@ public class TestDataSource {
     @Test
     public void sysUserTestSave() {
         SysUserEntity sysUserEntity = new SysUserEntity();
-        sysUserEntity.setUsername("999");
+        sysUserEntity.setUserId(5L);
+        sysUserEntity.setUsername("five");
         sysUserEntity = sysUserServiceImpl.save(sysUserEntity);
         log.info(sysUserEntity.toString());
 //        sysUserServiceImpl.testSave();
@@ -56,5 +62,15 @@ public class TestDataSource {
     public void sysLogTestSave() {
         sysLogServiceImpl.testSave();
     }
+
+    @Test
+    public void sysRoleUpdate() {
+        SysRoleEntity sysRoleEntity = new SysRoleEntity();
+        sysRoleEntity.setRoleId(1L);
+//        sysRoleEntity.setRoleName("技术部_开发人员");
+        sysRoleEntity.setRemark("sss");
+        sysRoleServiceImpl.save(sysRoleEntity);
+    }
+
 
 }

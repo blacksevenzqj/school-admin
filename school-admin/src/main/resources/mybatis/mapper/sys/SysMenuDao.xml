@@ -3,6 +3,10 @@
 
 <mapper namespace="school.admin.modules.sys.dao.SysMenuDao">
 
+	<select id="getById" resultType="school.admin.modules.sys.entity.SysMenuEntity">
+		SELECT a.* FROM `sys_menu` a WHERE a.`menu_id` = #{id}
+	</select>
+
 	<select id="queryListParentId" resultType="school.admin.modules.sys.entity.SysMenuEntity">
 		select * from sys_menu where parent_id = #{parentId} order by order_num asc 
 	</select>

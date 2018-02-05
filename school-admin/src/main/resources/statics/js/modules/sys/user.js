@@ -78,10 +78,8 @@ var vm = new Vue({
             vm.title = "新增";
             vm.roleList = {};
             vm.user = {status:1, roleIdList:[]};
-
             //获取角色信息
             this.getRoleList();
-
         },
         update: function () {
             var userId = getSelectedRow();

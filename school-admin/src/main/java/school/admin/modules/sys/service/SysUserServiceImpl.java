@@ -2,6 +2,7 @@ package school.admin.modules.sys.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -39,16 +40,29 @@ public class SysUserServiceImpl extends CrudService<SysUserDao, SysUserEntity, L
 
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void saveOrUpdateUser(SysUserEntity user) {
+    public void saveUser(SysUserEntity user) {
         //sha256加密
         String salt = RandomStringUtils.randomAlphanumeric(20);
         user.setSalt(salt);
         user.setPassword(ShiroUtils.sha256(user.getPassword(), user.getSalt()));
         save(user);
-
         //保存用户与角色关系
         sysUserRoleServiceImpl.saveOrUpdate(user.getUserId(), user.getRoleIdList());
     }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void upDateUser(SysUserEntity user) {
+        if(StringUtils.isNotBlank(user.getPassword())){
+            //sha256加密
+            String salt = RandomStringUtils.randomAlphanumeric(20);
+            user.setSalt(salt);
+            user.setPassword(ShiroUtils.sha256(user.getPassword(), user.getSalt()));
+        }
+        save(user);
+        //保存用户与角色关系
+        sysUserRoleServiceImpl.saveOrUpdate(user.getUserId(), user.getRoleIdList());
+    }
+
 
     /**
      * 修改密码

@@ -50,7 +50,6 @@ public class SysMenuController {
 				sysMenuEntity.setParentName(parentMenuEntity.getName());
 			}
 		}
-
 		return menuList;
 	}
 
@@ -62,7 +61,6 @@ public class SysMenuController {
 	public R select(){
 		//查询列表数据
 		List<SysMenuEntity> menuList = sysMenuServiceImpl.queryNotButtonList();
-
 		//添加顶级菜单
 		SysMenuEntity root = new SysMenuEntity();
 		root.setMenuId(0L);
@@ -70,7 +68,6 @@ public class SysMenuController {
 		root.setParentId(-1L);
 		root.setOpen(true);
 		menuList.add(root);
-
 		return R.ok().put("menuList", menuList);
 	}
 
@@ -93,9 +90,7 @@ public class SysMenuController {
 	public R save(@RequestBody SysMenuEntity menu){
 		//数据校验
 		verifyForm(menu);
-
 		sysMenuServiceImpl.save(menu);
-
 		return R.ok();
 	}
 
@@ -108,9 +103,7 @@ public class SysMenuController {
 	public R update(@RequestBody SysMenuEntity menu){
 		//数据校验
 		verifyForm(menu);
-
 		sysMenuServiceImpl.save(menu);
-
 		return R.ok();
 	}
 
@@ -124,15 +117,12 @@ public class SysMenuController {
 		if(menuId <= 31){
 			return R.error("系统菜单，不能删除");
 		}
-
 		//判断是否有子菜单或按钮
 		List<SysMenuEntity> menuList = sysMenuServiceImpl.queryListParentId(menuId);
 		if(menuList.size() > 0){
 			return R.error("请先删除子菜单或按钮");
 		}
-
 		sysMenuServiceImpl.delete(menuId);
-
 		return R.ok();
 	}
 
@@ -143,29 +133,24 @@ public class SysMenuController {
         if(menu.getMenuId() == null){
             throw new RRException("菜单ID不能为空");
         }
-
 		if(StringUtils.isBlank(menu.getName())){
 			throw new RRException("菜单名称不能为空");
 		}
-
 		if(menu.getParentId() == null){
 			throw new RRException("上级菜单不能为空");
 		}
-
 		//菜单
 		if(menu.getType() == Constant.MenuType.MENU.getValue()){
 			if(StringUtils.isBlank(menu.getUrl())){
 				throw new RRException("菜单URL不能为空");
 			}
 		}
-
 		//上级菜单类型
 		int parentType = Constant.MenuType.CATALOG.getValue();
 		if(menu.getParentId() != 0){
 			SysMenuEntity parentMenu = sysMenuServiceImpl.get(menu.getParentId());
 			parentType = parentMenu.getType();
 		}
-
 		//目录、菜单
 		if(menu.getType() == Constant.MenuType.CATALOG.getValue() ||
 				menu.getType() == Constant.MenuType.MENU.getValue()){
@@ -174,7 +159,6 @@ public class SysMenuController {
 			}
 			return ;
 		}
-
 		//按钮
 		if(menu.getType() == Constant.MenuType.BUTTON.getValue()){
 			if(parentType != Constant.MenuType.MENU.getValue()){

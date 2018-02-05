@@ -16,7 +16,7 @@ public interface CrudDao<T, E> extends BaseDao {
      * @param id 主键
      * @return T t
      */
-    T getById(E id);
+    T getById(@Param("id") E id);
 
     /**
      * 获取单条数据

@@ -7,6 +7,10 @@
 		SELECT a.* FROM `sys_user` a WHERE a.`username` = #{username}
 	</select>
 
+	<select id="getById" resultType="school.admin.modules.sys.entity.SysUserEntity">
+		SELECT a.* FROM `sys_user` a WHERE a.`user_id` = #{id}
+	</select>
+
 	<select id="queryList" resultType="school.admin.modules.sys.entity.SysUserEntity">
 		select a.* from sys_user a
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -63,6 +67,18 @@
           #{createDate}
         )
 	</insert>
+
+	<update id="update" parameterType="school.admin.modules.sys.entity.SysUserEntity">
+		UPDATE sys_user
+		<trim prefix="set" suffixOverrides="," suffix=" where user_id = #{userId} ">
+			<if test="username != null and username.length()>0"> username = #{username} , </if>
+			<if test="password != null and password.length()>0"> password = #{password} , </if>
+			<if test="salt != null and salt.length()>0"> salt = #{salt} , </if>
+			<if test="email != null and email.length()>0"> email = #{email} , </if>
+			<if test="mobile != null and mobile.length()>0"> mobile = #{mobile} , </if>
+			<if test="status != null"> status = #{status} , </if>
+		</trim>
+	</update>
 
 	<update id="updatePassword" >
 		update sys_user set password = #{newPassword}
