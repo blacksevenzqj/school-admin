@@ -1,5 +1,6 @@
 package school.admin.modules.sys.dao;
 
+import org.apache.ibatis.annotations.Param;
 import school.admin.modules.sys.entity.SysUserRoleEntity;
 import school.db.dao.CrudDao;
 
@@ -16,5 +17,7 @@ public interface SysUserRoleDao extends CrudDao<SysUserRoleEntity, Long> {
 	List<Long> queryRoleIdList(Long userId);
 
 	void deleteByUserId(Long userId);
+
+	void deleteBatchByUserId(@Param("userIds")Long[] userIds);
 
 }

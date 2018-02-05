@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import school.admin.modules.sys.dao.SysUserRoleDao;
 import school.admin.modules.sys.entity.SysUserRoleEntity;
+import school.admin.modules.sys.enums.SysContents;
 import school.db.service.CrudService;
 
 import java.util.ArrayList;
@@ -43,7 +44,11 @@ public class SysUserRoleServiceImpl extends CrudService<SysUserRoleDao, SysUserR
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void deleteBatch(Long[] roleIds){
-		this.deleteBatchByIds(roleIds);
+	public void deleteBatch(Long[] ids, String type){
+		if(SysContents.ROLE.equalsIgnoreCase(type)){
+			this.deleteBatchByIds(ids);
+		}else{
+			getDao().deleteBatchByUserId(ids);
+		}
 	}
 }

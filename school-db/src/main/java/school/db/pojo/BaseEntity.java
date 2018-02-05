@@ -24,7 +24,6 @@ public abstract class BaseEntity implements Serializable {
     /**
      * 创建日期
      */
-    @JsonIgnore
     protected Date createDate;
     /**
      * 更新日期

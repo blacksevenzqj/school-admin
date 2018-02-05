@@ -7,6 +7,14 @@
 		SELECT a.* FROM `sys_user` a WHERE a.`username` = #{username}
 	</select>
 
+	<select id="queryList" resultType="school.admin.modules.sys.entity.SysUserEntity">
+		select a.* from sys_user a
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="username != null and username.length()>0"> AND a. username = #{username}
+			</if>
+		</trim>
+	</select>
+
 	<!-- 查询用户的所有权限 -->
 	<select id="queryAllPerms" resultType="string">
 		select m.perms from sys_user_role ur 
@@ -38,12 +46,28 @@
 		insert into sys_user
         (
           `username`,
-          `password`
+          `password`,
+          `salt`,
+          `email`,
+		  `mobile`,
+		  `status`,
+		  `create_date`
         )
         VALUES (
           #{username},
-          #{password}
+          #{password},
+          #{salt},
+          #{email},
+          #{mobile},
+          #{status},
+          #{createDate}
         )
 	</insert>
+
+	<update id="updatePassword" >
+		update sys_user set password = #{newPassword}
+		where user_id = #{userId}
+	</update>
+
 
 </mapper>

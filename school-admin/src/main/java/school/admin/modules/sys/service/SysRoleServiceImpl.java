@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import school.admin.modules.sys.dao.SysRoleDao;
 import school.admin.modules.sys.entity.SysRoleEntity;
+import school.admin.modules.sys.enums.SysContents;
 import school.db.service.CrudService;
 
 import java.util.Date;
@@ -47,7 +48,7 @@ public class SysRoleServiceImpl extends CrudService<SysRoleDao, SysRoleEntity, L
 		sysRoleMenuServiceImpl.deleteBatch(roleIds);
 
 		//删除角色与用户关联
-		sysUserRoleServiceImpl.deleteBatch(roleIds);
+		sysUserRoleServiceImpl.deleteBatch(roleIds, SysContents.ROLE);
 	}
 
 

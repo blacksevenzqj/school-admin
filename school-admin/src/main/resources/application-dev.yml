@@ -12,7 +12,7 @@ spring:
   # DataSource Config
   datasource:
     write:
-      url: jdbc:mysql://127.0.0.1:3306/renren_security?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
+      url: jdbc:mysql://127.0.0.1:3306/renren_security_nodept?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
       username: root
       password: root
       driver-class-name: com.mysql.jdbc.Driver
@@ -33,7 +33,7 @@ spring:
       # 合并多个DruidDataSource的监控数据
       #spring.datasource.useGlobalDataSourceStat=true
     read:
-      url: jdbc:mysql://127.0.0.1:3306/renren_security?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
+      url: jdbc:mysql://127.0.0.1:3306/renren_security_nodept?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
       username: root
       password: root
       driver-class-name: com.mysql.jdbc.Driver

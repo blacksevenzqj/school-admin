@@ -10,6 +10,7 @@ import java.util.Set;
  * hibernate-validator校验工具类
  */
 public class ValidatorUtils {
+
     private static Validator validator;
 
     static {

@@ -1,5 +1,6 @@
 package school.admin.modules.sys.dao;
 
+import org.apache.ibatis.annotations.Param;
 import school.admin.modules.sys.entity.SysUserEntity;
 import school.db.dao.CrudDao;
 
@@ -21,6 +22,6 @@ public interface SysUserDao extends CrudDao<SysUserEntity, Long> {
 	 */
 	List<Long> queryAllMenuId(Long userId);
 
-	boolean updatePassword(Long userId, String password, String newPassword);
+	boolean updatePassword(@Param("userId")Long userId, @Param("newPassword")String newPassword);
 
 }

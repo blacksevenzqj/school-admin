@@ -1,5 +1,6 @@
 package school.admin.modules.sys.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -44,6 +45,7 @@ public class SysUserEntity extends IncrementDataEntity {
 	/**
 	 * 盐
 	 */
+	@JsonIgnore
 	private String salt;
 
 	/**
@@ -68,21 +70,7 @@ public class SysUserEntity extends IncrementDataEntity {
 	 */
 	private List<Long> roleIdList;
 
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
 
-	/**
-	 * 部门ID
-	 */
-	@NotNull(message="部门不能为空", groups = {AddGroup.class, UpdateGroup.class})
-	private Long deptId;
-
-	/**
-	 * 部门名称
-	 */
-	private String deptName;
 
 	/**
 	 * 设置：
@@ -180,22 +168,6 @@ public class SysUserEntity extends IncrementDataEntity {
 		return status;
 	}
 	
-	/**
-	 * 设置：创建时间
-	 * @param createTime 创建时间
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	/**
-	 * 获取：创建时间
-	 * @return Date
-	 */
-	public Date getCreateTime() {
-		return createTime;
-	}
-
 	public List<Long> getRoleIdList() {
 		return roleIdList;
 	}
@@ -212,19 +184,4 @@ public class SysUserEntity extends IncrementDataEntity {
 		this.salt = salt;
 	}
 
-	public Long getDeptId() {
-		return deptId;
-	}
-
-	public void setDeptId(Long deptId) {
-		this.deptId = deptId;
-	}
-
-	public String getDeptName() {
-		return deptName;
-	}
-
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
-	}
 }

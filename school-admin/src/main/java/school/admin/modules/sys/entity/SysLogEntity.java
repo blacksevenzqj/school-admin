@@ -28,8 +28,6 @@ public class SysLogEntity extends IncrementDataEntity {
 	private Long time;
 	//IP地址
 	private String ip;
-	//创建时间
-	private Date createDate;
 
 	/**
 	 * 设置：
@@ -102,18 +100,6 @@ public class SysLogEntity extends IncrementDataEntity {
 	 */
 	public String getIp() {
 		return ip;
-	}
-	/**
-	 * 设置：创建时间
-	 */
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	/**
-	 * 获取：创建时间
-	 */
-	public Date getCreateDate() {
-		return createDate;
 	}
 
 	public Long getTime() {

@@ -1,12 +1,16 @@
 package school.admin.modules.sys.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import school.admin.common.annotation.SysLog;
 import school.admin.modules.sys.dao.SysUserDao;
 import school.admin.modules.sys.entity.SysUserEntity;
+import school.admin.modules.sys.enums.SysContents;
+import school.admin.modules.sys.shiro.ShiroUtils;
 import school.db.service.CrudService;
 
 import java.util.List;
@@ -14,6 +18,9 @@ import java.util.List;
 @Slf4j
 @Service(value = "sysUserServiceImpl")
 public class SysUserServiceImpl extends CrudService<SysUserDao, SysUserEntity, Long> {
+
+    @Autowired
+    SysUserRoleServiceImpl sysUserRoleServiceImpl;
 
     /**
      * 查询用户的所有权限
@@ -26,22 +33,46 @@ public class SysUserServiceImpl extends CrudService<SysUserDao, SysUserEntity, L
     /**
      * 查询用户的所有菜单ID
      */
-    @SysLog("测试Shiro的Service层AOP：queryAllMenuId")
-    @Transactional(readOnly = false)
     public List<Long> queryAllMenuId(Long userId){
         return getDao().queryAllMenuId(userId);
     }
 
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void saveOrUpdateUser(SysUserEntity user) {
+        //sha256加密
+        String salt = RandomStringUtils.randomAlphanumeric(20);
+        user.setSalt(salt);
+        user.setPassword(ShiroUtils.sha256(user.getPassword(), user.getSalt()));
+        save(user);
+
+        //保存用户与角色关系
+        sysUserRoleServiceImpl.saveOrUpdate(user.getUserId(), user.getRoleIdList());
+    }
+
     /**
      * 修改密码
-     * @param userId       用户ID
      * @param password     原密码
      * @param newPassword  新密码
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public boolean updatePassword(Long userId, String password, String newPassword){
-        return getDao().updatePassword(userId, password, newPassword);
+    public boolean updatePassword(SysUserEntity user, String password, String newPassword){
+        //原密码
+        password = ShiroUtils.sha256(password, user.getSalt());
+        //新密码
+        newPassword = ShiroUtils.sha256(newPassword, user.getSalt());
+        if(!user.getPassword().equalsIgnoreCase(password)){
+            return false;
+        }
+        return getDao().updatePassword(user.getUserId(), newPassword);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void deleteBatch(Long[] userIds) {
+        this.deleteBatchByIds(userIds);
+        sysUserRoleServiceImpl.deleteBatch(userIds, SysContents.USER);
+    }
+
 
 
 
