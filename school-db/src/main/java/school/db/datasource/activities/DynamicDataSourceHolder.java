@@ -1,9 +1,7 @@
-package school.db.datasource;
+package school.db.datasource.activities;
 
 /**
  * 动态数据源持有者
- *
- * @author zhangxd
  */
 public final class DynamicDataSourceHolder {
 

@@ -20,6 +20,7 @@
         <module>school-db</module>
         <module>school-utils</module>
         <module>school-admin</module>
+        <module>school-business</module>
     </modules>
 
     <properties>

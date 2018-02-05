@@ -1,4 +1,4 @@
-package school.db.datasource;
+package school.db.datasource.activities;
 
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.keygen.SelectKeyGenerator;

@@ -1,4 +1,4 @@
-package school.admin.common.config;
+package school.admin.common.config.druid.dynamic.tabswitch;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -12,48 +12,36 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import school.admin.common.exception.base.SystemException;
-import school.db.datasource.DynamicDataSource;
-import school.db.datasource.DynamicDataSourceTransactionManager;
+import school.db.datasource.activities.DynamicDataSourceTransactionManager;
+import school.db.datasource.tabswitch.DynamicSwitchDataSource;
 
 import javax.sql.DataSource;
 
 /**
- * 数据源配置
+ * 配置多数据源
  */
 @Configuration
-public class DatasourceConfig {
+public class DynamicDataSourceConfig {
 
-    /**
-     * Write data source druid data source.
-     * @return the druid data source
-     */
     @Primary
-    @Bean(name = "writeDataSource")
-    @ConfigurationProperties("spring.datasource.write")
-    public DruidDataSource writeDataSource() {
+    @Bean(name = "managementDataSource")
+    @ConfigurationProperties("spring.datasource.management")
+    public DruidDataSource managementDataSource(){
         return new DruidDataSource();
     }
 
-    /**
-     * Read data source druid data source.
-     * @return the druid data source
-     */
-    @Bean(name = "readDataSource")
-    @ConfigurationProperties("spring.datasource.read")
-    public DruidDataSource readDataSource() {
+    @Bean(name = "businessDataSource")
+    @ConfigurationProperties("spring.datasource.business")
+    public DruidDataSource businessDataSource(){
         return new DruidDataSource();
     }
 
-    /**
-     * Dynamic data source data source.
-     * @return the data source
-     */
-    @Bean(name = "dynamicDataSource")
-    public DataSource dynamicDataSource() {
-        DynamicDataSource dynamicDataSource = new DynamicDataSource();
-        dynamicDataSource.setWriteDataSource(writeDataSource());
-        dynamicDataSource.setReadDataSource(readDataSource());
-        return dynamicDataSource;
+    @Bean(name = "dynamicSwitchDataSource")
+    public DataSource dataSource() {
+        DynamicSwitchDataSource dynamicSwitchDataSource = new DynamicSwitchDataSource();
+        dynamicSwitchDataSource.setManagementDataSource(managementDataSource());
+        dynamicSwitchDataSource.setBusinessDataSource(businessDataSource());
+        return dynamicSwitchDataSource;
     }
 
     /**
@@ -62,7 +50,7 @@ public class DatasourceConfig {
      * @return the data source transaction manager
      */
     @Bean(name = "dynamicTransactionManager")
-    public DataSourceTransactionManager dynamicTransactionManager(@Qualifier("dynamicDataSource") DataSource dynamicDataSource) {
+    public DataSourceTransactionManager dynamicTransactionManager(@Qualifier("dynamicSwitchDataSource") DataSource dynamicDataSource) {
         return new DynamicDataSourceTransactionManager(dynamicDataSource);
     }
 
@@ -74,7 +62,7 @@ public class DatasourceConfig {
      */
     @Bean
     @ConfigurationProperties(prefix = MybatisProperties.MYBATIS_PREFIX)
-    public SqlSessionFactory dynamicSqlSessionFactory(@Qualifier("dynamicDataSource") DataSource dynamicDataSource, MybatisProperties properties) {
+    public SqlSessionFactory dynamicSqlSessionFactory(@Qualifier("dynamicSwitchDataSource") DataSource dynamicDataSource, MybatisProperties properties) {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dynamicDataSource);
         sessionFactory.setConfigLocation(new DefaultResourceLoader().getResource(properties.getConfigLocation()));
@@ -85,5 +73,4 @@ public class DatasourceConfig {
             throw new SystemException(e);
         }
     }
-
 }

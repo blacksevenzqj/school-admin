@@ -1,4 +1,4 @@
-package school.db.datasource;
+package school.db.datasource.activities;
 
 public enum DynamicDataSourceGlobal {
     /**

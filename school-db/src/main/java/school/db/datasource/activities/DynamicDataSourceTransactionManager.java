@@ -1,4 +1,4 @@
-package school.db.datasource;
+package school.db.datasource.activities;
 
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionDefinition;

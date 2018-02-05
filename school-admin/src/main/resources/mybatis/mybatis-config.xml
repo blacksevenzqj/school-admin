@@ -72,8 +72,8 @@
 
         </plugin>
 
-        <!-- 动态数据源拦截器 -->
-        <plugin interceptor="school.db.datasource.DynamicPlugin"></plugin>
+        <!-- 动态数据源拦截器：动静分离 -->
+        <!--<plugin interceptor="school.db.datasource.activities.DynamicPlugin"></plugin>-->
 
     </plugins>
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import school.admin.common.annotation.SysLog;
+import school.admin.modules.business.visa.service.VisaServiceImpl;
 import school.admin.modules.sys.entity.SysLogEntity;
 import school.admin.modules.sys.entity.SysRoleEntity;
 import school.admin.modules.sys.entity.SysUserEntity;
@@ -29,6 +30,9 @@ public class TestDataSource {
 
     @Autowired
     SysRoleServiceImpl sysRoleServiceImpl;
+
+    @Autowired
+    VisaServiceImpl visaServiceImpl;
 
     @Test
     public void queryAllMenuId() {
@@ -72,5 +76,9 @@ public class TestDataSource {
         sysRoleServiceImpl.save(sysRoleEntity);
     }
 
+    @Test
+    public void Visa() {
+        System.out.println(visaServiceImpl.getBaseInformation(1));
+    }
 
 }
