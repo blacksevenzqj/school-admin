@@ -14,6 +14,7 @@ import school.management.admin.modules.sys.service.SysLogServiceImpl;
 import school.management.admin.modules.sys.service.SysRoleServiceImpl;
 import school.management.admin.modules.sys.service.SysUserServiceImpl;
 import school.management.business.service.VisaServiceImpl;
+import school.management.business.visa.entity.BaseInformation;
 
 import java.util.List;
 
@@ -33,6 +34,20 @@ public class TestDataSource {
 
     @Autowired
     VisaServiceImpl visaServiceImpl;
+
+
+    @Test
+    public void visa() {
+//        System.out.println(visaServiceImpl.getBaseInformation(1));
+//        System.out.println(visaServiceImpl.getBaseInformationForJpa(1));
+        BaseInformation baseInformation = new BaseInformation();
+        baseInformation.setName("666");
+        baseInformation.setDescription("999");
+        baseInformation.setComboContent("666666666");
+//        visaServiceImpl.saveBaseInformationForJpa(baseInformation);
+        visaServiceImpl.save(baseInformation);
+    }
+
 
     @Test
     public void queryAllMenuId() {
@@ -74,11 +89,6 @@ public class TestDataSource {
 //        sysRoleEntity.setRoleName("技术部_开发人员");
         sysRoleEntity.setRemark("sss");
         sysRoleServiceImpl.save(sysRoleEntity);
-    }
-
-    @Test
-    public void visa() {
-        System.out.println(visaServiceImpl.getBaseInformation(1));
     }
 
 }
