@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="school.admin.modules.sys.dao.SysUserDao">
+<mapper namespace="school.management.admin.modules.sys.dao.SysUserDao">
 
-	<select id="get" resultType="school.admin.modules.sys.entity.SysUserEntity">
+	<select id="get" resultType="school.management.admin.modules.sys.entity.SysUserEntity">
 		SELECT a.* FROM `sys_user` a WHERE a.`username` = #{username}
 	</select>
 
-	<select id="getById" resultType="school.admin.modules.sys.entity.SysUserEntity">
+	<select id="getById" resultType="school.management.admin.modules.sys.entity.SysUserEntity">
 		SELECT a.* FROM `sys_user` a WHERE a.`user_id` = #{id}
 	</select>
 
-	<select id="queryList" resultType="school.admin.modules.sys.entity.SysUserEntity">
+	<select id="queryList" resultType="school.management.admin.modules.sys.entity.SysUserEntity">
 		select a.* from sys_user a
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="username != null and username.length()>0"> AND a. username = #{username}
@@ -46,7 +46,7 @@
 		</foreach>
 	</delete>
 
-	<insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="school.admin.modules.sys.entity.SysUserEntity">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="school.management.admin.modules.sys.entity.SysUserEntity">
 		insert into sys_user
         (
           `username`,
@@ -68,7 +68,7 @@
         )
 	</insert>
 
-	<update id="update" parameterType="school.admin.modules.sys.entity.SysUserEntity">
+	<update id="update" parameterType="school.management.admin.modules.sys.entity.SysUserEntity">
 		UPDATE sys_user
 		<trim prefix="set" suffixOverrides="," suffix=" where user_id = #{userId} ">
 			<if test="username != null and username.length()>0"> username = #{username} , </if>

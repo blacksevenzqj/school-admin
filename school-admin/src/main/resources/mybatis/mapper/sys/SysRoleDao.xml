@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="school.admin.modules.sys.dao.SysRoleDao">
+<mapper namespace="school.management.admin.modules.sys.dao.SysRoleDao">
 
-    <select id="getById" resultType="school.admin.modules.sys.entity.SysRoleEntity">
+    <select id="getById" resultType="school.management.admin.modules.sys.entity.SysRoleEntity">
         SELECT a.* FROM `sys_role` a WHERE a.`role_id` = #{id}
     </select>
 
-    <select id="queryList" resultType="school.admin.modules.sys.entity.SysRoleEntity">
+    <select id="queryList" resultType="school.management.admin.modules.sys.entity.SysRoleEntity">
         select a.* from sys_role a order by a.create_date desc
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="roleId" parameterType="school.admin.modules.sys.entity.SysRoleEntity">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="roleId" parameterType="school.management.admin.modules.sys.entity.SysRoleEntity">
         insert into sys_role
         (
         `role_name`,
@@ -25,7 +25,7 @@
         )
     </insert>
 
-    <update id="update" parameterType="school.admin.modules.sys.entity.SysRoleEntity">
+    <update id="update" parameterType="school.management.admin.modules.sys.entity.SysRoleEntity">
         UPDATE sys_role
         <trim prefix="set" suffixOverrides="," suffix=" where role_id = #{roleId} ">
             <if test="roleName != null and roleName.length()>0"> role_name = #{roleName} , </if>

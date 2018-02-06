@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="school.admin.modules.sys.dao.SysMenuDao">
+<mapper namespace="school.management.admin.modules.sys.dao.SysMenuDao">
 
-	<select id="getById" resultType="school.admin.modules.sys.entity.SysMenuEntity">
+	<select id="getById" resultType="school.management.admin.modules.sys.entity.SysMenuEntity">
 		SELECT a.* FROM `sys_menu` a WHERE a.`menu_id` = #{id}
 	</select>
 
-	<select id="queryListParentId" resultType="school.admin.modules.sys.entity.SysMenuEntity">
+	<select id="queryListParentId" resultType="school.management.admin.modules.sys.entity.SysMenuEntity">
 		select * from sys_menu where parent_id = #{parentId} order by order_num asc 
 	</select>
 	
-	<select id="queryNotButtonList" resultType="school.admin.modules.sys.entity.SysMenuEntity">
+	<select id="queryNotButtonList" resultType="school.management.admin.modules.sys.entity.SysMenuEntity">
 		select * from sys_menu where type != 2 order by order_num asc 
 	</select>
 
-	<select id="findList" parameterType="school.admin.modules.sys.entity.SysMenuEntity" resultType="school.admin.modules.sys.entity.SysMenuEntity">
+	<select id="findList" parameterType="school.management.admin.modules.sys.entity.SysMenuEntity" resultType="school.management.admin.modules.sys.entity.SysMenuEntity">
 		select * from sys_menu order by order_num asc
 	</select>
 
-	<insert id="insert" useGeneratedKeys="true" keyProperty="menuId" parameterType="school.admin.modules.sys.entity.SysMenuEntity">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="menuId" parameterType="school.management.admin.modules.sys.entity.SysMenuEntity">
 		insert into sys_menu
 		(
 		`parent_id`,
