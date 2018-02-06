@@ -24,13 +24,14 @@ public class DataSourceAspect implements Ordered {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
+    /**
+     * 1、注解方式：
+     */
     @Pointcut("@annotation(school.management.db.datasource.tabswitch.annotation.DataSource)")
-    public void dataSourcePointCut() {
-
+    public void annotationDataSourcePointCut() {
     }
-
-    @Around("dataSourcePointCut()")
-    public Object around(ProceedingJoinPoint point) throws Throwable {
+    @Around("annotationDataSourcePointCut()")
+    public Object annotationAround(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
 
@@ -42,6 +43,7 @@ public class DataSourceAspect implements Ordered {
             DynamicSwitchDataSourceHolder.putDataSource(DynamicSwitchDataSourceGlobal.getByName(ds.name()));
             logger.debug("set datasource is " + ds.name());
         }
+
         try {
             return point.proceed();
         } finally {
@@ -49,6 +51,28 @@ public class DataSourceAspect implements Ordered {
             logger.debug("clean datasource");
         }
     }
+
+
+    /**
+     * 2、表达式方式：
+     */
+    @Pointcut("execution(* school.management.business.service.*.*(..))")
+    public void patternDataSourcePointCut() {
+
+    }
+    @Around("patternDataSourcePointCut()")
+    public Object patternAround(ProceedingJoinPoint point) throws Throwable {
+        MethodSignature signature = (MethodSignature) point.getSignature();
+        Method method = signature.getMethod();
+        DynamicSwitchDataSourceHolder.putDataSource(DynamicSwitchDataSourceGlobal.BUSINESS);
+        try {
+            return point.proceed();
+        } finally {
+            DynamicSwitchDataSourceHolder.clearDataSource();
+            logger.debug("clean datasource");
+        }
+    }
+
 
     @Override
     public int getOrder() {

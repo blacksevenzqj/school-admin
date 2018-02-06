@@ -13,7 +13,7 @@ import school.management.admin.modules.sys.entity.SysUserEntity;
 import school.management.admin.modules.sys.service.SysLogServiceImpl;
 import school.management.admin.modules.sys.service.SysRoleServiceImpl;
 import school.management.admin.modules.sys.service.SysUserServiceImpl;
-import school.management.business.visa.service.VisaServiceImpl;
+import school.management.business.service.VisaServiceImpl;
 
 import java.util.List;
 
