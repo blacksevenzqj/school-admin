@@ -18,6 +18,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import school.management.admin.common.exception.base.SystemException;
 import school.management.db.datasource.tabswitch.DynamicSwitchDataSource;
+import school.management.db.datasource.tabswitch.DynamicSwitchDataSourceTransactionManager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -52,13 +53,13 @@ public class DynamicDataSourceConfig {
     /**
      * 用于：事务---“动静分离”。只是切换数据源的话，不用也可以。
      * Dynamic transaction manager data source transaction manager.
-     * @param dynamicDataSource the dynamic data source
+     * @param dynamicSwitchDataSource the dynamic data source
      * @return the data source transaction manager
      */
-//    @Bean(name = "dynamicTransactionManager")
-//    public DataSourceTransactionManager dynamicTransactionManager(@Qualifier("dynamicSwitchDataSource") DataSource dynamicSwitchDataSource) {
-//        return new DataSourceTransactionManager(dynamicDataSource);
-//    }
+    @Bean(name = "dynamicTransactionManager")
+    public DataSourceTransactionManager dynamicTransactionManager(@Qualifier("dynamicSwitchDataSource") DataSource dynamicSwitchDataSource) {
+        return new DynamicSwitchDataSourceTransactionManager(dynamicSwitchDataSource);
+    }
 
 
     // MyBatis的数据源：
@@ -84,35 +85,35 @@ public class DynamicDataSourceConfig {
 
 
     // JPA数据源：
-    /**
-     * 我们通过LocalContainerEntityManagerFactoryBean来获取EntityManagerFactory实例
-     * 注意：LocalContainerEntityManagerFactoryBean和userEntityManagerFactory方法其中一个注解@Primary即可，不然启动会报错。
-     */
-    @Bean(name = "localContainerEntityManagerFactoryBean")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(EntityManagerFactoryBuilder builder) {
-        return builder
-                .dataSource(dynamicSwitchDataSource())
-                .packages("school.management.business") //设置实体类所在位置
-                .persistenceUnit("schoolPersistenceUnit")
-                .build(); //不要在这里直接获取EntityManagerFactory
-    }
-    /**
-     * EntityManagerFactory类似于Hibernate的SessionFactory,mybatis的SqlSessionFactory
-     * 总之,在执行操作之前,我们总要获取一个EntityManager,这就类似于Hibernate的Session，mybatis的sqlSession.
-     */
-    @Bean(name = "entityManagerFactory")
-    @Primary
-    public EntityManagerFactory entityManagerFactory(EntityManagerFactoryBuilder builder) {
-        return this.entityManagerFactoryBean(builder).getObject();
-    }
-    /**
-     * 配置事物管理器
-     */
-    @Bean(name = "transactionManager")
-    @Primary
-    public PlatformTransactionManager writeTransactionManager(EntityManagerFactoryBuilder builder) {
-        return new JpaTransactionManager(this.entityManagerFactory(builder));
-    }
+//    /**
+//     * 我们通过LocalContainerEntityManagerFactoryBean来获取EntityManagerFactory实例
+//     * 注意：LocalContainerEntityManagerFactoryBean和userEntityManagerFactory方法其中一个注解@Primary即可，不然启动会报错。
+//     */
+//    @Bean(name = "localContainerEntityManagerFactoryBean")
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(EntityManagerFactoryBuilder builder) {
+//        return builder
+//                .dataSource(dynamicSwitchDataSource())
+//                .packages("school.management.business") //设置实体类所在位置
+//                .persistenceUnit("schoolPersistenceUnit")
+//                .build(); //不要在这里直接获取EntityManagerFactory
+//    }
+//    /**
+//     * EntityManagerFactory类似于Hibernate的SessionFactory,mybatis的SqlSessionFactory
+//     * 总之,在执行操作之前,我们总要获取一个EntityManager,这就类似于Hibernate的Session，mybatis的sqlSession.
+//     */
+//    @Bean(name = "entityManagerFactory")
+//    @Primary
+//    public EntityManagerFactory entityManagerFactory(EntityManagerFactoryBuilder builder) {
+//        return this.entityManagerFactoryBean(builder).getObject();
+//    }
+//    /**
+//     * 配置事物管理器
+//     */
+//    @Bean(name = "transactionManager")
+//    @Primary
+//    public PlatformTransactionManager writeTransactionManager(EntityManagerFactoryBuilder builder) {
+//        return new JpaTransactionManager(this.entityManagerFactory(builder));
+//    }
 
 
 

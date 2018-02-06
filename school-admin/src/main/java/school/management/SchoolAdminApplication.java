@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan({"school.management.admin.modules", "school.management.business"})
+@MapperScan({"school.management.admin.modules"})
 public class SchoolAdminApplication {
 	
 	public static void main(String[] args) {

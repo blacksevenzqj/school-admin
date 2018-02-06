@@ -8,6 +8,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import school.management.db.datasource.tabswitch.DynamicSwitchDataSourceGlobal;
 import school.management.db.datasource.tabswitch.DynamicSwitchDataSourceHolder;
@@ -38,17 +39,17 @@ public class DataSourceAspect implements Ordered {
         DataSource ds = method.getAnnotation(DataSource.class);
         if(ds == null){
             DynamicSwitchDataSourceHolder.putDataSource(DynamicSwitchDataSourceGlobal.MANAGEMENT);
-            logger.debug("set datasource is " + DynamicSwitchDataSourceGlobal.MANAGEMENT.name());
+            logger.info("set datasource is " + DynamicSwitchDataSourceGlobal.MANAGEMENT.name());
         }else {
             DynamicSwitchDataSourceHolder.putDataSource(DynamicSwitchDataSourceGlobal.getByName(ds.name()));
-            logger.debug("set datasource is " + ds.name());
+            logger.info("set datasource is " + ds.name());
         }
 
         try {
             return point.proceed();
         } finally {
             DynamicSwitchDataSourceHolder.clearDataSource();
-            logger.debug("clean datasource");
+            logger.info("clean datasource");
         }
     }
 
@@ -56,7 +57,10 @@ public class DataSourceAspect implements Ordered {
     /**
      * 2、表达式方式：
      */
-    @Pointcut("execution(* school.management.business.service.*.*(..))")
+    @Pointcut(
+        "execution(* school.management.admin.modules.business.visa.service.*.*(..)) || " +
+        "execution(* school.management.admin.modules.business.businesshelp.service.*.*(..))"
+    )
     public void patternDataSourcePointCut() {
 
     }
@@ -69,7 +73,7 @@ public class DataSourceAspect implements Ordered {
             return point.proceed();
         } finally {
             DynamicSwitchDataSourceHolder.clearDataSource();
-            logger.debug("clean datasource");
+            logger.info("clean datasource");
         }
     }
 

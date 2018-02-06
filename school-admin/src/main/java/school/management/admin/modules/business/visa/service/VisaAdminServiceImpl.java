@@ -1,25 +1,37 @@
-package school.management.business.service;
+package school.management.admin.modules.business.visa.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import school.management.admin.modules.business.visa.dao.BaseInformationAdminDao;
+import school.management.business.visa.service.VisaServiceImpl;
 import school.management.business.visa.dao.jpa.BaseInformationRepository;
-import school.management.business.visa.dao.mybatis.BaseInformationDao;
 import school.management.business.visa.entity.BaseInformation;
-import school.management.db.service.CrudService;
 
+import java.util.List;
 
 @Slf4j
-@Service(value = "visaServiceImpl")
-public class VisaServiceImpl extends CrudService<BaseInformationDao, BaseInformation, Integer> {
+@Service(value = "visaAdminServiceImpl")
+public class VisaAdminServiceImpl {
 
+    @Autowired
+    VisaServiceImpl visaServiceImpl;
+    @Autowired
+    BaseInformationAdminDao baseInformationAdminDao;
+
+    @Transactional(readOnly = true)
 //    @DataSource(name = DataSourceNames.BUSINESS_SYSTEM)
     public BaseInformation getBaseInformation(Integer baseInformationId){
-        return getDao().getById(baseInformationId);
+        return visaServiceImpl.get(baseInformationId);
     }
-
+    public BaseInformation saveBaseInformation(BaseInformation baseInformation){
+        return visaServiceImpl.save(baseInformation);
+    }
+    public List<BaseInformation> getBaseInformationList(){
+        return baseInformationAdminDao.getBaseInformationList();
+    }
 
 
     @Autowired
@@ -33,8 +45,5 @@ public class VisaServiceImpl extends CrudService<BaseInformationDao, BaseInforma
     public BaseInformation saveBaseInformationForJpa(BaseInformation baseInformation){
         return baseInformationRepository.saveAndFlush(baseInformation);
     }
-
-
-
 
 }
