@@ -84,7 +84,7 @@ public class DynamicDataSourceConfig {
     }
 
 
-    // JPA数据源：
+    // JPA数据源：在“只读事务”上存在问题，暂时不用。
 //    /**
 //     * 我们通过LocalContainerEntityManagerFactoryBean来获取EntityManagerFactory实例
 //     * 注意：LocalContainerEntityManagerFactoryBean和userEntityManagerFactory方法其中一个注解@Primary即可，不然启动会报错。
@@ -114,7 +114,6 @@ public class DynamicDataSourceConfig {
 //    public PlatformTransactionManager writeTransactionManager(EntityManagerFactoryBuilder builder) {
 //        return new JpaTransactionManager(this.entityManagerFactory(builder));
 //    }
-
 
 
 }
