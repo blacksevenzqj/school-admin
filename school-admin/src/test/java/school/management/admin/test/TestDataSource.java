@@ -39,17 +39,17 @@ public class TestDataSource {
 
     @Test
     public void visa() {
-//        System.out.println(visaAdminServiceImpl.getBaseInformation(1));
-//        System.out.println(visaAdminServiceImpl.getBaseInformationForJpa(1));
-
         BaseInformation baseInformation = new BaseInformation();
         baseInformation.setName("666");
         baseInformation.setDescription("999");
         baseInformation.setComboContent("666666666");
         visaAdminServiceImpl.saveBaseInformation(baseInformation);
 
-        List list = visaAdminServiceImpl.getBaseInformationList();
-        System.out.println(list.size());
+//        List list = visaAdminServiceImpl.getBaseInformationList();
+//        System.out.println(list.size());
+
+//        System.out.println(visaAdminServiceImpl.getBaseInformation(1));
+//        System.out.println(visaAdminServiceImpl.getBaseInformationForJpa(1));
     }
 
 

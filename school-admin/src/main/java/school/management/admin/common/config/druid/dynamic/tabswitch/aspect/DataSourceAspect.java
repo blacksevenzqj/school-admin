@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import school.management.admin.common.aspect.AspectOrderConfig;
 import school.management.db.datasource.tabswitch.DynamicSwitchDataSourceGlobal;
 import school.management.db.datasource.tabswitch.DynamicSwitchDataSourceHolder;
 import school.management.db.datasource.tabswitch.annotation.DataSource;
@@ -80,6 +81,6 @@ public class DataSourceAspect implements Ordered {
 
     @Override
     public int getOrder() {
-        return 1;
+        return AspectOrderConfig.DATASOURCE;
     }
 }
