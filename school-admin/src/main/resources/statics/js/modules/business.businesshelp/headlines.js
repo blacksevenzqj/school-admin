@@ -63,10 +63,8 @@ var vm = new Vue({
         },
         showList: true,
         title:null,
-        roleList:{},
-        user:{
-            status:1,
-            roleIdList:[]
+        headlines:{
+            delFlag:0,
         }
     },
     methods: {
@@ -76,8 +74,7 @@ var vm = new Vue({
         add: function(){
             vm.showList = false;
             vm.title = "新增";
-            vm.roleList = {};
-            vm.user = {status:1, roleIdList:[]};
+            vm.headlines = {delFlag:0};
             //获取角色信息
             this.getRoleList();
         },

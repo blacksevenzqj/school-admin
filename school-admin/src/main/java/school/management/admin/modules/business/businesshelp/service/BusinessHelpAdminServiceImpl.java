@@ -20,7 +20,9 @@ public class BusinessHelpAdminServiceImpl {
         return businessHeadlinesServiceImpl.queryPageMap(params);
     }
 
-
+    public BusinessHeadlines saveBusinessHeadlines(BusinessHeadlines businessHeadlines){
+        return businessHeadlinesServiceImpl.save(businessHeadlines);
+    }
 
 
 }
