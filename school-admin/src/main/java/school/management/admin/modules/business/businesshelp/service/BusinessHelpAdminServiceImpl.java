@@ -7,6 +7,7 @@ import school.management.business.businesshelp.entity.BusinessHeadlines;
 import school.management.business.businesshelp.service.BusinessHeadlinesServiceImpl;
 import school.management.db.utils.PageUtils;
 
+import java.util.Date;
 import java.util.Map;
 
 @Slf4j
@@ -23,8 +24,13 @@ public class BusinessHelpAdminServiceImpl {
         return businessHeadlinesServiceImpl.get(id);
     }
 
-    public BusinessHeadlines saveBusinessHeadlines(BusinessHeadlines businessHeadlines){
+    public BusinessHeadlines saveOrUpDateHeadlines(BusinessHeadlines businessHeadlines){
+        businessHeadlines.setCreateTime(new Date());
         return businessHeadlinesServiceImpl.save(businessHeadlines);
+    }
+
+    public void delHeadlinesByIds(Integer[] ids){
+        businessHeadlinesServiceImpl.deleteBatchByIds(ids);
     }
 
 

@@ -4,6 +4,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import school.management.admin.common.annotation.SysLog;
+import school.management.admin.common.aspect.SysLogConfig;
 import school.management.admin.modules.business.businesshelp.service.BusinessHelpAdminServiceImpl;
 import school.management.admin.modules.sys.controller.AbstractController;
 import school.management.admin.modules.sys.entity.SysUserEntity;
@@ -26,28 +27,37 @@ public class BusinessHelpController extends AbstractController {
     /**
      * 创业头条
      */
-    @RequestMapping("/headlines/list")
+    @RequestMapping(value = "/headlines/list", method = RequestMethod.GET)
     @RequiresPermissions("business:businesshelp:headlines:list")
     public R headlinesList(@RequestParam Map<String, Object> params){
         PageUtils page = businessHelpAdminServiceImpl.headlinesQueryPageMap(params);
         return R.ok().put("page", page);
     }
-    @RequestMapping("/headlines/info/{id}")
+    @RequestMapping(value = "/headlines/info/{id}", method = RequestMethod.GET)
     public R headlinesInfo(@PathVariable("id") int id){
         return R.ok().put("headlines", businessHelpAdminServiceImpl.headlinesInfo(id));
     }
-    @SysLog("保存创业头条")
-    @RequestMapping("/headlines/save")
+    @RequestMapping(value = "/headlines/save", method = RequestMethod.POST)
     @RequiresPermissions("business:businesshelp:headlines:save")
-    public R save(@RequestBody BusinessHeadlines businessHeadlines){
-        ValidatorUtils.validateEntity(businessHeadlines, AddGroup.class);
+    @SysLog(SysLogConfig.ADD + SysLogConfig.COLON  + SysLogConfig.BUSINESSHELP + SysLogConfig.COLON + SysLogConfig.HEADLINES)
+    public R saveHeadlines(@RequestBody BusinessHeadlines businessHeadlines){
+        ValidatorUtils.validateEntity(businessHeadlines);
+        businessHelpAdminServiceImpl.saveOrUpDateHeadlines(businessHeadlines);
         return R.ok();
     }
-    @SysLog("修改创业头条")
-    @RequestMapping("/headlines/update")
+    @RequestMapping(value = "/headlines/update", method = RequestMethod.POST)
     @RequiresPermissions("business:businesshelp:headlines:update")
-    public R update(@RequestBody BusinessHeadlines businessHeadlines){
+    @SysLog(SysLogConfig.UPDATE + SysLogConfig.COLON  + SysLogConfig.BUSINESSHELP + SysLogConfig.COLON + SysLogConfig.HEADLINES)
+    public R updateHeadlines(@RequestBody BusinessHeadlines businessHeadlines){
         ValidatorUtils.validateEntity(businessHeadlines, UpdateGroup.class);
+        businessHelpAdminServiceImpl.saveOrUpDateHeadlines(businessHeadlines);
+        return R.ok();
+    }
+    @RequestMapping(value = "/headlines/del", method = RequestMethod.POST)
+    @RequiresPermissions("business:businesshelp:headlines:del")
+    @SysLog(SysLogConfig.DEL + SysLogConfig.COLON  + SysLogConfig.BUSINESSHELP + SysLogConfig.COLON + SysLogConfig.HEADLINES)
+    public R delHeadlines(Integer[] ids){
+        businessHelpAdminServiceImpl.delHeadlinesByIds(ids);
         return R.ok();
     }
 

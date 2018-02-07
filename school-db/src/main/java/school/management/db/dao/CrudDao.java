@@ -79,7 +79,7 @@ public interface CrudDao<T, E> extends BaseDao {
      * @param id entity id
      * @return int int
      */
-    int deleteById(E id);
+    int deleteById(@Param("id") E id);
 
     void deleteBatchByIds(@Param("ids") E[] ids);
 

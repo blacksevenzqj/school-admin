@@ -1,6 +1,7 @@
 package school.management.admin.common.aspect;
 
 import com.google.gson.Gson;
+import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,6 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import school.management.admin.common.annotation.SysLog;
 import school.management.admin.modules.sys.entity.SysLogEntity;
+import school.management.admin.modules.sys.entity.SysUserEntity;
 import school.management.admin.modules.sys.service.SysLogServiceImpl;
 import school.management.common.utils.HttpContextUtils;
 import school.management.common.utils.IPUtils;
@@ -80,8 +82,8 @@ public class SysLogAspect {
 		sysLog.setIp(IPUtils.getIpAddr(request));
 
 		//用户名
-//		String username = ((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername();
-//		sysLog.setUsername(username);
+		String username = ((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername();
+		sysLog.setUsername(username);
 
 		sysLog.setTime(time);
 		sysLog.setCreateDate(new Date());

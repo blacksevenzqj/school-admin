@@ -40,20 +40,6 @@ $(function () {
         }
     });
 });
-var setting = {
-    data: {
-        simpleData: {
-            enable: true,
-            idKey: "deptId",
-            pIdKey: "parentId",
-            rootPId: -1
-        },
-        key: {
-            url:"nourl"
-        }
-    }
-};
-var ztree;
 
 var vm = new Vue({
     el:'#rrapp',
@@ -64,7 +50,11 @@ var vm = new Vue({
         showList: true,
         title:null,
         headlines:{
-            delFlag:0,
+            id:null,
+            title:null,
+            headLineLevel:null,
+            headLineTextUrl:null,
+            delFlag:"0"
         }
     },
     methods: {
@@ -88,17 +78,17 @@ var vm = new Vue({
             vm.getHeadlines(id);
         },
         del: function () {
-            var userIds = getSelectedRows();
-            if(userIds == null){
+            var ids = getSelectedRows();
+            if(ids == null){
                 return ;
             }
 
             confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
-                    url: baseURL + "sys/user/delete",
+                    url: baseBusinessURL + "businesshelp/headlines/del",
                     contentType: "application/json",
-                    data: JSON.stringify(userIds),
+                    data: JSON.stringify(ids),
                     success: function(r){
                         if(r.code == 0){
                             alert('操作成功', function(){
@@ -112,12 +102,12 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function () {
-            var url = vm.headlines.id == null ? "businesshelp/headlines/save" : "businesshelp/headlines/save";
+            var url = vm.headlines.id == null ? "businesshelp/headlines/save" : "businesshelp/headlines/update";
             $.ajax({
                 type: "POST",
                 url: baseBusinessURL + url,
                 contentType: "application/json",
-                data: JSON.stringify(vm.user),
+                data: JSON.stringify(vm.headlines),
                 success: function(r){
                     if(r.code === 0){
                         alert('操作成功', function(){
