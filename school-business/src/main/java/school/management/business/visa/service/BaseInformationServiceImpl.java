@@ -8,7 +8,7 @@ import school.management.db.service.CrudService;
 
 
 @Slf4j
-@Service(value = "visaServiceImpl")
-public class VisaServiceImpl extends CrudService<BaseInformationDao, BaseInformation, Integer> {
+@Service(value = "baseInformationServiceImpl")
+public class BaseInformationServiceImpl extends CrudService<BaseInformationDao, BaseInformation, Integer> {
 
 }

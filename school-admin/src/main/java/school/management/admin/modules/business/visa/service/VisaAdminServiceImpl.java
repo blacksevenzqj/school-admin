@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import school.management.admin.common.annotation.SysLog;
-import school.management.admin.modules.business.visa.dao.BaseInformationAdminDao;
-import school.management.business.visa.service.VisaServiceImpl;
+import school.management.admin.modules.business.visa.dao.VisaAdminDao;
+import school.management.business.visa.service.BaseInformationServiceImpl;
 import school.management.business.visa.entity.BaseInformation;
 
 import java.util.List;
@@ -16,22 +16,22 @@ import java.util.List;
 public class VisaAdminServiceImpl {
 
     @Autowired
-    VisaServiceImpl visaServiceImpl;
+    BaseInformationServiceImpl baseInformationServiceImpl;
     @Autowired
-    BaseInformationAdminDao baseInformationAdminDao;
+    VisaAdminDao visaAdminDao;
 
     @Transactional(readOnly = true)
 //    @DataSource(name = DataSourceNames.BUSINESS_SYSTEM)
     public BaseInformation getBaseInformation(Integer baseInformationId){
-        return visaServiceImpl.get(baseInformationId);
+        return baseInformationServiceImpl.get(baseInformationId);
     }
     @SysLog
     public BaseInformation saveBaseInformation(BaseInformation baseInformation){
-        return visaServiceImpl.save(baseInformation);
+        return baseInformationServiceImpl.save(baseInformation);
     }
     @Transactional(readOnly = true)
     public List<BaseInformation> getBaseInformationList(){
-        return baseInformationAdminDao.getBaseInformationList();
+        return visaAdminDao.getBaseInformationList();
     }
 
 

@@ -2,6 +2,7 @@ package school.management.business.businesshelp.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import school.management.db.pojo.IncrementDataEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,8 +12,13 @@ import java.util.Date;
 @Entity
 @DynamicUpdate
 @Table(name="cy_business_headlines")
-public class BusinessHeadlines {
-	
+public class BusinessHeadlines extends IncrementDataEntity {
+
+	@Override
+	public boolean isNewRecord() {
+		return id == null;
+	}
+
 	@Id
 	@GeneratedValue
 	@Column(name="id",nullable=true)
@@ -41,7 +47,7 @@ public class BusinessHeadlines {
 	@Column(name="create_time",nullable=true)
     private Date createTime;
 	
-	@Column(name="del_flag",nullable=true)
-    private Integer delFlag = 0;
+//	@Column(name="del_flag",nullable=true)
+//    private Integer delFlag = 0;
 	
 }

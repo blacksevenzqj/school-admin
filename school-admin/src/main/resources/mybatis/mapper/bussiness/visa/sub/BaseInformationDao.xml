@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="school.management.admin.modules.business.visa.dao.BaseInformationAdminDao">
+<mapper namespace="school.management.business.visa.dao.mybatis.BaseInformationDao">
 
     <select id="getById" resultType="school.management.business.visa.entity.BaseInformation">
         select * from qz_base_information where base_information_id = #{id}

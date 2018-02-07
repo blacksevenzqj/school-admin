@@ -14,8 +14,6 @@ import school.management.admin.modules.sys.entity.SysUserEntity;
 import school.management.admin.modules.sys.service.SysLogServiceImpl;
 import school.management.admin.modules.sys.service.SysRoleServiceImpl;
 import school.management.admin.modules.sys.service.SysUserServiceImpl;
-import school.management.business.visa.service.VisaServiceImpl;
-import school.management.business.visa.entity.BaseInformation;
 
 import java.util.List;
 
@@ -39,16 +37,16 @@ public class TestDataSource {
 
     @Test
     public void visa() {
-        BaseInformation baseInformation = new BaseInformation();
-        baseInformation.setName("666");
-        baseInformation.setDescription("999");
-        baseInformation.setComboContent("666666666");
-        visaAdminServiceImpl.saveBaseInformation(baseInformation);
+//        BaseInformation baseInformation = new BaseInformation();
+//        baseInformation.setName("666");
+//        baseInformation.setDescription("999");
+//        baseInformation.setComboContent("666666666");
+//        visaAdminServiceImpl.saveBaseInformation(baseInformation);
 
-//        List list = visaAdminServiceImpl.getBaseInformationList();
-//        System.out.println(list.size());
+        List list = visaAdminServiceImpl.getBaseInformationList();
+        System.out.println(list.size());
 
-//        System.out.println(visaAdminServiceImpl.getBaseInformation(1));
+        System.out.println(visaAdminServiceImpl.getBaseInformation(1));
 //        System.out.println(visaAdminServiceImpl.getBaseInformationForJpa(1));
     }
 

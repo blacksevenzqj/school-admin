@@ -43,4 +43,17 @@
 		)
 	</insert>
 
+	<update id="update" parameterType="school.management.admin.modules.sys.entity.SysMenuEntity">
+		UPDATE sys_menu
+		<trim prefix="set" suffixOverrides="," suffix=" where menu_id = #{menuId} ">
+			<if test="parentId != null"> parent_id = #{parentId} , </if>
+			<if test="name != null and name.length()>0"> name = #{name} ,</if>
+			<if test="url != null and url.length()>0"> url = #{url} ,</if>
+			<if test="perms != null and perms.length()>0"> perms = #{perms} ,</if>
+			<if test="type != null"> type = #{type} ,</if>
+			<if test="icon != null and icon.length()>0"> icon = #{icon} ,</if>
+			<if test="orderNum != null"> order_num = #{orderNum} ,</if>
+		</trim>
+	</update>
+
 </mapper>

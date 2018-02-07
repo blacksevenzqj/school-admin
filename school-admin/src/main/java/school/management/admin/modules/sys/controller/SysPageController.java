@@ -14,6 +14,10 @@ public class SysPageController {
 	public String module(@PathVariable("module") String module, @PathVariable("url") String url){
 		return "modules/" + module + "/" + url;
 	}
+	@RequestMapping("modules/business/{module}/{url}.html")
+	public String moduleBusiness(@PathVariable("module") String module, @PathVariable("url") String url){
+		return "modules/" + module + "/" + url;
+	}
 
 	@RequestMapping(value = {"/", "index.html"})
 	public String index(){
