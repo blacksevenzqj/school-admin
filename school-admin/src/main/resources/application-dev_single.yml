@@ -73,7 +73,7 @@ spring:
 # Mybatis配置
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mapper/*/*.xml
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
 
 # reasonable分页参数合理化
 pagehelper:
