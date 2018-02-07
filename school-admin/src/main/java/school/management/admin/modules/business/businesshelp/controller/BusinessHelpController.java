@@ -56,7 +56,7 @@ public class BusinessHelpController extends AbstractController {
     @RequestMapping(value = "/headlines/del", method = RequestMethod.POST)
     @RequiresPermissions("business:businesshelp:headlines:del")
     @SysLog(SysLogConfig.DEL + SysLogConfig.COLON  + SysLogConfig.BUSINESSHELP + SysLogConfig.COLON + SysLogConfig.HEADLINES)
-    public R delHeadlines(Integer[] ids){
+    public R delHeadlines(@RequestBody Integer[] ids){
         businessHelpAdminServiceImpl.delHeadlinesByIds(ids);
         return R.ok();
     }

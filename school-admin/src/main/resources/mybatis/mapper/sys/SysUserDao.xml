@@ -34,15 +34,10 @@
 		where ur.user_id = #{userId}
 	</select>
 	
-	<delete id="deleteBatch">
+	<delete id="deleteBatchByIds">
 		delete from sys_user where user_id in 
-		<foreach item="userId" collection="array" open="(" separator="," close=")">
-			#{userId}
-		</foreach>
-		;
-		delete from sys_user_role where user_id in 
-		<foreach item="userId" collection="array" open="(" separator="," close=")">
-			#{userId}
+		<foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+			#{item}
 		</foreach>
 	</delete>
 

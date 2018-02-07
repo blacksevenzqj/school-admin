@@ -46,9 +46,11 @@
         </trim>
     </update>
 
-    <delete id="deleteById">
-        DELETE from cy_business_headlines where id = #{id}
+    <delete id="deleteBatchByIds">
+        delete from cy_business_headlines where id in
+        <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
-
 
 </mapper>
