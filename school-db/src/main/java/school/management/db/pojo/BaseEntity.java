@@ -33,7 +33,6 @@ public abstract class BaseEntity implements Serializable {
     /**
      * 删除标记(0:正常; -1:删除;)
      */
-    @JsonIgnore
     protected String delFlag;
 
 
@@ -71,8 +70,7 @@ public abstract class BaseEntity implements Serializable {
         this.updateDate = updateDate == null ? null : (Date) updateDate.clone();
     }
 
-    @JsonIgnore
-    @Length(min = 1, max = 1)
+    @Length(min = 1, max = 2)
     public String getDelFlag() {
         return delFlag;
     }

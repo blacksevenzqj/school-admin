@@ -4,6 +4,7 @@ $.jgrid.defaults.responsive = true;
 $.jgrid.defaults.styleUI = 'Bootstrap';
 
 var baseURL = "../../";
+var baseBusinessURL = "../../../";
 
 //工具集合Tools
 window.T = {};
