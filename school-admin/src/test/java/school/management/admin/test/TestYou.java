@@ -14,6 +14,7 @@ import school.management.admin.modules.sys.entity.SysUserEntity;
 import school.management.admin.modules.sys.service.SysLogServiceImpl;
 import school.management.admin.modules.sys.service.SysRoleServiceImpl;
 import school.management.admin.modules.sys.service.SysUserServiceImpl;
+import school.management.business.businesshelp.entity.BusinessHeadlines;
 import school.management.db.utils.PageUtils;
 
 import java.util.HashMap;
@@ -31,8 +32,11 @@ public class TestYou {
     @Test
     public void businessHelp() {
         Map map = new HashMap();
-        PageUtils pageUtils = businessHelpAdminServiceImpl.queryPageMap(map);
+        PageUtils<BusinessHeadlines> pageUtils = businessHelpAdminServiceImpl.queryPageMap(map);
         System.out.println(pageUtils);
+        for(BusinessHeadlines bl : pageUtils.getList()){
+            System.out.println(bl);
+        }
     }
 
 
