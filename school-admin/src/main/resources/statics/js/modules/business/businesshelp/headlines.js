@@ -10,7 +10,7 @@ $(function () {
 			{ label: '状态', name: 'delFlag', width: 60, formatter: function(value, options, row){
 				return value === "0" ?
 					'<span class="label label-success">正常</span>' :
-					'<span class="label label-danger">删除</span>';
+					'<span class="label label-danger">禁用</span>';
 			}},
 			{ label: '创建时间', name: 'createTime', index: "create_time", width: 85}
         ],
@@ -75,21 +75,17 @@ var vm = new Vue({
             vm.showList = false;
             vm.title = "新增";
             vm.headlines = {delFlag:0};
-            //获取角色信息
-            this.getRoleList();
         },
         update: function () {
-            var userId = getSelectedRow();
-            if(userId == null){
+            var id = getSelectedRow();
+            if(id == null){
                 return ;
             }
 
             vm.showList = false;
             vm.title = "修改";
 
-            vm.getUser(userId);
-            //获取角色信息
-            this.getRoleList();
+            vm.getHeadlines(id);
         },
         del: function () {
             var userIds = getSelectedRows();
@@ -116,10 +112,10 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function () {
-            var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
+            var url = vm.headlines.id == null ? "businesshelp/headlines/save" : "businesshelp/headlines/save";
             $.ajax({
                 type: "POST",
-                url: baseURL + url,
+                url: baseBusinessURL + url,
                 contentType: "application/json",
                 data: JSON.stringify(vm.user),
                 success: function(r){
@@ -133,15 +129,9 @@ var vm = new Vue({
                 }
             });
         },
-        getUser: function(userId){
-            $.get(baseURL + "sys/user/info/"+userId, function(r){
-                vm.user = r.user;
-                vm.user.password = null;
-            });
-        },
-        getRoleList: function(){
-            $.get(baseURL + "sys/role/select", function(r){
-                vm.roleList = r.list;
+        getHeadlines: function(id){
+            $.get(baseBusinessURL + "businesshelp/headlines/info/" + id, function(r){
+                vm.headlines = r.headlines;
             });
         },
         reload: function () {

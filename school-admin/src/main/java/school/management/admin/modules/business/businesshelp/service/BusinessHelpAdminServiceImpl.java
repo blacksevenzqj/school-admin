@@ -16,8 +16,11 @@ public class BusinessHelpAdminServiceImpl {
     @Autowired
     BusinessHeadlinesServiceImpl businessHeadlinesServiceImpl;
 
-    public PageUtils<BusinessHeadlines> queryPageMap(Map<String, Object> params){
+    public PageUtils<BusinessHeadlines> headlinesQueryPageMap(Map<String, Object> params){
         return businessHeadlinesServiceImpl.queryPageMap(params);
+    }
+    public BusinessHeadlines headlinesInfo(int id){
+        return businessHeadlinesServiceImpl.get(id);
     }
 
     public BusinessHeadlines saveBusinessHeadlines(BusinessHeadlines businessHeadlines){

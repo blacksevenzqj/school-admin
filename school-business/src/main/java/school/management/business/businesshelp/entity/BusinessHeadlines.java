@@ -2,6 +2,7 @@ package school.management.business.businesshelp.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import school.management.common.validator.group.UpdateGroup;
 import school.management.db.pojo.IncrementDataEntity;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class BusinessHeadlines extends IncrementDataEntity {
 	@Id
 	@GeneratedValue
 	@Column(name="id",nullable=true)
+	@NotNull(message="头条ID不能为空", groups = UpdateGroup.class)
     private Integer id;
 	
 	@Column(name="sys_user_id",nullable=true)
@@ -35,7 +37,7 @@ public class BusinessHeadlines extends IncrementDataEntity {
     private Integer headLineLevel = 1;
 	
 	@Column(name="headline_text_url",nullable=true)
-	@NotNull(message="头条链接必填") 
+	@NotNull(message="头条内容必填")
 	private String headLineTextUrl;
 	
 	@Column(name="total_number_like",nullable=true)

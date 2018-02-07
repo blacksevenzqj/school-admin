@@ -12,4 +12,39 @@
         ORDER BY create_time DESC
     </select>
 
+    <select id="getById" resultType="school.management.business.businesshelp.entity.BusinessHeadlines">
+        select a.* from cy_business_headlines a where a.id = #{id}
+    </select>
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="school.management.business.businesshelp.entity.BusinessHeadlines">
+        insert into cy_business_headlines
+        (
+        `sys_user_id`,
+        `title`,
+        `headline_level`,
+        `headline_text_url`,
+        `create_time`
+        )
+        VALUES (
+        #{sysUserId},
+        #{title},
+        #{headLineLevel},
+        #{headLineTextUrl},
+        #{createTime}
+        )
+    </insert>
+
+    <update id="update" parameterType="school.management.business.businesshelp.entity.BusinessHeadlines">
+        UPDATE cy_business_headlines
+        <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">
+            <if test="sysUserId != null"> sys_user_id = #{sysUserId} , </if>
+            <if test="title != null and title.length()>0"> title = #{title} , </if>
+            <if test="headLineLevel != null"> headline_level = #{headLineLevel} , </if>
+            <if test="headLineTextUrl != null and headLineTextUrl.length()>0"> headline_text_url = #{headLineTextUrl} , </if>
+            <if test="createTime != null"> create_time = #{createTime} , </if>
+        </trim>
+    </update>
+
+
 </mapper>

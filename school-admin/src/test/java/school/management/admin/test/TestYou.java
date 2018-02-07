@@ -32,7 +32,7 @@ public class TestYou {
     @Test
     public void businessHelp() {
         Map map = new HashMap();
-        PageUtils<BusinessHeadlines> pageUtils = businessHelpAdminServiceImpl.queryPageMap(map);
+        PageUtils<BusinessHeadlines> pageUtils = businessHelpAdminServiceImpl.headlinesQueryPageMap(map);
         System.out.println(pageUtils);
         for(BusinessHeadlines bl : pageUtils.getList()){
             System.out.println(bl);
