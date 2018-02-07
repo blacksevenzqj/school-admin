@@ -1,11 +1,23 @@
 package school.management.admin.modules.business.businesshelp.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import school.management.business.businesshelp.service.BusinessHeadlinesServiceImpl;
+import school.management.db.utils.PageUtils;
+
+import java.util.Map;
 
 @Slf4j
-@Service(value = "businessHelpServiceImpl")
+@Service(value = "businessHelpAdminServiceImpl")
 public class BusinessHelpAdminServiceImpl {
+
+    @Autowired
+    BusinessHeadlinesServiceImpl businessHeadlinesServiceImpl;
+
+    public PageUtils queryPageMap(Map<String, Object> params){
+        return businessHeadlinesServiceImpl.queryPageMap(params);
+    }
 
 
 

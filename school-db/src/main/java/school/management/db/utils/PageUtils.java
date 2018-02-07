@@ -7,7 +7,9 @@ import java.util.List;
  * 分页工具类
  */
 public class PageUtils implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
 	//总记录数
 	private long totalCount;
 	//每页记录数
@@ -72,5 +74,15 @@ public class PageUtils implements Serializable {
 	public void setList(List<?> list) {
 		this.list = list;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "PageUtils{" +
+				"totalCount=" + totalCount +
+				", pageSize=" + pageSize +
+				", totalPage=" + totalPage +
+				", currPage=" + currPage +
+				", list=" + list +
+				'}';
+	}
 }

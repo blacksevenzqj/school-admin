@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="school.management.business.businesshelp.dao.BusinessHeadlinesDao">
+
+    <select id="queryList" resultType="school.management.business.businesshelp.entity.BusinessHeadlines">
+        select a.* from cy_business_headlines a
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="title != null and title.length()>0"> AND a. title = #{title}
+            </if>
+        </trim>
+    </select>
+
+</mapper>

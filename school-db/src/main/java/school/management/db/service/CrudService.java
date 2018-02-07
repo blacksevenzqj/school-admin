@@ -89,6 +89,10 @@ public abstract class CrudService<D extends CrudDao<T, E>, T extends BaseEntity,
     }
 
     public PageUtils queryPageMap(Map<String, Object> params) {
+        if(params.get("pageNum") == null){
+            params.put("pageNum", 1);
+            params.put("pageSize", 10);
+        }
         Paging page = new Paging(Integer.valueOf(params.get("pageNum").toString()), Integer.valueOf(params.get("pageSize").toString()));
         PageInfo PageInfo = queryPage(page, params);
         return new PageUtils(PageInfo.getList(), PageInfo.getTotal(), PageInfo.getPageSize(), PageInfo.getPages());
