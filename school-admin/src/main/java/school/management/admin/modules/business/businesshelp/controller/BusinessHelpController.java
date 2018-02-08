@@ -34,6 +34,7 @@ public class BusinessHelpController extends AbstractController {
         return R.ok().put("page", page);
     }
     @RequestMapping(value = "/headlines/info/{id}", method = RequestMethod.GET)
+    @RequiresPermissions("business:businesshelp:headlines:info")
     public R headlinesInfo(@PathVariable("id") int id){
         return R.ok().put("headlines", businessHelpAdminServiceImpl.headlinesInfo(id));
     }
