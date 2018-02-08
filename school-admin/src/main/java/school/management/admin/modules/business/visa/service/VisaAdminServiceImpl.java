@@ -23,7 +23,7 @@ public class VisaAdminServiceImpl {
     VisaAdminDao visaAdminDao;
 
     /**
-     * 主类：
+     * 签证_主类：
      */
     @Autowired
     VisaServiceImpl visaServiceImpl;
@@ -44,7 +44,7 @@ public class VisaAdminServiceImpl {
 
 
     /**
-     * 基本信息：
+     * 套餐_基本信息：
      */
     @Autowired
     BaseInformationServiceImpl baseInformationServiceImpl;
