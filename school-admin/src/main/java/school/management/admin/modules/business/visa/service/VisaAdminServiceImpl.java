@@ -21,7 +21,7 @@ public class VisaAdminServiceImpl {
     VisaAdminDao visaAdminDao;
 
     /**
-     * 签证_主类：
+     * 1、签证_主类：
      */
     @Autowired
     VisaServiceImpl visaServiceImpl;
@@ -40,7 +40,7 @@ public class VisaAdminServiceImpl {
     }
 
     /**
-     * 套餐_主类：
+     * 2.1、套餐_主类：一对一
      */
     VisaComboServiceImpl visaComboServiceImpl;
 
@@ -56,10 +56,8 @@ public class VisaAdminServiceImpl {
     public void delVisaComboByIds(Integer[] ids){
         visaComboServiceImpl.deleteBatchByIds(ids);
     }
-
-
     /**
-     * 套餐_基本信息：
+     * 2.2、套餐_基本信息：一对一
      */
     @Autowired
     BaseInformationServiceImpl baseInformationServiceImpl;
@@ -79,7 +77,8 @@ public class VisaAdminServiceImpl {
     }
 
     /**
-     * 套餐_须知：
+     * 3、须知：
+     * 套餐 选 须知：
      */
     @Autowired
     NeedKnowServiceImpl needKnowServiceImpl;
@@ -97,11 +96,31 @@ public class VisaAdminServiceImpl {
         needKnowServiceImpl.deleteBatchByIds(ids);
     }
 
+    /**
+     * 4、办理流程：
+     * 套餐 选 办理流程：
+     */
+    @Autowired
+    ProceduresServiceImpl proceduresServiceImpl;
+
+    public PageUtils<Procedures> proceduresQueryPageMap(Map<String, Object> params){
+        return proceduresServiceImpl.queryPageMap(params);
+    }
+    public Procedures proceduresInfo(Integer id){
+        return proceduresServiceImpl.get(id);
+    }
+    public Procedures saveOrUpDateProcedures(Procedures procedures){
+        return proceduresServiceImpl.save(procedures);
+    }
+    public void delProceduresByIds(Integer[] ids){
+        proceduresServiceImpl.deleteBatchByIds(ids);
+    }
+
 
 // =====================================================================================================================
 
     /**
-     * 签证_主类：套餐_主类：套餐_基本信息：关系表
+     * 2.3、签证_主类：套餐_主类：套餐_基本信息：关系表
      */
     @Autowired
     ComboRalationBaseInformationServiceImpl comboRalationBaseInformationServiceImpl;
@@ -114,7 +133,7 @@ public class VisaAdminServiceImpl {
     }
 
     /**
-     * 签证_主类：套餐_主类：套餐_须知：关系表
+     * 3.1、签证_主类：套餐_主类：须知：关系表
      */
     @Autowired
     ComboRalationNeedKnowServiceImpl comboRalationNeedKnowServiceImpl;
@@ -126,7 +145,18 @@ public class VisaAdminServiceImpl {
         comboRalationNeedKnowServiceImpl.deleteBatchByIds(ids);
     }
 
+    /**
+     * 4.1、签证_主类：套餐_主类：办理流程：关系表
+     */
+    @Autowired
+    HandleProceduresServiceImpl handleProceduresServiceImpl;
 
+    public HandleProcedures saveOrUpDateHandleProcedures(HandleProcedures handleProcedures){
+        return handleProceduresServiceImpl.save(handleProcedures);
+    }
+    public void delHandleProceduresByIds(Integer[] ids){
+        handleProceduresServiceImpl.deleteBatchByIds(ids);
+    }
 
 
 
