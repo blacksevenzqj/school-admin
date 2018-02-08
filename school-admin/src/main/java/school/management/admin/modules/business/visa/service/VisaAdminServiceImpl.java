@@ -116,8 +116,29 @@ public class VisaAdminServiceImpl {
         proceduresServiceImpl.deleteBatchByIds(ids);
     }
 
+    /**
+     * 5、所需材料：
+     * 套餐 选 角色 再选 所需材料：
+     */
+    @Autowired
+    MaterialServiceImpl materialServiceImpl;
+
+    public PageUtils<Material> materialQueryPageMap(Map<String, Object> params){
+        return materialServiceImpl.queryPageMap(params);
+    }
+    public Material materialInfo(Integer id){
+        return materialServiceImpl.get(id);
+    }
+    public Material saveOrUpDateMaterial(Material material){
+        return materialServiceImpl.save(material);
+    }
+    public void delMaterialByIds(Integer[] ids){
+        materialServiceImpl.deleteBatchByIds(ids);
+    }
+
 
 // =====================================================================================================================
+
 
     /**
      * 2.3、签证_主类：套餐_主类：套餐_基本信息：关系表

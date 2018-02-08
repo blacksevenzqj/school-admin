@@ -17,7 +17,7 @@
       #{visaId},
       #{comboId},
       #{proceduresId},
-      #{order}
+      #{order},
       #{createTime},
       #{delFlag}
     )
