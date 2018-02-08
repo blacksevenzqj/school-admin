@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="school.management.business.visa.dao.mybatis.ComboRalationBaseInformationDao">
+
+    <insert id="insert" parameterType="school.management.business.visa.entity.ComboRalationBaseInformation">
+    insert into qz_combo_ralation_base_information
+    (
+    `visa_id`,
+    `combo_id`,
+    `base_information_id`,
+    `create_time`,
+    `del_flag`
+    )
+    VALUES (
+      #{visaId},
+      #{comboId},
+      #{baseInformationId},
+      #{createTime},
+      #{delFlag}
+    )
+    </insert>
+
+    <update id="update" parameterType="school.management.business.visa.entity.ComboRalationBaseInformation">
+        UPDATE qz_combo_ralation_base_information
+        <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">
+            <if test="visaId != null"> visa_id = #{visaId} , </if>
+            <if test="comboId != null"> combo_id = #{comboId} , </if>
+            <if test="baseInformationId != null"> base_information_id = #{baseInformationId} , </if>
+            <if test="createTime != null" > create_time = #{createTime} , </if>
+            <if test="delFlag != null" > del_flag = #{delFlag} , </if>
+        </trim>
+    </update>
+
+    <delete id="deleteBatchByIds">
+        delete from qz_combo_ralation_base_information where id in
+        <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+
+</mapper>

@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import school.management.admin.common.annotation.SysLog;
 import school.management.admin.modules.business.visa.dao.VisaAdminDao;
-import school.management.business.visa.entity.Visa;
-import school.management.business.visa.service.BaseInformationServiceImpl;
-import school.management.business.visa.entity.BaseInformation;
-import school.management.business.visa.service.VisaServiceImpl;
+import school.management.business.visa.entity.*;
+import school.management.business.visa.service.*;
 import school.management.db.utils.PageUtils;
 
 import java.util.List;
@@ -34,13 +32,30 @@ public class VisaAdminServiceImpl {
     public Visa visaInfo(Integer id){
         return visaServiceImpl.get(id);
     }
-    public Visa saveOrUpDateVisa(Visa baseInformation){
-        return visaServiceImpl.save(baseInformation);
+    public Visa saveOrUpDateVisa(Visa visa){
+        return visaServiceImpl.save(visa);
     }
     public void delVisaByIds(Integer[] ids){
         visaServiceImpl.deleteBatchByIds(ids);
     }
 
+    /**
+     * 套餐_主类：
+     */
+    VisaComboServiceImpl visaComboServiceImpl;
+
+    public PageUtils<VisaCombo> visaComboQueryPageMap(Map<String, Object> params){
+        return visaComboServiceImpl.queryPageMap(params);
+    }
+    public VisaCombo visaComboInfo(Integer id){
+        return visaComboServiceImpl.get(id);
+    }
+    public VisaCombo saveOrUpDateVisaCombo(VisaCombo visaCombo){
+        return visaComboServiceImpl.save(visaCombo);
+    }
+    public void delVisaComboByIds(Integer[] ids){
+        visaComboServiceImpl.deleteBatchByIds(ids);
+    }
 
 
     /**
@@ -63,11 +78,41 @@ public class VisaAdminServiceImpl {
         baseInformationServiceImpl.deleteBatchByIds(ids);
     }
 
+    /**
+     * 套餐_须知：
+     */
+    @Autowired
+    ComboRalationNeedKnowServiceImpl comboRalationNeedKnowServiceImpl;
+
+    public PageUtils<ComboRalationNeedKnow> comboRalationNeedKnowQueryPageMap(Map<String, Object> params){
+        return comboRalationNeedKnowServiceImpl.queryPageMap(params);
+    }
+    public ComboRalationNeedKnow comboRalationNeedKnowInfo(Integer id){
+        return comboRalationNeedKnowServiceImpl.get(id);
+    }
+    public ComboRalationNeedKnow saveOrUpDateComboRalationNeedKnow(ComboRalationNeedKnow comboRalationNeedKnow){
+        return comboRalationNeedKnowServiceImpl.save(comboRalationNeedKnow);
+    }
+    public void delComboRalationNeedKnowByIds(Integer[] ids){
+        comboRalationNeedKnowServiceImpl.deleteBatchByIds(ids);
+    }
 
 
 
+// =====================================================================================================================
 
+    /**
+     * 签证_主类：套餐_主类：套餐_基本信息：关系表
+     */
+    @Autowired
+    ComboRalationBaseInformationServiceImpl comboRalationBaseInformationServiceImpl;
 
+    public ComboRalationBaseInformation saveOrUpDateComboRalationBaseInformation(ComboRalationBaseInformation comboRalationBaseInformation){
+        return comboRalationBaseInformationServiceImpl.save(comboRalationBaseInformation);
+    }
+    public void delComboRalationBaseInformationByIds(Integer[] ids){
+        comboRalationBaseInformationServiceImpl.deleteBatchByIds(ids);
+    }
 
 
 
