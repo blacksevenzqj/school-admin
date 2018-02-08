@@ -5,6 +5,4 @@ import java.util.List;
 
 public interface VisaAdminDao {
 
-    List<BaseInformation> getBaseInformationList();
-
 }

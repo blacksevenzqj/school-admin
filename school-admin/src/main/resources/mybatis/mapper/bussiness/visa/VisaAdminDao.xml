@@ -3,8 +3,5 @@
 
 <mapper namespace="school.management.admin.modules.business.visa.dao.VisaAdminDao">
 
-    <select id="getBaseInformationList" resultType="school.management.business.visa.entity.BaseInformation">
-        select * from qz_base_information
-    </select>
 
 </mapper>
