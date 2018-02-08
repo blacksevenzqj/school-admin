@@ -82,21 +82,20 @@ public class VisaAdminServiceImpl {
      * 套餐_须知：
      */
     @Autowired
-    ComboRalationNeedKnowServiceImpl comboRalationNeedKnowServiceImpl;
+    NeedKnowServiceImpl needKnowServiceImpl;
 
-    public PageUtils<ComboRalationNeedKnow> comboRalationNeedKnowQueryPageMap(Map<String, Object> params){
-        return comboRalationNeedKnowServiceImpl.queryPageMap(params);
+    public PageUtils<NeedKnow> needKnowQueryPageMap(Map<String, Object> params){
+        return needKnowServiceImpl.queryPageMap(params);
     }
-    public ComboRalationNeedKnow comboRalationNeedKnowInfo(Integer id){
-        return comboRalationNeedKnowServiceImpl.get(id);
+    public NeedKnow needKnowInfo(Integer id){
+        return needKnowServiceImpl.get(id);
     }
-    public ComboRalationNeedKnow saveOrUpDateComboRalationNeedKnow(ComboRalationNeedKnow comboRalationNeedKnow){
-        return comboRalationNeedKnowServiceImpl.save(comboRalationNeedKnow);
+    public NeedKnow saveOrUpDateNeedKnow(NeedKnow needKnow){
+        return needKnowServiceImpl.save(needKnow);
     }
-    public void delComboRalationNeedKnowByIds(Integer[] ids){
-        comboRalationNeedKnowServiceImpl.deleteBatchByIds(ids);
+    public void delNeedKnowByIds(Integer[] ids){
+        needKnowServiceImpl.deleteBatchByIds(ids);
     }
-
 
 
 // =====================================================================================================================
@@ -113,6 +112,20 @@ public class VisaAdminServiceImpl {
     public void delComboRalationBaseInformationByIds(Integer[] ids){
         comboRalationBaseInformationServiceImpl.deleteBatchByIds(ids);
     }
+
+    /**
+     * 签证_主类：套餐_主类：套餐_须知：关系表
+     */
+    @Autowired
+    ComboRalationNeedKnowServiceImpl comboRalationNeedKnowServiceImpl;
+
+    public ComboRalationNeedKnow saveOrUpDateComboRalationNeedKnow(ComboRalationNeedKnow comboRalationNeedKnow){
+        return comboRalationNeedKnowServiceImpl.save(comboRalationNeedKnow);
+    }
+    public void delComboRalationNeedKnowByIds(Integer[] ids){
+        comboRalationNeedKnowServiceImpl.deleteBatchByIds(ids);
+    }
+
 
 
 
