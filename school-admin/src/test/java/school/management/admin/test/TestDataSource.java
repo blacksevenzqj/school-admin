@@ -43,10 +43,6 @@ public class TestDataSource {
 //        baseInformation.setComboContent("666666666");
 //        visaAdminServiceImpl.saveBaseInformation(baseInformation);
 
-        List list = visaAdminServiceImpl.getBaseInformationList();
-        System.out.println(list.size());
-
-        System.out.println(visaAdminServiceImpl.getBaseInformation(1));
 //        System.out.println(visaAdminServiceImpl.getBaseInformationForJpa(1));
     }
 

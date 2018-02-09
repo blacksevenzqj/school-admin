@@ -1,7 +1,8 @@
 spring:
   profiles:
-    active: dev_switch
+#    active: dev_switch
 #    active: dev
 #    active: dev_single
+    active: test_switch
 
 

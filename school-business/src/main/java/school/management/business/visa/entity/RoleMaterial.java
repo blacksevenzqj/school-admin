@@ -34,6 +34,6 @@ public class RoleMaterial extends IncrementDataEntity {
     private String acceptEmail; // 接收资料的邮箱
     private String acceptAddress; // 资料邮寄地址
     private Date createTime;
-    private Integer delFlag;
+//    private Integer delFlag;
 
 }

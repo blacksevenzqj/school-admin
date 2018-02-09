@@ -29,7 +29,7 @@ public class HandleProcedures extends IncrementDataEntity {
     private Integer proceduresId;
     private Integer order;
     private Date createTime;
-    private Integer delFlag;
+//    private Integer delFlag;
 
    
 }

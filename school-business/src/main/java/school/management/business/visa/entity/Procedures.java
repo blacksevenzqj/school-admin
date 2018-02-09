@@ -31,7 +31,7 @@ public class Procedures extends IncrementDataEntity { // 办理流程
 
     private Date createTime;
 
-    private Integer delFlag;
+//    private Integer delFlag;
 
    
 }

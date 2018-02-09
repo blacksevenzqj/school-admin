@@ -31,6 +31,6 @@ public class NeedKnow extends IncrementDataEntity { // 预定须知
 
     private Date createTime;
 
-    private Integer delFlag;
+//    private Integer delFlag;
 
 }
