@@ -46,15 +46,25 @@ var vm = new Vue({
     el:'#rrapp',
     data:{
         q:{
-            title: null
+            nationalName: null
         },
         showList: true,
         title:null,
-        headlines:{
+        country:{
             id:null,
-            title:null,
-            headLineLevel:null,
-            headLineTextUrl:null,
+            nationalName:null,
+            nationalEnglishName:null,
+            nationalCode:null,
+            nationalFlag:null,
+            nationalName:null,
+            area:null,
+            hotVisa:null,
+            topDescription:null,
+            topFlag:"0",
+            orderFlag:null,
+            onlineFlag:"1",
+            minPrice:null,
+            maxPrice:null,
             delFlag:"0"
         }
     },
@@ -65,7 +75,7 @@ var vm = new Vue({
         add: function(){
             vm.showList = false;
             vm.title = "新增";
-            vm.headlines = {delFlag:0};
+            vm.country = {topFlag:"0", onlineFlag:"1", delFlag:"0"};
         },
         update: function () {
             var id = getSelectedRow();
@@ -76,7 +86,7 @@ var vm = new Vue({
             vm.showList = false;
             vm.title = "修改";
 
-            vm.getHeadlines(id);
+            vm.getCountry(id);
         },
         del: function () {
             var ids = getSelectedRows();
@@ -87,7 +97,7 @@ var vm = new Vue({
             confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
-                    url: baseBusinessURL + "businesshelp/headlines/del",
+                    url: baseBusinessURL + "visa/country/del",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function(r){
@@ -103,12 +113,12 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function () {
-            var url = vm.headlines.id == null ? "businesshelp/headlines/save" : "businesshelp/headlines/update";
+            var url = vm.country.id == null ? "visa/country/save" : "visa/country/update";
             $.ajax({
                 type: "POST",
                 url: baseBusinessURL + url,
                 contentType: "application/json",
-                data: JSON.stringify(vm.headlines),
+                data: JSON.stringify(vm.country),
                 success: function(r){
                     if(r.code === 0){
                         alert('操作成功', function(){
@@ -120,16 +130,16 @@ var vm = new Vue({
                 }
             });
         },
-        getHeadlines: function(id){
-            $.get(baseBusinessURL + "businesshelp/headlines/info/" + id, function(r){
-                vm.headlines = r.headlines;
+        getCountry: function(id){
+            $.get(baseBusinessURL + "visa/country/info/" + id, function(r){
+                vm.country = r.country;
             });
         },
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'title': vm.q.title},
+                postData:{'nationalName': vm.q.nationalName},
                 page:page
             }).trigger("reloadGrid");
         }

@@ -8,9 +8,10 @@ public interface SysLogConfig {
     String COLON = ":";
     String UNDERLINE = "_";
 
-
     String BUSINESSHELP = "创业帮";
     String HEADLINES = "创业头条";
 
+    String VISA = "签证";
+    String COUNTRY = "国家";
 
 }

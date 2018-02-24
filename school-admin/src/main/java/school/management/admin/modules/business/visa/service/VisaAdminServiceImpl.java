@@ -26,16 +26,16 @@ public class VisaAdminServiceImpl {
     @Autowired
     VisaServiceImpl visaServiceImpl;
 
-    public PageUtils<Visa> visaQueryPageMap(Map<String, Object> params){
+    public PageUtils<Visa> visaCountryQueryPageMap(Map<String, Object> params){
         return visaServiceImpl.queryPageMap(params);
     }
-    public Visa visaInfo(Integer id){
+    public Visa visaCountryInfo(Integer id){
         return visaServiceImpl.get(id);
     }
-    public Visa saveOrUpDateVisa(Visa visa){
+    public Visa saveOrUpDateVisaCountry(Visa visa){
         return visaServiceImpl.save(visa);
     }
-    public void delVisaByIds(Integer[] ids){
+    public void delVisaCountryByIds(Integer[] ids){
         visaServiceImpl.deleteBatchByIds(ids);
     }
 
