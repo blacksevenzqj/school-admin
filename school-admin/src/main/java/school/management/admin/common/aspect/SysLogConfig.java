@@ -13,5 +13,5 @@ public interface SysLogConfig {
 
     String VISA = "签证";
     String COUNTRY = "国家";
-
+    String BASEINFORMATION = "基本信息";
 }

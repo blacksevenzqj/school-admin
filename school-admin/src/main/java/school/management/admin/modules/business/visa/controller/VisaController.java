@@ -9,6 +9,7 @@ import school.management.admin.modules.business.businesshelp.service.BusinessHel
 import school.management.admin.modules.business.visa.service.VisaAdminServiceImpl;
 import school.management.admin.modules.sys.controller.AbstractController;
 import school.management.business.businesshelp.entity.BusinessHeadlines;
+import school.management.business.visa.entity.BaseInformation;
 import school.management.business.visa.entity.Visa;
 import school.management.common.utils.R;
 import school.management.common.validator.ValidatorUtils;
@@ -38,13 +39,13 @@ public class VisaController extends AbstractController {
     }
     @RequestMapping(value = "/country/info/{id}", method = RequestMethod.GET)
     @RequiresPermissions("business:visa:country:info")
-    public R headlinesInfo(@PathVariable("id") int id){
+    public R countryInfo(@PathVariable("id") int id){
         return R.ok().put("country", visaAdminServiceImpl.visaCountryInfo(id));
     }
     @RequestMapping(value = "/country/save", method = RequestMethod.POST)
     @RequiresPermissions("business:visa:country:save")
     @SysLog(SysLogConfig.ADD + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.COUNTRY)
-    public R saveHeadlines(@RequestBody Visa visa){
+    public R saveCountry(@RequestBody Visa visa){
         ValidatorUtils.validateEntity(visa);
         visaAdminServiceImpl.saveOrUpDateVisaCountry(visa);
         return R.ok();
@@ -52,7 +53,7 @@ public class VisaController extends AbstractController {
     @RequestMapping(value = "/country/update", method = RequestMethod.POST)
     @RequiresPermissions("business:visa:country:update")
     @SysLog(SysLogConfig.UPDATE + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.COUNTRY)
-    public R updateHeadlines(@RequestBody Visa visa){
+    public R updateCountry(@RequestBody Visa visa){
         ValidatorUtils.validateEntity(visa, UpdateGroup.class);
         visaAdminServiceImpl.saveOrUpDateVisaCountry(visa);
         return R.ok();
@@ -60,8 +61,47 @@ public class VisaController extends AbstractController {
     @RequestMapping(value = "/country/del", method = RequestMethod.POST)
     @RequiresPermissions("business:visa:country:del")
     @SysLog(SysLogConfig.DEL + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.COUNTRY)
-    public R delHeadlines(@RequestBody Integer[] ids){
+    public R delCountry(@RequestBody Integer[] ids){
         visaAdminServiceImpl.delVisaCountryByIds(ids);
+        return R.ok();
+    }
+
+
+    /**
+     * 基本信息
+     */
+    @RequestMapping(value = "/baseInformation/list", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:baseInformation:list")
+    public R baseInformationList(@RequestParam Map<String, Object> params){
+        PageUtils page = visaAdminServiceImpl.baseInformationQueryPageMap(params);
+        return R.ok().put("page", page);
+    }
+    @RequestMapping(value = "/baseInformation/info/{id}", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:baseInformation:info")
+    public R baseInformationInfo(@PathVariable("id") int id){
+        return R.ok().put("baseInformation", visaAdminServiceImpl.baseInformationInfo(id));
+    }
+    @RequestMapping(value = "/baseInformation/save", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:baseInformation:save")
+    @SysLog(SysLogConfig.ADD + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.BASEINFORMATION)
+    public R saveBaseInformation(@RequestBody BaseInformation baseInformation){
+        ValidatorUtils.validateEntity(baseInformation);
+        visaAdminServiceImpl.saveOrUpDateBaseInformation(baseInformation);
+        return R.ok();
+    }
+    @RequestMapping(value = "/baseInformation/update", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:baseInformation:update")
+    @SysLog(SysLogConfig.UPDATE + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.BASEINFORMATION)
+    public R updateBaseInformation(@RequestBody BaseInformation baseInformation){
+        ValidatorUtils.validateEntity(baseInformation, UpdateGroup.class);
+        visaAdminServiceImpl.saveOrUpDateBaseInformation(baseInformation);
+        return R.ok();
+    }
+    @RequestMapping(value = "/baseInformation/del", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:baseInformation:del")
+    @SysLog(SysLogConfig.DEL + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.BASEINFORMATION)
+    public R delBaseInformation(@RequestBody Integer[] ids){
+        visaAdminServiceImpl.delBaseInformationByIds(ids);
         return R.ok();
     }
 

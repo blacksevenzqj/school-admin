@@ -37,7 +37,7 @@ public class Visa extends IncrementDataEntity {
     private Integer onlineFlag; // 是否上线标志：0:默认，1:上线，2:下线
     private BigDecimal minPrice; // 办理签证最低价格
     private BigDecimal maxPrice; // 办理签证最高价格
-    private Date createTime;
+    private Date createTime = new Date();
 //    private Integer delFlag;
 
 }

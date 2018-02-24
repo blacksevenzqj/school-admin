@@ -58,7 +58,7 @@ public class BaseInformation extends IncrementDataEntity {
     private String comboDescription; // 套餐描述
 
     @Column(name="create_time",nullable=true)
-    private Date createTime; // 创建时间
+    private Date createTime = new Date(); // 创建时间
 
 //    @Column(name="del_flag",nullable=true)
 //    private Integer delFlag; // 删除标志

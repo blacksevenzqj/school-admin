@@ -51,7 +51,7 @@
 
     <update id="update" parameterType="school.management.business.visa.entity.BaseInformation">
         UPDATE qz_base_information
-        <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">
+        <trim prefix="set" suffixOverrides="," suffix=" where base_information_id = #{baseInformationId} ">
             <if test="name != null and name.length()>0"> name = #{name} , </if>
             <if test="description != null and description.length()>0"> description = #{description} , </if>
             <if test="enterCountryNum != null"> enter_country_num = #{enterCountryNum} , </if>
@@ -60,7 +60,7 @@
             <if test="comboContent != null and comboContent.length()>0" > combo_content = #{comboContent} , </if>
             <if test="handleTime != null and handleTime.length()>0" > handle_time = #{handleTime} , </if>
             <if test="visaInterview != null and visaInterview.length()>0" > visa_interview = #{visaInterview} , </if>
-            <if test="cashDeposit != null and cashDeposit.length()>0" > cash_deposit = #{cashDeposit} , </if>
+            <if test="cashDeposit != null" > cash_deposit = #{cashDeposit} , </if>
             <if test="handleRange != null and handleRange.length()>0" > handle_range = #{handleRange} , </if>
             <if test="comboDescription != null and comboDescription.length()>0" > combo_description = #{comboDescription} , </if>
             <if test="createTime != null" > create_time = #{createTime} , </if>
@@ -69,7 +69,7 @@
     </update>
 
     <delete id="deleteBatchByIds">
-        delete from qz_base_information where id in
+        delete from qz_base_information where base_information_id in
         <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
             #{item}
         </foreach>
