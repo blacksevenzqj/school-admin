@@ -105,4 +105,18 @@ public class VisaController extends AbstractController {
         return R.ok();
     }
 
+
+
+    /**
+     * 须知
+     */
+    @RequestMapping(value = "/needKnow/list", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:needKnow:list")
+    public R needKnowList(@RequestParam Map<String, Object> params){
+        PageUtils page = visaAdminServiceImpl.needKnowQueryPageMap(params);
+        return R.ok().put("page", page);
+    }
+
+
+
 }

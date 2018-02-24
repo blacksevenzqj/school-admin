@@ -26,7 +26,7 @@ public class Material extends IncrementDataEntity { // 材料
     private Integer id;
     private String title; // 资料标题
     private String content; // 内容
-    private Date createTime;
+    private Date createTime = new Date();
 //    private Integer delFlag;
 
 }

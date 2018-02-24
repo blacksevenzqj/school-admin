@@ -29,7 +29,7 @@ public class NeedKnow extends IncrementDataEntity { // 预定须知
 
     private String content; // 预定须知 内容
 
-    private Date createTime;
+    private Date createTime = new Date();
 
 //    private Integer delFlag;
 
