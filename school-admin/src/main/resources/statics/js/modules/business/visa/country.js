@@ -56,7 +56,6 @@ var vm = new Vue({
             nationalEnglishName:null,
             nationalCode:null,
             nationalFlag:null,
-            nationalName:null,
             area:null,
             hotVisa:null,
             topDescription:null,

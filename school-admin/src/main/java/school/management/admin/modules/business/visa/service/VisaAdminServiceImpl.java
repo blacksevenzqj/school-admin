@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import school.management.admin.common.annotation.SysLog;
 import school.management.admin.modules.business.visa.dao.VisaAdminDao;
+import school.management.admin.modules.business.visa.entity.VisaComboForm;
 import school.management.admin.modules.business.visa.entity.VisaComboVo;
 import school.management.business.visa.entity.*;
 import school.management.business.visa.service.*;
+import school.management.common.utils.beancopier.CachedBeanCopier;
 import school.management.db.pojo.Paging;
 import school.management.db.utils.PageUtils;
 
@@ -46,6 +48,7 @@ public class VisaAdminServiceImpl {
     /**
      * 2.1、套餐_主类：一对一
      */
+    @Autowired
     VisaComboServiceImpl visaComboServiceImpl;
 
     public PageUtils<VisaComboVo> visaComboQueryPageMap(Map<String, Object> params){
@@ -62,7 +65,9 @@ public class VisaAdminServiceImpl {
     public VisaCombo visaComboInfo(Integer id){
         return visaComboServiceImpl.get(id);
     }
-    public VisaCombo saveOrUpDateVisaCombo(VisaCombo visaCombo){
+    public VisaCombo saveOrUpDateVisaCombo(VisaComboForm visaComboForm){
+        VisaCombo visaCombo = new VisaCombo();
+        CachedBeanCopier.defaultCopy(visaComboForm, visaCombo);
         return visaComboServiceImpl.save(visaCombo);
     }
     public void delVisaComboByIds(Integer[] ids){

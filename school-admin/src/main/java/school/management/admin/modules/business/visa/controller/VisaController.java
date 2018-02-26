@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import school.management.admin.common.annotation.SysLog;
 import school.management.admin.common.aspect.SysLogConfig;
 import school.management.admin.modules.business.businesshelp.service.BusinessHelpAdminServiceImpl;
+import school.management.admin.modules.business.visa.entity.VisaComboForm;
 import school.management.admin.modules.business.visa.service.VisaAdminServiceImpl;
 import school.management.admin.modules.sys.controller.AbstractController;
 import school.management.business.businesshelp.entity.BusinessHeadlines;
@@ -232,7 +233,19 @@ public class VisaController extends AbstractController {
         PageUtils page = visaAdminServiceImpl.visaComboQueryPageMap(params);
         return R.ok().put("page", page);
     }
-
+    @RequestMapping(value = "/visaCombo/info/{id}", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:visaCombo:info")
+    public R visaComboInfo(@PathVariable("id") int id){
+        return R.ok().put("visaCombo", visaAdminServiceImpl.visaComboInfo(id));
+    }
+    @RequestMapping(value = "/visaCombo/save", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:visaCombo:save")
+    @SysLog(SysLogConfig.ADD + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.VISACOMBO)
+    public R saveVisaCombo(@RequestBody VisaComboForm visaComboForm){
+        ValidatorUtils.validateEntity(visaComboForm);
+        visaAdminServiceImpl.saveOrUpDateVisaCombo(visaComboForm);
+        return R.ok();
+    }
 
 
 }

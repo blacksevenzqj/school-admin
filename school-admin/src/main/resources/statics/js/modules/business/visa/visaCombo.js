@@ -4,8 +4,8 @@ $(function () {
         datatype: "json",
         colModel: [
             { label: '套餐ID', name: 'comboId', index: "comboId", width: 30, key: true },
-            { label: '签证ID', name: 'visaId', width: 30},
-            { label: '签证名称', name: 'visaName', width: 45},
+            { label: '国家ID', name: 'visaId', width: 30},
+            { label: '国家名称', name: 'visaName', width: 45},
             { label: '套餐序号', name: 'comboNum', width: 30},
             { label: '套餐名字', name: 'name', width: 90},
             { label: '套餐描述', name: 'description', width: 120},
@@ -59,11 +59,22 @@ var vm = new Vue({
         },
         showList: true,
         title:null,
-        procedures:{
-            id:null,
-            title:null,
-            content:null,
-            delFlag:"0"
+        countryList:[],
+        baseInformationList:[],
+        needKnowList:[],
+        visaCombo:{
+            comboId:null,
+            visaId:null,
+            comboNum:null,
+            name:null,
+            description:null,
+            marketPrice:null,
+            price:null,
+            onlineFlag:null,
+            delFlag:"0",
+
+            baseInformationId:null,
+            needKnowIds:[]
         }
     },
     methods: {
@@ -73,7 +84,10 @@ var vm = new Vue({
         add: function(){
             vm.showList = false;
             vm.title = "新增";
-            vm.procedures = {delFlag:"0"};
+            vm.visaCombo = {onlineFlag:1, delFlag:"0", needKnowIds:[]};
+            this.getCountryList();
+            this.getBaseInformationList();
+            this.getNeedKnowList();
         },
         update: function () {
             var id = getSelectedRow();
@@ -95,7 +109,7 @@ var vm = new Vue({
             confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
-                    url: baseBusinessURL + "visa/procedures/del",
+                    url: baseBusinessURL + "visa/visaCombo/del",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function(r){
@@ -111,12 +125,12 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function () {
-            var url = vm.procedures.id == null ? "visa/procedures/save" : "visa/procedures/update";
+            var url = vm.visaCombo.comboId == null ? "visa/visaCombo/save" : "visa/visaCombo/update";
             $.ajax({
                 type: "POST",
                 url: baseBusinessURL + url,
                 contentType: "application/json",
-                data: JSON.stringify(vm.procedures),
+                data: JSON.stringify(vm.visaCombo),
                 success: function(r){
                     if(r.code === 0){
                         alert('操作成功', function(){
@@ -128,9 +142,19 @@ var vm = new Vue({
                 }
             });
         },
-        getProcedures: function(id){
-            $.get(baseBusinessURL + "visa/procedures/info/" + id, function(r){
-                vm.procedures = r.procedures;
+        getCountryList: function(){
+            $.get(baseBusinessURL + "visa/country/list", function(r){
+                vm.countryList = r.page.list;
+            });
+        },
+        getBaseInformationList: function(){
+            $.get(baseBusinessURL + "visa/baseInformation/list", function(r){
+                vm.baseInformationList = r.page.list;
+            });
+        },
+        getNeedKnowList: function(){
+            $.get(baseBusinessURL + "visa/needKnow/list", function(r){
+                vm.needKnowList = r.page.list;
             });
         },
         reload: function () {

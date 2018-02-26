@@ -21,6 +21,6 @@ public interface SysLogConfig {
     String NEEDKNOW = "订购须知";
     String PROCEDURES = "办理流程";
     String MATERIAL = "所需材料";
-
+    String VISACOMBO = "签证套餐";
 
 }
