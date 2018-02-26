@@ -10,6 +10,10 @@ public interface SysLogConfig {
 
     String BUSINESSHELP = "创业帮";
     String HEADLINES = "创业头条";
+    String SUCCESS = "成功案例";
+    
+    String HOT = "热点";
+    String TODAYNEWS="今日热点";
 
     String VISA = "签证";
     String COUNTRY = "国家";
