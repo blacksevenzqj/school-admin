@@ -32,7 +32,7 @@ public class VisaCombo extends IncrementDataEntity {
     private BigDecimal marketPrice; // 行情价
     private BigDecimal price; // 套餐价格
     private Integer onlineFlag; // 套餐上线标识：0:默认，1:上线，2:下线
-    private Date createTime;
+    private Date createTime = new Date();
 //    private Integer delFlag;
 
     

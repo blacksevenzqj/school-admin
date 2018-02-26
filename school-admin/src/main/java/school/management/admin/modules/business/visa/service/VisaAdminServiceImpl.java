@@ -1,13 +1,17 @@
 package school.management.admin.modules.business.visa.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import school.management.admin.common.annotation.SysLog;
 import school.management.admin.modules.business.visa.dao.VisaAdminDao;
+import school.management.admin.modules.business.visa.entity.VisaComboVo;
 import school.management.business.visa.entity.*;
 import school.management.business.visa.service.*;
+import school.management.db.pojo.Paging;
 import school.management.db.utils.PageUtils;
 
 import java.util.List;
@@ -44,8 +48,16 @@ public class VisaAdminServiceImpl {
      */
     VisaComboServiceImpl visaComboServiceImpl;
 
-    public PageUtils<VisaCombo> visaComboQueryPageMap(Map<String, Object> params){
-        return visaComboServiceImpl.queryPageMap(params);
+    public PageUtils<VisaComboVo> visaComboQueryPageMap(Map<String, Object> params){
+        if(params.get("pageNum") == null){
+            params.put("pageNum", 1);
+            params.put("pageSize", 10);
+        }
+        Paging page = new Paging(Integer.valueOf(params.get("pageNum").toString()), Integer.valueOf(params.get("pageSize").toString()));
+        PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
+        List<VisaComboVo> list = visaAdminDao.visaComboVoQueryList(params);
+        PageInfo<VisaComboVo> pageInfo = new PageInfo<>(list);
+        return new PageUtils<>(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
     }
     public VisaCombo visaComboInfo(Integer id){
         return visaComboServiceImpl.get(id);

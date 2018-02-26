@@ -3,5 +3,13 @@
 
 <mapper namespace="school.management.admin.modules.business.visa.dao.VisaAdminDao">
 
+    <select id="visaComboVoQueryList" resultType="school.management.admin.modules.business.visa.entity.VisaComboVo">
+        SELECT a.*,b.`national_name` as visaName FROM `qz_visa_combo` a JOIN `qz_visa` b ON a.`visa_id` = b.`id`
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="name != null and name.length()>0"> AND a.name like CONCAT('%',#{name},'%') </if>
+            <if test="visaName != null and visaName.length()>0"> AND b.national_name like CONCAT('%',#{visaName},'%') </if>
+        </trim>
+        ORDER BY create_time DESC
+    </select>
 
 </mapper>

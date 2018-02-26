@@ -222,4 +222,17 @@ public class VisaController extends AbstractController {
     }
 
 
+
+    /**
+     * 签证套餐
+     */
+    @RequestMapping(value = "/visaCombo/list", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:visaCombo:list")
+    public R visaComboList(@RequestParam Map<String, Object> params){
+        PageUtils page = visaAdminServiceImpl.visaComboQueryPageMap(params);
+        return R.ok().put("page", page);
+    }
+
+
+
 }
