@@ -30,81 +30,24 @@
 		<div class="panel-heading">{{title}}</div>
 		<form class="form-horizontal">
 			<div class="form-group">
-				<div class="col-sm-3 control-label">名称</div>
+				<div class="col-sm-3 control-label">标题描述</div>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="baseInformation.name" placeholder="名称"/>
+					<input type="text" class="form-control" v-model="needKnow.title" placeholder="标题描述"/>
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-3 control-label">描述</div>
+				<div class="col-sm-3 control-label">内容</div>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="baseInformation.description" placeholder="描述"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-3 control-label">入境次数</div>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="baseInformation.enterCountryNum" placeholder="入境次数"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-3 control-label">停留天数</div>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="baseInformation.stayDay" placeholder="停留天数"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-3 control-label">有效期</div>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="baseInformation.validityTime" placeholder="有效期"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-3 control-label">套餐内容</div>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="baseInformation.comboContent" placeholder="套餐内容"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-3 control-label">办理时间</div>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="baseInformation.handleTime" placeholder="办理时间"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-3 control-label">是否需要面签</div>
-				<label class="radio-inline">
-					<input type="radio" name="visaInterview" value="0" v-model="baseInformation.visaInterview"/> 不需要
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="visaInterview" value="1" v-model="baseInformation.visaInterview"/> 需要
-				</label>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-3 control-label">保证金</div>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="baseInformation.cashDeposit" placeholder="保证金"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-3 control-label">处理范围</div>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="baseInformation.handleRange" placeholder="处理范围"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-3 control-label">套餐描述</div>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="baseInformation.comboDescription" placeholder="套餐描述"/>
+					<input type="text" class="form-control" v-model="needKnow.content" placeholder="内容"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-3 control-label">状态</div>
 				<label class="radio-inline">
-					<input type="radio" name="delFlag" value="-1" v-model="baseInformation.delFlag"/> 禁用
+					<input type="radio" name="delFlag" value="-1" v-model="needKnow.delFlag"/> 禁用
 				</label>
 				<label class="radio-inline">
-					<input type="radio" name="delFlag" value="0" v-model="baseInformation.delFlag"/> 正常
+					<input type="radio" name="delFlag" value="0" v-model="needKnow.delFlag"/> 正常
 				</label>
 			</div>
 			<div class="form-group">
@@ -115,6 +58,6 @@
 		</form>
 	</div>
 </div>
-<script src="${request.contextPath}/statics/js/modules/business/visa/baseInformation.js?_${.now?long}"></script>
+<script src="${request.contextPath}/statics/js/modules/business/visa/needKnow.js?_${.now?long}"></script>
 </body>
 </html>

@@ -10,6 +10,7 @@ import school.management.admin.modules.business.visa.service.VisaAdminServiceImp
 import school.management.admin.modules.sys.controller.AbstractController;
 import school.management.business.businesshelp.entity.BusinessHeadlines;
 import school.management.business.visa.entity.BaseInformation;
+import school.management.business.visa.entity.NeedKnow;
 import school.management.business.visa.entity.Visa;
 import school.management.common.utils.R;
 import school.management.common.validator.ValidatorUtils;
@@ -115,6 +116,34 @@ public class VisaController extends AbstractController {
     public R needKnowList(@RequestParam Map<String, Object> params){
         PageUtils page = visaAdminServiceImpl.needKnowQueryPageMap(params);
         return R.ok().put("page", page);
+    }
+    @RequestMapping(value = "/needKnow/info/{id}", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:needKnow:info")
+    public R needKnowInfo(@PathVariable("id") int id){
+        return R.ok().put("needKnow", visaAdminServiceImpl.needKnowInfo(id));
+    }
+    @RequestMapping(value = "/needKnow/save", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:needKnow:save")
+    @SysLog(SysLogConfig.ADD + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.NEEDKNOW)
+    public R saveNeedKnow(@RequestBody NeedKnow needKnow){
+        ValidatorUtils.validateEntity(needKnow);
+        visaAdminServiceImpl.saveOrUpDateNeedKnow(needKnow);
+        return R.ok();
+    }
+    @RequestMapping(value = "/needKnow/update", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:needKnow:update")
+    @SysLog(SysLogConfig.UPDATE + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.NEEDKNOW)
+    public R updateNeedKnow(@RequestBody NeedKnow needKnown){
+        ValidatorUtils.validateEntity(needKnown, UpdateGroup.class);
+        visaAdminServiceImpl.saveOrUpDateNeedKnow(needKnown);
+        return R.ok();
+    }
+    @RequestMapping(value = "/needKnow/del", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:needKnow:del")
+    @SysLog(SysLogConfig.DEL + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.NEEDKNOW)
+    public R delNeedKnow(@RequestBody Integer[] ids){
+        visaAdminServiceImpl.delNeedKnowByIds(ids);
+        return R.ok();
     }
 
 
