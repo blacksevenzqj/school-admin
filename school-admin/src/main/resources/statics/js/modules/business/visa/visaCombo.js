@@ -62,6 +62,7 @@ var vm = new Vue({
         countryList:[],
         baseInformationList:[],
         needKnowList:[],
+        proceduresList:[],
         visaCombo:{
             comboId:null,
             visaId:null,
@@ -73,8 +74,9 @@ var vm = new Vue({
             onlineFlag:null,
             delFlag:"0",
 
-            baseInformationId:null,
-            needKnowIds:[]
+            baseInformationIds:[],
+            needKnowIds:[],
+            proceduresIds:[]
         }
     },
     methods: {
@@ -84,10 +86,11 @@ var vm = new Vue({
         add: function(){
             vm.showList = false;
             vm.title = "新增";
-            vm.visaCombo = {onlineFlag:1, delFlag:"0", needKnowIds:[]};
+            vm.visaCombo = {onlineFlag:1, delFlag:"0", baseInformationIds:[], needKnowIds:[], proceduresIds:[]};
             this.getCountryList();
             this.getBaseInformationList();
             this.getNeedKnowList();
+            this.getProceduresList();
         },
         update: function () {
             var id = getSelectedRow();
@@ -155,6 +158,11 @@ var vm = new Vue({
         getNeedKnowList: function(){
             $.get(baseBusinessURL + "visa/needKnow/list", function(r){
                 vm.needKnowList = r.page.list;
+            });
+        },
+        getProceduresList: function(){
+            $.get(baseBusinessURL + "visa/procedures/list", function(r){
+                vm.proceduresList = r.page.list;
             });
         },
         reload: function () {

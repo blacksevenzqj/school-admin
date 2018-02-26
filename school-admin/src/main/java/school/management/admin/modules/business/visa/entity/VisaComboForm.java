@@ -6,8 +6,10 @@ import school.management.business.visa.entity.VisaCombo;
 @Data
 public class VisaComboForm extends VisaCombo {
 
-    private Integer baseInformationId;
+    private Integer[] baseInformationIds;
 
     private Integer[] needKnowIds;
+
+    private Integer[] proceduresIds;
 
 }

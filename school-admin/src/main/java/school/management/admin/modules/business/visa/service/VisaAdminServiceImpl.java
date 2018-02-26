@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import school.management.admin.common.annotation.SysLog;
 import school.management.admin.modules.business.visa.dao.VisaAdminDao;
@@ -65,6 +66,7 @@ public class VisaAdminServiceImpl {
     public VisaCombo visaComboInfo(Integer id){
         return visaComboServiceImpl.get(id);
     }
+    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public VisaCombo saveOrUpDateVisaCombo(VisaComboForm visaComboForm){
         VisaCombo visaCombo = new VisaCombo();
         CachedBeanCopier.defaultCopy(visaComboForm, visaCombo);

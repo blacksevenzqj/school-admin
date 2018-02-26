@@ -43,8 +43,8 @@
 			<div class="form-group">
 				<div class="col-sm-2 control-label">基本信息</div>
 				<div class="col-sm-10">
-					<label v-for="baseInformation in baseInformationList" class="radio-inline">
-						<input type="radio" :value="baseInformation.baseInformationId" name="baseInformationId" v-model="visaCombo.baseInformationId">{{baseInformation.name}}
+					<label v-for="baseInformation in baseInformationList" class="checkbox-inline">
+						<input type="checkbox" :value="baseInformation.baseInformationId"  v-model="visaCombo.baseInformationIds">{{baseInformation.name}}
 					</label>
 				</div>
 			</div>
@@ -53,6 +53,14 @@
 				<div class="col-sm-10">
 					<label v-for="needKnow in needKnowList" class="checkbox-inline">
 						<input type="checkbox" :value="needKnow.id"  v-model="visaCombo.needKnowIds">{{needKnow.title}}
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">办理流程</div>
+				<div class="col-sm-10">
+					<label v-for="procedures in proceduresList" class="checkbox-inline">
+						<input type="checkbox" :value="procedures.id"  v-model="visaCombo.proceduresIds">{{procedures.title}}
 					</label>
 				</div>
 			</div>
