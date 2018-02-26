@@ -11,6 +11,7 @@ import school.management.admin.modules.sys.controller.AbstractController;
 import school.management.business.businesshelp.entity.BusinessHeadlines;
 import school.management.business.visa.entity.BaseInformation;
 import school.management.business.visa.entity.NeedKnow;
+import school.management.business.visa.entity.Procedures;
 import school.management.business.visa.entity.Visa;
 import school.management.common.utils.R;
 import school.management.common.validator.ValidatorUtils;
@@ -146,6 +147,44 @@ public class VisaController extends AbstractController {
         return R.ok();
     }
 
+
+    /**
+     * 办理流程
+     */
+    @RequestMapping(value = "/procedures/list", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:procedures:list")
+    public R proceduresList(@RequestParam Map<String, Object> params){
+        PageUtils page = visaAdminServiceImpl.proceduresQueryPageMap(params);
+        return R.ok().put("page", page);
+    }
+    @RequestMapping(value = "/procedures/info/{id}", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:procedures:info")
+    public R proceduresInfo(@PathVariable("id") int id){
+        return R.ok().put("procedures", visaAdminServiceImpl.proceduresInfo(id));
+    }
+    @RequestMapping(value = "/procedures/save", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:procedures:save")
+    @SysLog(SysLogConfig.ADD + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.PROCEDURES)
+    public R saveProcedures(@RequestBody Procedures procedures){
+        ValidatorUtils.validateEntity(procedures);
+        visaAdminServiceImpl.saveOrUpDateProcedures(procedures);
+        return R.ok();
+    }
+    @RequestMapping(value = "/procedures/update", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:procedures:update")
+    @SysLog(SysLogConfig.UPDATE + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.PROCEDURES)
+    public R updateProcedures(@RequestBody Procedures procedures){
+        ValidatorUtils.validateEntity(procedures, UpdateGroup.class);
+        visaAdminServiceImpl.saveOrUpDateProcedures(procedures);
+        return R.ok();
+    }
+    @RequestMapping(value = "/procedures/del", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:procedures:del")
+    @SysLog(SysLogConfig.DEL + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.PROCEDURES)
+    public R delProcedures(@RequestBody Integer[] ids){
+        visaAdminServiceImpl.delProceduresByIds(ids);
+        return R.ok();
+    }
 
 
 }

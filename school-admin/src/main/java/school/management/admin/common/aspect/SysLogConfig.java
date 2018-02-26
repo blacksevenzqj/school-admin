@@ -15,4 +15,5 @@ public interface SysLogConfig {
     String COUNTRY = "国家";
     String BASEINFORMATION = "基本信息";
     String NEEDKNOW = "订购须知";
+    String PROCEDURES = "办理流程";
 }
