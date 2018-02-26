@@ -16,4 +16,7 @@ public interface SysLogConfig {
     String BASEINFORMATION = "基本信息";
     String NEEDKNOW = "订购须知";
     String PROCEDURES = "办理流程";
+    String MATERIAL = "所需材料";
+
+
 }

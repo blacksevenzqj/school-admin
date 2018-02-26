@@ -9,10 +9,7 @@ import school.management.admin.modules.business.businesshelp.service.BusinessHel
 import school.management.admin.modules.business.visa.service.VisaAdminServiceImpl;
 import school.management.admin.modules.sys.controller.AbstractController;
 import school.management.business.businesshelp.entity.BusinessHeadlines;
-import school.management.business.visa.entity.BaseInformation;
-import school.management.business.visa.entity.NeedKnow;
-import school.management.business.visa.entity.Procedures;
-import school.management.business.visa.entity.Visa;
+import school.management.business.visa.entity.*;
 import school.management.common.utils.R;
 import school.management.common.validator.ValidatorUtils;
 import school.management.common.validator.group.UpdateGroup;
@@ -108,7 +105,6 @@ public class VisaController extends AbstractController {
     }
 
 
-
     /**
      * 须知
      */
@@ -183,6 +179,45 @@ public class VisaController extends AbstractController {
     @SysLog(SysLogConfig.DEL + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.PROCEDURES)
     public R delProcedures(@RequestBody Integer[] ids){
         visaAdminServiceImpl.delProceduresByIds(ids);
+        return R.ok();
+    }
+
+
+    /**
+     * 所需材料
+     */
+    @RequestMapping(value = "/material/list", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:material:list")
+    public R materialList(@RequestParam Map<String, Object> params){
+        PageUtils page = visaAdminServiceImpl.materialQueryPageMap(params);
+        return R.ok().put("page", page);
+    }
+    @RequestMapping(value = "/material/info/{id}", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:material:info")
+    public R materialInfo(@PathVariable("id") int id){
+        return R.ok().put("material", visaAdminServiceImpl.materialInfo(id));
+    }
+    @RequestMapping(value = "/material/save", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:material:save")
+    @SysLog(SysLogConfig.ADD + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.MATERIAL)
+    public R saveMaterial(@RequestBody Material material){
+        ValidatorUtils.validateEntity(material);
+        visaAdminServiceImpl.saveOrUpDateMaterial(material);
+        return R.ok();
+    }
+    @RequestMapping(value = "/material/update", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:material:update")
+    @SysLog(SysLogConfig.UPDATE + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.MATERIAL)
+    public R updateMaterial(@RequestBody Material material){
+        ValidatorUtils.validateEntity(material, UpdateGroup.class);
+        visaAdminServiceImpl.saveOrUpDateMaterial(material);
+        return R.ok();
+    }
+    @RequestMapping(value = "/material/del", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:material:del")
+    @SysLog(SysLogConfig.DEL + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.MATERIAL)
+    public R delMaterial(@RequestBody Integer[] ids){
+        visaAdminServiceImpl.delMaterialByIds(ids);
         return R.ok();
     }
 
