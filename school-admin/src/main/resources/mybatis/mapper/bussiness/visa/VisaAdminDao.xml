@@ -9,7 +9,7 @@
             <if test="name != null and name.length()>0"> AND a.name like CONCAT('%',#{name},'%') </if>
             <if test="visaName != null and visaName.length()>0"> AND b.national_name like CONCAT('%',#{visaName},'%') </if>
         </trim>
-        ORDER BY create_time DESC
+        ORDER BY a.visa_id ASC a.create_time DESC
     </select>
 
 </mapper>
