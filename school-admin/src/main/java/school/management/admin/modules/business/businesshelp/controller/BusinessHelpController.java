@@ -9,6 +9,7 @@ import school.management.admin.modules.business.businesshelp.service.BusinessHel
 import school.management.admin.modules.sys.controller.AbstractController;
 import school.management.admin.modules.sys.entity.SysUserEntity;
 import school.management.business.businesshelp.entity.BusinessHeadlines;
+import school.management.business.businesshelp.entity.SuccessCase;
 import school.management.common.utils.R;
 import school.management.common.validator.ValidatorUtils;
 import school.management.common.validator.group.AddGroup;
@@ -62,4 +63,46 @@ public class BusinessHelpController extends AbstractController {
         return R.ok();
     }
 
+    /**
+     * 成功案例
+     */
+    //查询
+    @RequestMapping(value = "/successCase/list", method = RequestMethod.GET)
+    @RequiresPermissions("business:businesshelp:successCase:list")
+    public R successCaseList(@RequestParam Map<String, Object> params){
+        PageUtils page = businessHelpAdminServiceImpl.successCaseQueryPageMap(params);
+        return R.ok().put("page", page);
+    }
+    
+    @RequestMapping(value = "/successCase/info/{id}", method = RequestMethod.GET)
+    @RequiresPermissions("business:businesshelp:successCase:info")
+    public R successCaseInfo(@PathVariable("id") int id){
+        return R.ok().put("successCase", businessHelpAdminServiceImpl.successCaseInfo(id));
+    }
+    //新增
+    @RequestMapping(value = "/successCase/save", method = RequestMethod.POST)
+    @RequiresPermissions("business:businesshelp:successCase:save")
+    @SysLog(SysLogConfig.ADD + SysLogConfig.COLON  + SysLogConfig.BUSINESSHELP + SysLogConfig.COLON + SysLogConfig.SUCCESS)
+    public R savesuccessCase(@RequestBody SuccessCase successCase){
+        ValidatorUtils.validateEntity(successCase);
+        businessHelpAdminServiceImpl.saveOrUpDateSuccessCase(successCase);
+        return R.ok();
+    }
+    //修改
+    @RequestMapping(value = "/successCase/update", method = RequestMethod.POST)
+    @RequiresPermissions("business:businesshelp:successCase:update")
+    @SysLog(SysLogConfig.UPDATE + SysLogConfig.COLON  + SysLogConfig.BUSINESSHELP + SysLogConfig.COLON + SysLogConfig.SUCCESS)
+    public R updatesuccessCase(@RequestBody SuccessCase successCase){
+        ValidatorUtils.validateEntity(successCase, UpdateGroup.class);
+        businessHelpAdminServiceImpl.saveOrUpDateSuccessCase(successCase);
+        return R.ok();
+    }
+    //删除
+    @RequestMapping(value = "/successCase/del", method = RequestMethod.POST)
+    @RequiresPermissions("business:businesshelp:successCase:del")
+    @SysLog(SysLogConfig.DEL + SysLogConfig.COLON  + SysLogConfig.BUSINESSHELP + SysLogConfig.COLON + SysLogConfig.SUCCESS)
+    public R delSuccessCase(@RequestBody Integer[] ids){
+        businessHelpAdminServiceImpl.delSuccessCaseByIds(ids);
+        return R.ok();
+    }
 }
