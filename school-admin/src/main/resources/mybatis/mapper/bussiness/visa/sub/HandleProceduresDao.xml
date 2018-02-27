@@ -23,6 +23,25 @@
     )
     </insert>
 
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into qz_handle_procedures
+        (
+        `visa_id`,
+        `combo_id`,
+        `procedures_id`,
+        `order`,
+        `create_time`,
+        `del_flag`
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.visaId,jdbcType=INTEGER}, #{item.comboId,jdbcType=INTEGER}, #{item.proceduresId,jdbcType=INTEGER},
+            #{item.order,jdbcType=INTEGER}, #{item.createTime,jdbcType=DATE}, #{item.delFlag,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
     <update id="update" parameterType="school.management.business.visa.entity.HandleProcedures">
         UPDATE qz_handle_procedures
         <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">

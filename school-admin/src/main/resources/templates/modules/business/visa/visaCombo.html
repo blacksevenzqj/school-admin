@@ -44,7 +44,7 @@
 				<div class="col-sm-2 control-label">基本信息</div>
 				<div class="col-sm-10">
 					<label v-for="baseInformation in baseInformationList" class="radio-inline">
-						<input type="radio" :value="baseInformation.baseInformationId"  v-model="visaCombo.baseInformationId">{{baseInformation.name}}
+						<input type="radio" :value="baseInformation.baseInformationId"  name="baseInformationId" v-model="visaCombo.baseInformationId">{{baseInformation.name}}
 					</label>
 				</div>
 			</div>
@@ -65,11 +65,17 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-2 control-label">在学学生</div>
+				<div class="col-sm-2 control-label">在校学生</div>
 				<div class="col-sm-10">
 					<label v-for="material in materialList" class="checkbox-inline">
 						<input type="checkbox" :value="material.id"  v-model="visaCombo.studentMaterialIds">{{material.title}}
 					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-3 control-label">在校学生资料描述</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="visaCombo.studentMaterialDesc" placeholder="在校学生资料描述"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -81,11 +87,23 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<div class="col-sm-3 control-label">在职人员资料描述</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="visaCombo.officersMaterialDesc" placeholder="在职人员资料描述"/>
+				</div>
+			</div>
+			<div class="form-group">
 				<div class="col-sm-2 control-label">退休人员</div>
 				<div class="col-sm-10">
 					<label v-for="material in materialList" class="checkbox-inline">
 						<input type="checkbox" :value="material.id"  v-model="visaCombo.retireesMaterialIds">{{material.title}}
 					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-3 control-label">退休人员资料描述</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="visaCombo.retireesMaterialDesc" placeholder="退休人员资料描述"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -96,6 +114,25 @@
 					</label>
 				</div>
 			</div>
+			<div class="form-group">
+				<div class="col-sm-3 control-label">自由职业者资料描述</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="visaCombo.freelancerMaterialDesc" placeholder="自由职业者资料描述"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-3 control-label">资料邮箱</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="visaCombo.acceptEmail" placeholder="资料邮箱"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-3 control-label">资料邮寄地址</div>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" v-model="visaCombo.acceptAddress" placeholder="资料邮寄地址"/>
+				</div>
+			</div>
+
 			<div class="form-group">
 				<div class="col-sm-3 control-label">套餐序号</div>
 				<div class="col-sm-10">

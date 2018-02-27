@@ -80,9 +80,16 @@ var vm = new Vue({
             proceduresIds:[],
 
             studentMaterialIds:[],
+            studentMaterialDesc:null,
             officersMaterialIds:[],
+            officersMaterialDesc:null,
             retireesMaterialIds:[],
+            retireesMaterialDesc:null,
             freelancerMaterialIds:[],
+            freelancerMaterialDesc:null,
+
+            acceptEmail:null,
+            acceptAddress:null
         }
     },
     methods: {

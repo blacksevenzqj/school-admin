@@ -28,7 +28,7 @@ public class HandleProcedures extends IncrementDataEntity {
     private Integer comboId;
     private Integer proceduresId;
     private Integer order;
-    private Date createTime;
+    private Date createTime = new Date();
 //    private Integer delFlag;
 
    

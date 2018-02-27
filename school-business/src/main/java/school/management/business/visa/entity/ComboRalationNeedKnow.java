@@ -27,7 +27,7 @@ public class ComboRalationNeedKnow extends IncrementDataEntity {
 	private Integer visaId; // 办理国家签证ID
 	private Integer comboId; // 套餐ID
     private Integer needKnowId; // 预定须知ID
-    private Date createTime;
+    private Date createTime = new Date();
 //    private Integer delFlag;
 
 }

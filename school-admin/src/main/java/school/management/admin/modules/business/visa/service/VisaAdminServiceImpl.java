@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import school.management.admin.common.annotation.SysLog;
 import school.management.admin.modules.business.visa.dao.VisaAdminDao;
+import school.management.admin.modules.business.visa.entity.MaterialConfig;
 import school.management.admin.modules.business.visa.entity.VisaComboForm;
 import school.management.admin.modules.business.visa.entity.VisaComboVo;
 import school.management.business.visa.entity.*;
@@ -18,6 +19,7 @@ import school.management.db.pojo.Paging;
 import school.management.db.utils.PageUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -47,49 +49,6 @@ public class VisaAdminServiceImpl {
         visaServiceImpl.deleteBatchByIds(ids);
     }
 
-    /**
-     * 2.1、套餐_主类：一对一
-     */
-    @Autowired
-    VisaComboServiceImpl visaComboServiceImpl;
-
-    public PageUtils<VisaComboVo> visaComboQueryPageMap(Map<String, Object> params){
-        if(params.get("pageNum") == null){
-            params.put("pageNum", 1);
-            params.put("pageSize", 10);
-        }
-        Paging page = new Paging(Integer.valueOf(params.get("pageNum").toString()), Integer.valueOf(params.get("pageSize").toString()));
-        PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
-        List<VisaComboVo> list = visaAdminDao.visaComboVoQueryList(params);
-        PageInfo<VisaComboVo> pageInfo = new PageInfo<>(list);
-        return new PageUtils<>(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
-    }
-    public VisaCombo visaComboInfo(Integer id){
-        return visaComboServiceImpl.get(id);
-    }
-
-    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public VisaCombo saveOrUpDateVisaCombo(VisaComboForm visaComboForm){
-        VisaCombo visaCombo = new VisaCombo();
-        CachedBeanCopier.defaultCopy(visaComboForm, visaCombo);
-        visaCombo =  visaComboServiceImpl.save(visaCombo);
-
-        // 基本信息
-        ComboRalationBaseInformation crbInfo = new ComboRalationBaseInformation();
-        crbInfo.setVisaId(visaComboForm.getVisaId());
-        crbInfo.setComboId(visaCombo.getComboId());
-        crbInfo.setBaseInformationId(visaComboForm.getBaseInformationId());
-        comboRalationBaseInformationServiceImpl.save(crbInfo);
-
-
-
-
-        return visaCombo;
-    }
-
-    public void delVisaComboByIds(Integer[] ids){
-        visaComboServiceImpl.deleteBatchByIds(ids);
-    }
     /**
      * 2.2、套餐_基本信息：一对一
      */
@@ -211,6 +170,126 @@ public class VisaAdminServiceImpl {
     }
     public void delHandleProceduresByIds(Integer[] ids){
         handleProceduresServiceImpl.deleteBatchByIds(ids);
+    }
+
+
+// =====================================================================================================================
+
+    /**
+     * 2.1、套餐_主类：一对一
+     */
+    @Autowired
+    VisaComboServiceImpl visaComboServiceImpl;
+
+    @Autowired
+    RoleMaterialServiceImpl roleMaterialServiceImpl;
+
+    public PageUtils<VisaComboVo> visaComboQueryPageMap(Map<String, Object> params){
+        if(params.get("pageNum") == null){
+            params.put("pageNum", 1);
+            params.put("pageSize", 10);
+        }
+        Paging page = new Paging(Integer.valueOf(params.get("pageNum").toString()), Integer.valueOf(params.get("pageSize").toString()));
+        PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
+        List<VisaComboVo> list = visaAdminDao.visaComboVoQueryList(params);
+        PageInfo<VisaComboVo> pageInfo = new PageInfo<>(list);
+        return new PageUtils<>(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
+    }
+
+    public VisaCombo visaComboInfo(Integer id){
+        return visaComboServiceImpl.get(id);
+    }
+
+    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public VisaCombo saveOrUpDateVisaCombo(VisaComboForm visaComboForm){
+        VisaCombo visaCombo = new VisaCombo();
+        CachedBeanCopier.defaultCopy(visaComboForm, visaCombo);
+        visaCombo =  visaComboServiceImpl.save(visaCombo);
+
+        // 基本信息
+        ComboRalationBaseInformation crbInfo = new ComboRalationBaseInformation();
+        crbInfo.setVisaId(visaComboForm.getVisaId());
+        crbInfo.setComboId(visaCombo.getComboId());
+        crbInfo.setBaseInformationId(visaComboForm.getBaseInformationId());
+        comboRalationBaseInformationServiceImpl.save(crbInfo);
+        // 须知
+        Integer[] needKnowIds = visaComboForm.getNeedKnowIds();
+        List<ComboRalationNeedKnow> comboRalationNeedKnowList = new ArrayList<ComboRalationNeedKnow>();
+        for(Integer id : needKnowIds){
+            ComboRalationNeedKnow comboRalationNeedKnow = new ComboRalationNeedKnow();
+            comboRalationNeedKnow.setVisaId(visaComboForm.getVisaId());
+            comboRalationNeedKnow.setComboId(visaCombo.getComboId());
+            comboRalationNeedKnow.setNeedKnowId(id);
+            comboRalationNeedKnowList.add(comboRalationNeedKnow);
+        }
+        comboRalationNeedKnowServiceImpl.insertBatch(comboRalationNeedKnowList);
+        // 办理流程
+        Integer[] proceduresIds = visaComboForm.getProceduresIds();
+        List<HandleProcedures> handleProceduresList = new ArrayList<HandleProcedures>();
+        for(int i=0; i<proceduresIds.length; i++){
+            HandleProcedures handleProcedures = new HandleProcedures();
+            handleProcedures.setVisaId(visaComboForm.getVisaId());
+            handleProcedures.setComboId(visaCombo.getComboId());
+            handleProcedures.setProceduresId(proceduresIds[i]);
+            handleProcedures.setOrder(i);
+            handleProceduresList.add(handleProcedures);
+        }
+        handleProceduresServiceImpl.insertBatch(handleProceduresList);
+        // 所需材料
+        //1、学生
+        Integer[] studentMaterialIds = visaComboForm.getStudentMaterialIds();
+        materialsSave(1, studentMaterialIds, visaComboForm, visaCombo);
+        //2、在职
+        Integer[] officersMaterialIds = visaComboForm.getOfficersMaterialIds();
+        materialsSave(2, officersMaterialIds, visaComboForm, visaCombo);
+        //3、退休
+        Integer[] retireesMaterialIds = visaComboForm.getRetireesMaterialIds();
+        materialsSave(3, retireesMaterialIds, visaComboForm, visaCombo);
+        //4、自由职业
+        Integer[] freelancerMaterialIds = visaComboForm.getFreelancerMaterialIds();
+        materialsSave(4, freelancerMaterialIds, visaComboForm, visaCombo);
+        return visaCombo;
+    }
+    private void materialsSave(int type, Integer[] ids, VisaComboForm visaComboForm, VisaCombo visaCombo){
+        Arrays.sort(ids);
+        RoleMaterial roleMaterial = new RoleMaterial();
+        String idsStr = "";
+        for(Integer id : ids){
+            idsStr += id.toString() + ",";
+        }
+        roleMaterial.setMaterialIds(idsStr.substring(0, idsStr.length()-1));
+        roleMaterial.setVisaId(visaComboForm.getVisaId());
+        roleMaterial.setComboId(visaCombo.getComboId());
+        roleMaterial.setMaterialNum(ids.length);
+        roleMaterial.setAcceptEmail(visaComboForm.getAcceptEmail());
+        roleMaterial.setAcceptAddress(visaComboForm.getAcceptAddress());
+        roleMaterial.setRoleType(type);
+        switch (type){
+        case 1 :
+            roleMaterial.setRoleName(MaterialConfig.STUDENT);
+            roleMaterial.setDescrption(visaComboForm.getStudentMaterialDesc());
+            break;
+        case 2:
+            roleMaterial.setRoleName(MaterialConfig.OFFICERS);
+            roleMaterial.setDescrption(visaComboForm.getOfficersMaterialDesc());
+            break;
+        case 3:
+            roleMaterial.setRoleName(MaterialConfig.RETIREES);
+            roleMaterial.setDescrption(visaComboForm.getRetireesMaterialDesc());
+            break;
+        case 4:
+            roleMaterial.setRoleName(MaterialConfig.FREELANCER);
+            roleMaterial.setDescrption(visaComboForm.getFreelancerMaterialDesc());
+            break;
+        default:
+            break;
+        }
+        roleMaterialServiceImpl.save(roleMaterial);
+    }
+
+
+    public void delVisaComboByIds(Integer[] ids){
+        visaComboServiceImpl.deleteBatchByIds(ids);
     }
 
 
