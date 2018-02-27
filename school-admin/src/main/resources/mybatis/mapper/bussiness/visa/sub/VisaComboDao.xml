@@ -15,7 +15,7 @@
         select * from qz_visa_combo where combo_id = #{comboId}
     </select>
 
-    <insert id="insert" parameterType="school.management.business.visa.entity.VisaCombo">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="comboId" parameterType="school.management.business.visa.entity.VisaCombo">
     insert into qz_visa_combo
     (
     `visa_id`,

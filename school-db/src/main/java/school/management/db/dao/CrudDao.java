@@ -57,7 +57,7 @@ public interface CrudDao<T, E> extends BaseDao {
      */
     int insert(T entity);
 
-    int insertBatch(List<T> list);
+    int insertBatch(@Param("list") List<T> list);
 
     /**
      * 更新数据

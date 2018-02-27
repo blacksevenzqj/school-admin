@@ -21,6 +21,25 @@
     )
     </insert>
 
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into qz_combo_ralation_base_information (
+            `visa_id`,
+            `combo_id`,
+            `base_information_id`,
+            `create_time`,
+            `del_flag`
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+              #{item.visaId,jdbcType=INTEGER}, #{item.comboId,jdbcType=INTEGER}, #{item.baseInformationId,jdbcType=INTEGER},
+              #{item.createTime,jdbcType=DATE}, #{item.delFlag,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+
     <update id="update" parameterType="school.management.business.visa.entity.ComboRalationBaseInformation">
         UPDATE qz_combo_ralation_base_information
         <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">

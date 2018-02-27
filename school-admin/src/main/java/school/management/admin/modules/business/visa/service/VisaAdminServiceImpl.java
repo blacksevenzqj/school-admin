@@ -17,6 +17,7 @@ import school.management.common.utils.beancopier.CachedBeanCopier;
 import school.management.db.pojo.Paging;
 import school.management.db.utils.PageUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -66,12 +67,26 @@ public class VisaAdminServiceImpl {
     public VisaCombo visaComboInfo(Integer id){
         return visaComboServiceImpl.get(id);
     }
+
     @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public VisaCombo saveOrUpDateVisaCombo(VisaComboForm visaComboForm){
         VisaCombo visaCombo = new VisaCombo();
         CachedBeanCopier.defaultCopy(visaComboForm, visaCombo);
-        return visaComboServiceImpl.save(visaCombo);
+        visaCombo =  visaComboServiceImpl.save(visaCombo);
+
+        // 基本信息
+        ComboRalationBaseInformation crbInfo = new ComboRalationBaseInformation();
+        crbInfo.setVisaId(visaComboForm.getVisaId());
+        crbInfo.setComboId(visaCombo.getComboId());
+        crbInfo.setBaseInformationId(visaComboForm.getBaseInformationId());
+        comboRalationBaseInformationServiceImpl.save(crbInfo);
+
+
+
+
+        return visaCombo;
     }
+
     public void delVisaComboByIds(Integer[] ids){
         visaComboServiceImpl.deleteBatchByIds(ids);
     }

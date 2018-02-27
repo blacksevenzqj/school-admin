@@ -43,8 +43,8 @@
 			<div class="form-group">
 				<div class="col-sm-2 control-label">基本信息</div>
 				<div class="col-sm-10">
-					<label v-for="baseInformation in baseInformationList" class="checkbox-inline">
-						<input type="checkbox" :value="baseInformation.baseInformationId"  v-model="visaCombo.baseInformationIds">{{baseInformation.name}}
+					<label v-for="baseInformation in baseInformationList" class="radio-inline">
+						<input type="radio" :value="baseInformation.baseInformationId"  v-model="visaCombo.baseInformationId">{{baseInformation.name}}
 					</label>
 				</div>
 			</div>
@@ -61,6 +61,38 @@
 				<div class="col-sm-10">
 					<label v-for="procedures in proceduresList" class="checkbox-inline">
 						<input type="checkbox" :value="procedures.id"  v-model="visaCombo.proceduresIds">{{procedures.title}}
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">在学学生</div>
+				<div class="col-sm-10">
+					<label v-for="material in materialList" class="checkbox-inline">
+						<input type="checkbox" :value="material.id"  v-model="visaCombo.studentMaterialIds">{{material.title}}
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">在职人员</div>
+				<div class="col-sm-10">
+					<label v-for="material in materialList" class="checkbox-inline">
+						<input type="checkbox" :value="material.id"  v-model="visaCombo.officersMaterialIds">{{material.title}}
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">退休人员</div>
+				<div class="col-sm-10">
+					<label v-for="material in materialList" class="checkbox-inline">
+						<input type="checkbox" :value="material.id"  v-model="visaCombo.retireesMaterialIds">{{material.title}}
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">自由职业者</div>
+				<div class="col-sm-10">
+					<label v-for="material in materialList" class="checkbox-inline">
+						<input type="checkbox" :value="material.id"  v-model="visaCombo.freelancerMaterialIds">{{material.title}}
 					</label>
 				</div>
 			</div>

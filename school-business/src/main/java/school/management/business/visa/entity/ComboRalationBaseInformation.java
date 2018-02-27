@@ -29,7 +29,7 @@ public class ComboRalationBaseInformation extends IncrementDataEntity {
     private Integer comboId; // 签证套餐ID
     /** 办理该套餐基本信息ID **/
     private Integer baseInformationId; // 签证基本信息ID
-    private Date createTime;
+    private Date createTime = new Date();
 //    private Integer delFlag;
 
 }
