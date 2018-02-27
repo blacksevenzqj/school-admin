@@ -51,8 +51,8 @@
         </trim>
     </update>
 
-    <delete id="deleteBatchByIds">
-        delete from qz_combo_ralation_need_know where id in
+    <delete id="cneedKnowDelBatchBycomboIds">
+        delete from qz_combo_ralation_need_know where combo_id in
         <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
             #{item}
         </foreach>

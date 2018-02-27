@@ -214,6 +214,7 @@ public class VisaAdminServiceImpl {
         comboRalationBaseInformationServiceImpl.save(crbInfo);
         // 须知
         Integer[] needKnowIds = visaComboForm.getNeedKnowIds();
+        Arrays.sort(needKnowIds);
         List<ComboRalationNeedKnow> comboRalationNeedKnowList = new ArrayList<ComboRalationNeedKnow>();
         for(Integer id : needKnowIds){
             ComboRalationNeedKnow comboRalationNeedKnow = new ComboRalationNeedKnow();
@@ -225,6 +226,7 @@ public class VisaAdminServiceImpl {
         comboRalationNeedKnowServiceImpl.insertBatch(comboRalationNeedKnowList);
         // 办理流程
         Integer[] proceduresIds = visaComboForm.getProceduresIds();
+        Arrays.sort(proceduresIds);
         List<HandleProcedures> handleProceduresList = new ArrayList<HandleProcedures>();
         for(int i=0; i<proceduresIds.length; i++){
             HandleProcedures handleProcedures = new HandleProcedures();
@@ -287,9 +289,13 @@ public class VisaAdminServiceImpl {
         roleMaterialServiceImpl.save(roleMaterial);
     }
 
-
+    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void delVisaComboByIds(Integer[] ids){
         visaComboServiceImpl.deleteBatchByIds(ids);
+        visaAdminDao.cbaseInformationDelBatchBycomboIds(ids);
+        visaAdminDao.cneedKnowDelBatchBycomboIds(ids);
+        visaAdminDao.handleProceduresDelBatchBycomboIds(ids);
+        visaAdminDao.roleMaterialDelBatchBycomboIds(ids);
     }
 
 

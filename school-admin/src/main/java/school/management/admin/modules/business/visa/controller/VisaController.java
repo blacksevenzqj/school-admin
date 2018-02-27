@@ -246,6 +246,12 @@ public class VisaController extends AbstractController {
         visaAdminServiceImpl.saveOrUpDateVisaCombo(visaComboForm);
         return R.ok();
     }
-
+    @RequestMapping(value = "/visaCombo/del", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:visaCombo:del")
+    @SysLog(SysLogConfig.DEL + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.MATERIAL)
+    public R delVisaCombo(@RequestBody Integer[] ids){
+        visaAdminServiceImpl.delVisaComboByIds(ids);
+        return R.ok();
+    }
 
 }

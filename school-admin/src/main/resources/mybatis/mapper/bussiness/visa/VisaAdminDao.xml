@@ -12,4 +12,33 @@
         ORDER BY a.visa_id ASC, a.create_time DESC
     </select>
 
+
+    <delete id="cbaseInformationDelBatchBycomboIds">
+        delete from qz_combo_ralation_base_information where combo_id in
+        <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="cneedKnowDelBatchBycomboIds">
+        delete from qz_combo_ralation_need_know where combo_id in
+        <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="handleProceduresDelBatchBycomboIds">
+        delete from qz_handle_procedures where combo_id in
+        <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="roleMaterialDelBatchBycomboIds">
+        delete from qz_role_material where combo_id in
+        <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
 </mapper>
