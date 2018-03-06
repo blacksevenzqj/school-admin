@@ -27,7 +27,7 @@
     `answer`,
     `answer_media_type`,
     `answer_time`,
-    `del_flag`
+    `create_time`
     )
     VALUES (
       #{consultantId},
@@ -39,7 +39,7 @@
       #{answer},
       #{answerMediaType},
       #{answerTime},
-      #{delFlag}
+      #{createTime}
     )
     </insert>
 
