@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import school.management.admin.common.annotation.SysLog;
 import school.management.admin.modules.business.visa.dao.VisaAdminDao;
 import school.management.admin.modules.business.visa.entity.MaterialConfig;
 import school.management.admin.modules.business.visa.entity.VisaComboForm;
 import school.management.admin.modules.business.visa.entity.VisaComboVo;
 import school.management.business.visa.entity.*;
+import school.management.business.visa.entity.order.VisaOrderMasterVo;
 import school.management.business.visa.service.*;
 import school.management.common.utils.beancopier.CachedBeanCopier;
 import school.management.db.pojo.Paging;
@@ -300,7 +300,15 @@ public class VisaAdminServiceImpl {
 
 
 
+// =====================================================================================================================
 
+    @Autowired
+    VisaOrderServiceImpl visaOrderServiceImpl;
+
+    @Transactional(readOnly=true, rollbackFor = Exception.class)
+    public VisaOrderMasterVo getVisaOrderMasterVo(int id){
+        return visaOrderServiceImpl.getVisaOrderMasterVo(id);
+    }
 
 
 /**
