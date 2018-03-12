@@ -254,4 +254,15 @@ public class VisaController extends AbstractController {
         return R.ok();
     }
 
+
+    /**
+     * 签证订单
+     */
+    @RequestMapping(value = "/order/list", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:order:list")
+    public R visaOrderList(@RequestParam Map<String, Object> params){
+        PageUtils page = visaAdminServiceImpl.visaOrderQueryPageMap(params);
+        return R.ok().put("page", page);
+    }
+
 }

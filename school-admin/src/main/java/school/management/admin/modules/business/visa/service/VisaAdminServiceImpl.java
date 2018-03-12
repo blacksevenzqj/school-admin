@@ -305,9 +305,13 @@ public class VisaAdminServiceImpl {
     @Autowired
     VisaOrderServiceImpl visaOrderServiceImpl;
 
+    public PageUtils<VisaOrderMasterVo> visaOrderQueryPageMap(Map<String, Object> params){
+        return visaOrderServiceImpl.queryPageMap(params);
+    }
+
     @Transactional(readOnly=true, rollbackFor = Exception.class)
     public VisaOrderMasterVo getVisaOrderMasterVo(int id){
-        return visaOrderServiceImpl.getVisaOrderMasterVo(id);
+        return visaOrderServiceImpl.get(id);
     }
 
 

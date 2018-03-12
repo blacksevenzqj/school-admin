@@ -37,6 +37,8 @@ public class TestYou {
     public void visaOrderMasterVo() {
         VisaOrderMasterVo visaOrderMasterVo = visaAdminServiceImpl.getVisaOrderMasterVo(175);
         System.out.println(visaOrderMasterVo);
+
+        PageUtils<VisaOrderMasterVo> pageUtils = visaAdminServiceImpl.visaOrderQueryPageMap(new HashMap<>());
     }
 
     @Test

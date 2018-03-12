@@ -10,10 +10,6 @@ import school.management.db.service.CrudService;
 
 @Slf4j
 @Service(value = "visaOrderServiceImpl")
-public class VisaOrderServiceImpl extends CrudService<VisaOrderDao, VisaOrderMaster, Integer> {
-
-    public VisaOrderMasterVo getVisaOrderMasterVo(int orderMasterId){
-        return getDao().getVisaOrderMasterVo(orderMasterId);
-    }
+public class VisaOrderServiceImpl extends CrudService<VisaOrderDao, VisaOrderMasterVo, Integer> {
 
 }

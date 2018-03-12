@@ -36,8 +36,11 @@
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
         <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
         <result column="visa_id" jdbcType="INTEGER" property="visaId" />
+        <result column="country_name" jdbcType="VARCHAR" property="countryName" />
         <result column="combo_id" jdbcType="INTEGER" property="comboId" />
+        <result column="combo_name" jdbcType="VARCHAR" property="comboName" />
         <result column="contact_user_name" jdbcType="VARCHAR" property="contactUserName" />
         <result column="contact_user_phone" jdbcType="VARCHAR" property="contactUserPhone" />
         <result column="contact_user_email" jdbcType="VARCHAR" property="contactUserEmail" />
@@ -71,10 +74,27 @@
         </collection>
     </resultMap>
 
-    <select id="getVisaOrderMasterVo" resultMap="visaOrderMasterVoResultMap">
-        SELECT a.*,b.id detai_id,b.order_no,b.handle_visa_people_name,b.handle_visa_people_phone,b.price,b.create_time,b.del_flag
-        FROM dd_visa_order_master a,dd_visa_order_detail b WHERE a.order_num = b.order_no AND a.id = #{orderMasterId}
+    <select id="getById" resultMap="visaOrderMasterVoResultMap">
+        SELECT a.*,b.id detai_id,b.order_no,b.handle_visa_people_name,b.handle_visa_people_phone,b.price,b.create_time,b.del_flag,
+        c.`userp_name` user_name, d.`national_name` country_name, e.`name` combo_name
+                FROM dd_visa_order_master a,dd_visa_order_detail b, yh_userp c, qz_visa d, qz_visa_combo e
+        WHERE a.order_num = b.order_no AND a.`user_id` = c.`userp_id` AND a.`visa_id` = d.`id` AND a.`combo_id` = e.`combo_id` AND a.id = #{id}
     </select>
+
+
+    <select id="queryList" resultMap="visaOrderMasterVoResultMap">
+      SELECT a.*,c.`userp_name` user_name, d.`national_name` country_name, e.`name` combo_name
+        FROM dd_visa_order_master a,dd_visa_order_detail b, yh_userp c, qz_visa d, qz_visa_combo e
+        WHERE a.order_num = b.order_no AND a.`user_id` = c.`userp_id` AND a.`visa_id` = d.`id` AND a.`combo_id` = e.`combo_id`
+        <if test="orderNum != null and orderNum.length()>0"> AND a.order_num = #{orderNum} </if>
+        <if test="userName != null and userName.length()>0"> AND c.userp_name = #{userName} </if>
+        <if test="countryName != null and countryName.length()>0"> AND  d.national_name = #{countryName} </if>
+        <if test="comboName != null and comboName.length()>0"> AND e.name = #{comboName} </if>
+        <if test="comboName != null and comboName.length()>0"> AND e.name = #{comboName} </if>
+        ORDER BY a.create_time DESC
+    </select>
+
+
 
 
 </mapper>
