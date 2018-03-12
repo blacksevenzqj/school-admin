@@ -29,4 +29,6 @@ public interface SysLogConfig {
     String MATERIAL = "所需材料";
     String VISACOMBO = "签证套餐";
 
+    String VISAORDER = "签证订单";
+
 }

@@ -72,24 +72,29 @@ var vm = new Vue({
     el:'#rrapp',
     data:{
         q:{
-            name: null
+            orderNum: null,
+            userName: null,
+            countryName: null,
+            comboName: null
         },
         showList: true,
         title:null,
-        baseInformation:{
-            baseInformationId:null,
-            name:null,
-            description:null,
-            enterCountryNum:null,
-            stayDay:null,
-            validityTime:null,
-            comboContent:null,
-            handleTime:null,
-            visaInterview:"0",
-            cashDeposit:null,
-            handleRange:null,
-            comboDescription:null,
-            delFlag:"0"
+        visaOrder:{
+            id:null,
+            orderNum:null,
+            userName:null,
+            countryName:null,
+            comboName:null,
+            contactUserName:null,
+            contactUserPhone:null,
+            contactUserEmail:null,
+            buyNum:null,
+            orderAmount:null,
+            orderStatus:null,
+            visaType:null,
+            visaAddress:null,
+            delFlag:"0",
+            orderDetailList:[]
         }
     },
     methods: {
@@ -99,7 +104,7 @@ var vm = new Vue({
         add: function(){
             vm.showList = false;
             vm.title = "新增";
-            vm.baseInformation = {visaInterview:"0", delFlag:"0"};
+            vm.visaOrder = {delFlag:"0"};
         },
         update: function () {
             var id = getSelectedRow();
@@ -110,7 +115,7 @@ var vm = new Vue({
             vm.showList = false;
             vm.title = "修改";
 
-            vm.getBaseInformation(id);
+            vm.getVisaOrder(id);
         },
         del: function () {
             var ids = getSelectedRows();
@@ -121,7 +126,7 @@ var vm = new Vue({
             confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
-                    url: baseBusinessURL + "visa/baseInformation/del",
+                    url: baseBusinessURL + "visa/order/del",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function(r){
@@ -137,12 +142,12 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function () {
-            var url = vm.baseInformation.baseInformationId == null ? "visa/baseInformation/save" : "visa/baseInformation/update";
+            var url = vm.visaOrder.id == null ? "visa/order/save" : "visa/order/update";
             $.ajax({
                 type: "POST",
                 url: baseBusinessURL + url,
                 contentType: "application/json",
-                data: JSON.stringify(vm.baseInformation),
+                data: JSON.stringify(vm.visaOrder),
                 success: function(r){
                     if(r.code === 0){
                         alert('操作成功', function(){
@@ -154,16 +159,16 @@ var vm = new Vue({
                 }
             });
         },
-        getBaseInformation: function(id){
-            $.get(baseBusinessURL + "visa/baseInformation/info/" + id, function(r){
-                vm.baseInformation = r.baseInformation;
+        getVisaOrder: function(id){
+            $.get(baseBusinessURL + "visa/order/info/" + id, function(r){
+                vm.visaOrder = r.visaOrder;
             });
         },
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'name': vm.q.name},
+                postData:{'orderNum': vm.q.orderNum, 'userName': vm.q.userName, 'countryName': vm.q.countryName, 'comboName': vm.q.comboName},
                 page:page
             }).trigger("reloadGrid");
         }

@@ -11,6 +11,7 @@ import school.management.admin.modules.business.visa.service.VisaAdminServiceImp
 import school.management.admin.modules.sys.controller.AbstractController;
 import school.management.business.businesshelp.entity.BusinessHeadlines;
 import school.management.business.visa.entity.*;
+import school.management.business.visa.entity.order.VisaOrderMasterVo;
 import school.management.common.utils.R;
 import school.management.common.validator.ValidatorUtils;
 import school.management.common.validator.group.UpdateGroup;
@@ -263,6 +264,19 @@ public class VisaController extends AbstractController {
     public R visaOrderList(@RequestParam Map<String, Object> params){
         PageUtils page = visaAdminServiceImpl.visaOrderQueryPageMap(params);
         return R.ok().put("page", page);
+    }
+    @RequestMapping(value = "/order/info/{id}", method = RequestMethod.GET)
+    @RequiresPermissions("business:visa:order:info")
+    public R visaOrderInfo(@PathVariable("id") int id){
+        return R.ok().put("visaOrder", visaAdminServiceImpl.getVisaOrderMasterVo(id));
+    }
+    @RequestMapping(value = "/order/update", method = RequestMethod.POST)
+    @RequiresPermissions("business:visa:order:update")
+    @SysLog(SysLogConfig.UPDATE + SysLogConfig.COLON  + SysLogConfig.VISA + SysLogConfig.COLON + SysLogConfig.VISAORDER)
+    public R updateVisaOrder(@RequestBody VisaOrderMasterVo visaOrderMasterVo){
+        ValidatorUtils.validateEntity(visaOrderMasterVo, UpdateGroup.class);
+        visaAdminServiceImpl.saveOrUpdateVisaOrder(visaOrderMasterVo);
+        return R.ok();
     }
 
 }

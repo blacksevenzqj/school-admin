@@ -12,6 +12,7 @@ import school.management.admin.modules.business.visa.entity.MaterialConfig;
 import school.management.admin.modules.business.visa.entity.VisaComboForm;
 import school.management.admin.modules.business.visa.entity.VisaComboVo;
 import school.management.business.visa.entity.*;
+import school.management.business.visa.entity.order.VisaOrderDetail;
 import school.management.business.visa.entity.order.VisaOrderMasterVo;
 import school.management.business.visa.service.*;
 import school.management.common.utils.beancopier.CachedBeanCopier;
@@ -312,6 +313,14 @@ public class VisaAdminServiceImpl {
     @Transactional(readOnly=true, rollbackFor = Exception.class)
     public VisaOrderMasterVo getVisaOrderMasterVo(int id){
         return visaOrderServiceImpl.get(id);
+    }
+
+    @Transactional(readOnly=false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void saveOrUpdateVisaOrder(VisaOrderMasterVo visaOrderMasterVo){
+        visaOrderServiceImpl.updateVisaOrderMaster(visaOrderMasterVo);
+        for(VisaOrderDetail visaOrderDetail : visaOrderMasterVo.getOrderDetailList()) {
+            visaOrderServiceImpl.updateVisaOrderDetail(visaOrderDetail);
+        }
     }
 
 

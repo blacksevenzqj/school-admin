@@ -89,12 +89,25 @@
         <if test="orderNum != null and orderNum.length()>0"> AND a.order_num = #{orderNum} </if>
         <if test="userName != null and userName.length()>0"> AND c.userp_name = #{userName} </if>
         <if test="countryName != null and countryName.length()>0"> AND  d.national_name = #{countryName} </if>
-        <if test="comboName != null and comboName.length()>0"> AND e.name = #{comboName} </if>
-        <if test="comboName != null and comboName.length()>0"> AND e.name = #{comboName} </if>
+        <if test="comboName != null and comboName.length()>0"> AND e.name like CONCAT('%',#{comboName},'%')  </if>
         ORDER BY a.create_time DESC
     </select>
 
 
+    <update id="updateVisaOrderMaster" parameterType="school.management.business.visa.entity.order.VisaOrderMaster">
+        UPDATE dd_visa_order_master
+        <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">
+            <if test="visaType != null and visaType.length()>0"> visa_type = #{visaType} , </if>
+            <if test="visaAddress != null and visaAddress.length()>0"> visa_address = #{visaAddress} , </if>
+        </trim>
+    </update>
 
+    <update id="updateVisaOrderDetail" parameterType="school.management.business.visa.entity.order.VisaOrderDetail">
+        update dd_visa_order_detail
+        <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">
+            <if test="handleVisaPeopleName != null and handleVisaPeopleName.length()>0"> handle_visa_people_name = #{handleVisaPeopleName} , </if>
+            <if test="handleVisaPeoplePhone != null and handleVisaPeoplePhone.length()>0"> handle_visa_people_phone = #{handleVisaPeoplePhone} , </if>
+        </trim>
+    </update>
 
 </mapper>
