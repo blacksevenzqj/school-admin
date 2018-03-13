@@ -99,6 +99,7 @@
         <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">
             <if test="visaType != null and visaType.length()>0"> visa_type = #{visaType} , </if>
             <if test="visaAddress != null and visaAddress.length()>0"> visa_address = #{visaAddress} , </if>
+            <if test="delFlag != null"> del_flag = #{delFlag} , </if>
         </trim>
     </update>
 
@@ -107,6 +108,7 @@
         <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">
             <if test="handleVisaPeopleName != null and handleVisaPeopleName.length()>0"> handle_visa_people_name = #{handleVisaPeopleName} , </if>
             <if test="handleVisaPeoplePhone != null and handleVisaPeoplePhone.length()>0"> handle_visa_people_phone = #{handleVisaPeoplePhone} , </if>
+            <if test="delFlag != null"> del_flag = #{delFlag} , </if>
         </trim>
     </update>
 

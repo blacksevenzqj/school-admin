@@ -319,6 +319,7 @@ public class VisaAdminServiceImpl {
     public void saveOrUpdateVisaOrder(VisaOrderMasterVo visaOrderMasterVo){
         visaOrderServiceImpl.updateVisaOrderMaster(visaOrderMasterVo);
         for(VisaOrderDetail visaOrderDetail : visaOrderMasterVo.getOrderDetailList()) {
+            visaOrderDetail.setDelFlag(visaOrderMasterVo.getDelFlag());
             visaOrderServiceImpl.updateVisaOrderDetail(visaOrderDetail);
         }
     }
