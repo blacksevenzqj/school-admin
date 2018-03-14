@@ -10,9 +10,6 @@ import java.util.Date;
  * 乘机人信息：单个乘机人信息（往返）
  */
 @Data
-@Entity
-@DynamicUpdate
-@Table(name="air_ticket_order_detail")
 public class AirTicketOrderDetail extends IncrementDataEntity {
 
     @Override

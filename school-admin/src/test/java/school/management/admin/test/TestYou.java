@@ -6,8 +6,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import school.management.admin.modules.business.airticket.service.AirTicketOrderAdminServiceImpl;
 import school.management.admin.modules.business.businesshelp.service.BusinessHelpAdminServiceImpl;
 import school.management.admin.modules.business.visa.service.VisaAdminServiceImpl;
+import school.management.business.airticket.entity.vo.AirTicketOrderVo;
 import school.management.business.businesshelp.entity.BusinessHeadlines;
 import school.management.business.visa.entity.VisaCombo;
 import school.management.business.visa.entity.order.VisaOrderMasterVo;
@@ -33,11 +35,22 @@ public class TestYou {
     @Autowired
     VisaAdminServiceImpl visaAdminServiceImpl;
 
+    @Autowired
+    AirTicketOrderAdminServiceImpl airTicketOrderAdminServiceImpl;
+
+    @Test
+    public void airOrder() {
+        Map map = new HashMap();
+        map.put("orderNum", "at20180118103738XBPAERNWiTQLzzR9");
+        PageUtils<AirTicketOrderVo> page = airTicketOrderAdminServiceImpl.airTicketOrderQueryPageMap(map);
+        System.out.println(page);
+    }
+
+
     @Test
     public void visaOrderMasterVo() {
         VisaOrderMasterVo visaOrderMasterVo = visaAdminServiceImpl.getVisaOrderMasterVo(175);
         System.out.println(visaOrderMasterVo);
-
         PageUtils<VisaOrderMasterVo> pageUtils = visaAdminServiceImpl.visaOrderQueryPageMap(new HashMap<>());
     }
 

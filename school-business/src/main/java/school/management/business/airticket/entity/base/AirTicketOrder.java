@@ -100,6 +100,7 @@ public class AirTicketOrder extends IncrementDataEntity {
     @JsonIgnore
     private String delFlag;
 
+    // 支付给51Book的价格（机票结算价+基建+燃油）所有乘机人往返
     @JsonIgnore
     private Double paidFobookTotalPrice;
 

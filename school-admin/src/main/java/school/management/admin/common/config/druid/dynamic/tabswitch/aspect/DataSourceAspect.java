@@ -59,6 +59,7 @@ public class DataSourceAspect implements Ordered {
      * 2、表达式方式：
      */
     @Pointcut(
+        "execution(* school.management.admin.modules.business.airticket.service.*.*(..)) || " +
         "execution(* school.management.admin.modules.business.visa.service.*.*(..)) || " +
         "execution(* school.management.admin.modules.business.businesshelp.service.*.*(..)) || " +
         "execution(* school.management.admin.modules.business.hot.service.*.*(..)) || " +

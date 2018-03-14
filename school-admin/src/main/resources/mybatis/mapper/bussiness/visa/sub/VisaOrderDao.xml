@@ -31,8 +31,8 @@
     <!--</select>-->
 
 
-
-    <resultMap id="visaOrderMasterVoResultMap" type="school.management.business.visa.entity.order.VisaOrderMasterVo">
+    <!-- 关联一次性查询 -->
+    <resultMap id="visaOrderMasterVoResultMap" type="school.management.business.airticket.entity.vo.AirTicketOrderVo">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
         <result column="user_id" jdbcType="INTEGER" property="userId" />
@@ -63,7 +63,7 @@
         <result column="notify_payment_time" jdbcType="DATE" property="notifyPaymentTime" />
         <result column="notify_payment_result" jdbcType="VARCHAR" property="notifyPaymentResult" />
         <result column="payment_transaction_id" jdbcType="VARCHAR" property="paymentTransactionId" />
-        <collection property="orderDetailList" ofType="school.management.business.visa.entity.order.VisaOrderDetail" >
+        <collection property="orderDetailList" ofType="school.management.business.airticket.entity.fobook.DailyLowestPriceVO" >
             <id column="detai_id" property="id"/>
             <result column="order_no" property="orderNo"/>
             <result column="handle_visa_people_name" property="handleVisaPeopleName"/>
