@@ -19,7 +19,6 @@ public class AirTicketOrder extends IncrementDataEntity {
 
     private String ticketOrderType = "1"; // 机票订单类型：1:单程，2:往返
 
-    @JsonIgnore
     private String orderChangingType = "1";  // 订单类型：1:默认新单，2:改签订单
 
     @JsonIgnore
@@ -91,13 +90,10 @@ public class AirTicketOrder extends IncrementDataEntity {
 
     private String reimbursementVoucherUserAddress; // 报销凭证 的收货地址。
 
-    @JsonIgnore
     private Date createDate;
 
-    @JsonIgnore
     private Date updateDate;
 
-    @JsonIgnore
     private String delFlag;
 
     // 支付给51Book的价格（机票结算价+基建+燃油）所有乘机人往返

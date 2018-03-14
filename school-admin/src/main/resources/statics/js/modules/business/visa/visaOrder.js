@@ -19,17 +19,17 @@ $(function () {
                 }else if(value === '2'){
                     return '<span class="label label-success">订单取消/成功</span>';
                 }else if(value === '3'){
-                    return '<span class="label label-success">订单取消/失败</span>';
+                    return '<span class="label label-danger">订单取消/失败</span>';
                 }else if(value === '4'){
                     return '<span class="label label-success">支付成功</span>';
                 }else if(value === '5'){
-                    return '<span class="label label-success">支付失败</span>';
+                    return '<span class="label label-danger">支付失败</span>';
                 }else if(value === '6'){
-                    return '<span class="label label-success">过期未支付</span>';
-                }else if(value === '6'){
+                    return '<span class="label label-danger">过期未支付</span>';
+                }else if(value === '7'){
                     return '<span class="label label-success">退款成功</span>';
-                }else if(value === '6'){
-                    return '<span class="label label-success">退款失败</span>';
+                }else if(value === '8'){
+                    return '<span class="label label-danger">退款失败</span>';
                 }
             }},
             { label: '签证收件类型', name: 'visaType', width: 80 },

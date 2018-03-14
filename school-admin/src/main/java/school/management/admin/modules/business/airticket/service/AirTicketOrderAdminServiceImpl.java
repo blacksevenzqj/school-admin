@@ -28,6 +28,9 @@ public class AirTicketOrderAdminServiceImpl {
         Paging page = new Paging(Integer.valueOf(params.get("pageNum").toString()), Integer.valueOf(params.get("pageSize").toString()));
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
         List<AirTicketOrderVo> list = airTicketOrderDao.airTicketOrderQueryPageMap(params);
+        for(AirTicketOrderVo ato : list){
+            ato.afterInit();
+        }
         PageInfo<AirTicketOrderVo> pageInfo = new PageInfo<>(list);
         return new PageUtils<>(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
     }
