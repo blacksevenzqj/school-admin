@@ -3,14 +3,9 @@ package school.management.admin.modules.business.airticket.controller;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import school.management.admin.common.annotation.SysLog;
-import school.management.admin.common.aspect.SysLogConfig;
 import school.management.admin.modules.business.airticket.service.AirTicketOrderAdminServiceImpl;
 import school.management.admin.modules.sys.controller.AbstractController;
-import school.management.business.visa.entity.Visa;
 import school.management.common.utils.R;
-import school.management.common.validator.ValidatorUtils;
-import school.management.common.validator.group.UpdateGroup;
 import school.management.db.utils.PageUtils;
 
 import java.util.Map;
