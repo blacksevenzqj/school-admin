@@ -54,6 +54,9 @@
         FROM `air_ticket_order` a JOIN `air_ticket_routing` b ON a.`order_num` = b.`order_num` JOIN `yh_userp` c ON a.`userp_id` = c.`userp_id`
         <trim prefix="WHERE" prefixOverrides="AND | OR">
             <if test="orderNum != null and orderNum.length()>0"> AND a. order_num = #{orderNum} </if>
+            <if test="userpName != null and userpName.length()>0"> AND c.`userp_name` = #{userpName} </if>
+            <if test="contactUserName != null and contactUserName.length()>0"> AND a.`contact_user_name` = #{contactUserName} </if>
+            <if test="ticketOrderType != null and ticketOrderType.length()>0"> AND a.`ticket_order_type` = #{ticketOrderType} </if>
         </trim>
         ORDER BY a.create_date DESC
     </select>

@@ -84,7 +84,10 @@ var vm = new Vue({
     el:'#rrapp',
     data:{
         q:{
-            orderNum: null
+            orderNum: null,
+            userpName: null,
+            contactUserName: null,
+            ticketOrderType: "1"
         },
         showList: true,
         title:null,
@@ -175,7 +178,7 @@ var vm = new Vue({
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'orderNum': vm.q.orderNum},
+                postData:{'orderNum': vm.q.orderNum, 'userpName': vm.q.userpName, 'contactUserName': vm.q.contactUserName, 'ticketOrderType': vm.q.ticketOrderType},
                 page:page
             }).trigger("reloadGrid");
         }
