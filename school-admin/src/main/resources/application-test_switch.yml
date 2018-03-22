@@ -103,3 +103,16 @@ school:
   redisSwitch:
     globalOpen: false  # 是否开启redis缓存  true开启   false关闭
     shiroRedisOpen: false # true表示shiro session存到redis里，需要开启redis，才会生效【分布式场景】
+
+
+###图片上传
+pic:
+  imageBasePath: /schoolpa/upload/img/
+  customerPath: /customer
+
+mediaconf:
+  ak: 23607021
+  sk: d9d7a17dae2a15f54bc2f6fb0cd2a0b7
+  namespace: luckyaircar
+  urlprefix: http://luckyaircar.image.alimmdn.com
+
