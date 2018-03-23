@@ -7,10 +7,12 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EsType {
+public @interface EsIndex {
 
-    String typeName() default "";
+    String indexName() default "";
 
-    String routingName() default "";
+    int numberOfShards() default 5;
+
+    int numberOfReplicas() default 1;
 
 }

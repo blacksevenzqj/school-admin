@@ -7,8 +7,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EsFieldType {
+public @interface EsFieldData {
 
-    String typeName() default "";
+    String dataName() default "";
 
 }

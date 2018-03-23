@@ -2,10 +2,11 @@ package school.management.elasticsearch.entity;
 
 import lombok.Data;
 import school.management.elasticsearch.annotation.EsType;
+import school.management.elasticsearch.entity.group.EsIndexGroup;
 
 
 @Data
-@EsType(indexName="school", typeName="hotnew", routingName="hotnew", numberOfShards=5, numberOfReplicas=1)
-public class EsHotNew extends EsBaseEntity{
+@EsType(typeName="hotnew", routingName="hotnew")
+public class EsHotNew extends EsIndexGroup {
 
 }

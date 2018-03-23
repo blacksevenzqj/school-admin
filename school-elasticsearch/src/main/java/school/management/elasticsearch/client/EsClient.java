@@ -12,7 +12,8 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.settings.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import school.management.elasticsearch.annotation.EsFieldType;
+import school.management.elasticsearch.annotation.EsFieldData;
+import school.management.elasticsearch.annotation.EsIndex;
 import school.management.elasticsearch.annotation.EsType;
 import school.management.elasticsearch.common.EsConfig;
 import school.management.elasticsearch.config.ESClientDecorator;
@@ -29,19 +30,22 @@ public class EsClient {
     @Autowired
     private RestHighLevelClient client;
 
+    /**
+     * 传入：子类POJO的Class
+     */
     public <T> void createIndexMapping(Class<T> tClass){
-        CreateIndexRequest request = new CreateIndexRequest(tClass.getAnnotation(EsType.class).indexName());
+        CreateIndexRequest request = new CreateIndexRequest(tClass.getSuperclass().getAnnotation(EsIndex.class).indexName());
         request.settings(Settings.builder()
-                .put(EsConfig.NUMBER_OF_SHARDS, tClass.getAnnotation(EsType.class).numberOfShards())
-                .put(EsConfig.NUMBER_OF_REPLICAS, tClass.getAnnotation(EsType.class).numberOfReplicas()));
+                .put(EsConfig.NUMBER_OF_SHARDS, tClass.getSuperclass().getAnnotation(EsIndex.class).numberOfShards())
+                .put(EsConfig.NUMBER_OF_REPLICAS, tClass.getSuperclass().getAnnotation(EsIndex.class).numberOfReplicas()));
 
         Map mapField = new HashMap();
         Field[] fields = tClass.getFields();
         for(Field field : fields) {
-            if (field.getAnnotation(EsFieldType.class) == null || StringUtils.isBlank(field.getAnnotation(EsFieldType.class).typeName())) {
+            if (field.getAnnotation(EsFieldData.class) == null || StringUtils.isBlank(field.getAnnotation(EsFieldData.class).dataName())) {
                 mapField.put(field.getName(), ESClientDecorator.getMapType().get(EsConfig.El_STRING));
             } else {
-                mapField.put(field.getName(), ESClientDecorator.getMapType().get(field.getAnnotation(EsFieldType.class).typeName()));
+                mapField.put(field.getName(), ESClientDecorator.getMapType().get(field.getAnnotation(EsFieldData.class).dataName()));
             }
         }
 
@@ -67,6 +71,8 @@ public class EsClient {
         };
         client.indices().createAsync(request, listener);
     }
+
+
 
     public <T> List<T> search(SearchRequest request, Class<T> tClass) {
         List<T> list = new ArrayList<>();

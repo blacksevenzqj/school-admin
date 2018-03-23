@@ -32,7 +32,7 @@ public class TestEs {
 
     @Test
     public void get() throws Exception {
-        RestResult restResult = esServiceImpl.searchMatchByTitle("feiji");
+        RestResult restResult = esServiceImpl.searchMatchByTitle("feiji", EsHotNew.class);
         System.out.println(restResult);
     }
 
