@@ -15,7 +15,9 @@ import school.management.elasticsearch.service.EsServiceImpl;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -29,9 +31,9 @@ public class TestEs {
     EsServiceImpl esServiceImpl;
 
     @Test
-    public void esClient() throws Exception{
+    public void createIndexMapping() throws Exception{
 //        esClient.createIndexMapping(EsHotNew.class);
-        esServiceImpl.createEsHotNewIndexMapping(EsHotNew.class);
+        esServiceImpl.createIndexMapping(EsHotNew.class);
 
         Thread.currentThread().sleep(3000L);
     }
@@ -43,15 +45,37 @@ public class TestEs {
         obj.setDbId("111");
         obj.setCreateDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         obj.setServiceUrl("http://www.baidu.com");
-        esServiceImpl.createIndexDocuments(EsHotNew.class, obj);
+        esServiceImpl.createIndexDoc(EsHotNew.class, obj);
 
         Thread.currentThread().sleep(3000L);
     }
 
     @Test
-    public void get() throws Exception {
-        RestResult restResult = esServiceImpl.searchMatchByTitle(EsHotNew.class, "feiji");
-        System.out.println(restResult);
+    public void saveBulk() throws Exception{
+        List<EsBaseEntity> list = new ArrayList<>();
+        EsHotNew obj = new EsHotNew();
+        obj.setTitle("feiji");
+        obj.setDbId("111");
+        obj.setCreateDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        obj.setServiceUrl("http://www.baidu.com");
+        EsHotNew obj2 = new EsHotNew();
+        obj2.setTitle("dapao");
+        obj2.setDbId("222");
+        obj2.setCreateDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        obj2.setServiceUrl("http://www.google.com");
+        list.add(obj);
+        list.add(obj2);
+        esServiceImpl.createDocBulk(EsHotNew.class, list);
+
+        Thread.currentThread().sleep(3000L);
+    }
+
+    @Test
+    public void searchMatchByTitle() throws Exception {
+        RestResult<List<EsHotNew>> restResult = esServiceImpl.searchMatchByTitle(EsHotNew.class, "feiji");
+        for(EsHotNew obj : restResult.getData()){
+            System.out.println(obj);
+        }
     }
 
 

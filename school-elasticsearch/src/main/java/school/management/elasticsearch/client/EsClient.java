@@ -4,14 +4,20 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.DocWriteRequest;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.bulk.BulkItemResponse;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.replication.ReplicationResponse;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.settings.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,30 +81,12 @@ public class EsClient {
         client.indices().createAsync(request, listener);
     }
 
-
-    public void createIndexDocuments(IndexRequest indexRequest){
+    // 新增文档：如果 _id 相同则为 更新文档 操作
+    public void createIndexDoc(IndexRequest indexRequest){
         ActionListener<IndexResponse> listener = new ActionListener<IndexResponse>(){
             @Override
             public void onResponse(IndexResponse indexResponse) {
-                String index = indexResponse.getIndex();
-                String type = indexResponse.getType();
-                String id = indexResponse.getId();
-                long version = indexResponse.getVersion();
-                if (indexResponse.getResult() == DocWriteResponse.Result.CREATED) {
-                    log.info("CREATED");
-                } else if (indexResponse.getResult() == DocWriteResponse.Result.UPDATED) {
-                    log.info("UPDATED");
-                }
-                ReplicationResponse.ShardInfo shardInfo = indexResponse.getShardInfo();
-                if (shardInfo.getTotal() != shardInfo.getSuccessful()) {
-                    log.info("shardInfo.getTotal() != shardInfo.getSuccessful()");
-                }
-                if (shardInfo.getFailed() > 0) {
-                    for (ReplicationResponse.ShardInfo.Failure failure : shardInfo.getFailures()) {
-                        String reason = failure.reason();
-                        log.error(reason);
-                    }
-                }
+                ClientUtils.responseProcess(indexResponse);
             }
             @Override
             public void onFailure(Exception e) {
@@ -108,6 +96,37 @@ public class EsClient {
         client.indexAsync(indexRequest, listener);
     }
 
+    public void createDocBulk(BulkRequest request){
+        ActionListener<BulkResponse> listener = new ActionListener<BulkResponse>() {
+            @Override
+            public void onResponse(BulkResponse bulkResponse) {
+                for (BulkItemResponse bulkItemResponse : bulkResponse) {
+                    if(bulkItemResponse.isFailed()){
+                        BulkItemResponse.Failure failure = bulkItemResponse.getFailure();
+                        log.error(failure.toString());
+                    }else{
+                        DocWriteResponse itemResponse = bulkItemResponse.getResponse();
+                        if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.INDEX
+                                || bulkItemResponse.getOpType() == DocWriteRequest.OpType.CREATE) {
+                            IndexResponse indexResponse = (IndexResponse) itemResponse;
+                            ClientUtils.responseProcess(indexResponse);
+                        } else if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.UPDATE) {
+                            UpdateResponse updateResponse = (UpdateResponse) itemResponse;
+                            ClientUtils.responseProcess(updateResponse);
+                        } else if (bulkItemResponse.getOpType() == DocWriteRequest.OpType.DELETE) {
+                            DeleteResponse deleteResponse = (DeleteResponse) itemResponse;
+                            ClientUtils.responseProcess(deleteResponse);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Exception e) {
+                log.error(e.getMessage());
+            }
+        };
+        client.bulkAsync(request, listener);
+    }
 
     /**
      * 传入：子类POJO的Class

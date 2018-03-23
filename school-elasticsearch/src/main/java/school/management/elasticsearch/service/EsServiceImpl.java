@@ -2,6 +2,7 @@ package school.management.elasticsearch.service;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -29,6 +30,54 @@ public class EsServiceImpl {
     /**
      * 传入：子类POJO的Class
      */
+    public <T> RestResult createIndexMapping(Class<T> tClass) {
+        esClient.createIndexMapping(tClass);
+        return RestResult.getSuccessResult();
+    }
+
+    /**
+     * 传入：子类POJO的Class
+     */
+    public <T> RestResult createIndexDoc(Class<T> tClass, EsBaseEntity obj){
+        try {
+            IndexRequest indexRequest = new IndexRequest(
+                    tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
+                    tClass.getAnnotation(EsType.class).typeName(),
+                    obj.getDbId()
+            ).source(EsUtils.Class2Array(obj));
+            esClient.createIndexDoc(indexRequest);
+            return RestResult.getSuccessResult();
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return RestResult.getFailResult(500,"新增文档失败");
+    }
+
+    /**
+     * 传入：子类POJO的Class
+     */
+    public <T> RestResult createDocBulk(Class<T> tClass, List<EsBaseEntity> list){
+        BulkRequest request = new BulkRequest();
+        try {
+            for(EsBaseEntity obj : list){
+                IndexRequest indexRequest = new IndexRequest(
+                        tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
+                        tClass.getAnnotation(EsType.class).typeName(),
+                        obj.getDbId()
+                ).source(EsUtils.Class2Array(obj));
+                request.add(indexRequest);
+            }
+            esClient.createDocBulk(request);
+            return RestResult.getSuccessResult();
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return RestResult.getFailResult(500,"新增文档失败");
+    }
+
+    /**
+     * 传入：子类POJO的Class
+     */
     public <T> RestResult<List<T>> searchMatchByTitle(Class<T> tClass, String title) {
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.indices(tClass.getSuperclass().getAnnotation(EsIndex.class).indexName());
@@ -38,24 +87,6 @@ public class EsServiceImpl {
         return RestResult.getSuccessResult(esClient.search(searchRequest, tClass));
     }
 
-    public <T> RestResult createIndexDocuments(Class<T> tClass, EsBaseEntity obj){
-        try {
-            IndexRequest indexRequest = new IndexRequest(
-                    tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
-                    tClass.getAnnotation(EsType.class).typeName(),
-                    obj.getDbId()
-            ).source(EsUtils.Class2Array(obj));
-            esClient.createIndexDocuments(indexRequest);
-            return RestResult.getSuccessResult();
-        }catch (Exception e){
-            log.error(e.getMessage());
-        }
-        return RestResult.getFailResult(500,"新增文档失败");
-    }
 
-    public <T> RestResult createEsHotNewIndexMapping(Class<T> tClass) {
-        esClient.createIndexMapping(tClass);
-        return RestResult.getSuccessResult();
-    }
 
 }

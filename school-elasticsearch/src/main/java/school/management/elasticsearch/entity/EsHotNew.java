@@ -9,4 +9,13 @@ import school.management.elasticsearch.entity.group.EsIndexGroup;
 @EsType(typeName="hotnew", routingName="hotnew")
 public class EsHotNew extends EsIndexGroup {
 
+    @Override
+    public String toString() {
+        return "EsHotNew{" +
+                "title='" + title + '\'' +
+                ", serviceUrl='" + serviceUrl + '\'' +
+                ", dbId='" + dbId + '\'' +
+                ", createDate='" + createDate + '\'' +
+                '}';
+    }
 }

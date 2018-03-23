@@ -20,6 +20,7 @@ public class MyTest {
 //        fangshe(EsHotNew.class);
 
         class2Array(EsHotNew.class);
+
     }
 
     public static void class2Array(Class tClass) throws Exception{
