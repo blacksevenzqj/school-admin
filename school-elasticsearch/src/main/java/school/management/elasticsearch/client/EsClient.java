@@ -11,6 +11,7 @@ import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -95,8 +96,22 @@ public class EsClient {
         };
         client.indexAsync(indexRequest, listener);
     }
+    // 删除文档：
+    public void deleteIndexDoc(DeleteRequest deleteRequest){
+        ActionListener<DeleteResponse> listener = new ActionListener<DeleteResponse>() {
+            @Override
+            public void onResponse(DeleteResponse deleteResponse) {
+                ClientUtils.responseProcess(deleteResponse);
+            }
+            @Override
+            public void onFailure(Exception e) {
+                log.error(e.getMessage());
+            }
+        };
+        client.deleteAsync(deleteRequest, listener);
+    }
 
-    public void createDocBulk(BulkRequest request){
+    public void processDocBulk(BulkRequest request){
         ActionListener<BulkResponse> listener = new ActionListener<BulkResponse>() {
             @Override
             public void onResponse(BulkResponse bulkResponse) {

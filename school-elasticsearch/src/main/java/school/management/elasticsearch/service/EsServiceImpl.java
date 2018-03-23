@@ -3,8 +3,10 @@ package school.management.elasticsearch.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +30,21 @@ public class EsServiceImpl {
     EsClient esClient;
 
     /**
-     * 传入：子类POJO的Class
+     * 新增索引
      */
+    // 传入：子类POJO的Class
     public <T> RestResult createIndexMapping(Class<T> tClass) {
         esClient.createIndexMapping(tClass);
         return RestResult.getSuccessResult();
     }
 
+// ***************************************************************************************************
+
     /**
-     * 传入：子类POJO的Class
+     * 新增、修改、删除 文档：
      */
+    // 新增文档：
+    // 传入：子类POJO的Class
     public <T> RestResult createIndexDoc(Class<T> tClass, EsBaseEntity obj){
         try {
             IndexRequest indexRequest = new IndexRequest(
@@ -52,22 +59,58 @@ public class EsServiceImpl {
         }
         return RestResult.getFailResult(500,"新增文档失败");
     }
+    // 删除文档：
+    // 传入：子类POJO的Class
+    public <T> RestResult deleteIndexDoc(Class<T> tClass, EsBaseEntity obj) {
+        try {
+            DeleteRequest request = new DeleteRequest(
+                    tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
+                    tClass.getAnnotation(EsType.class).typeName(),
+                    obj.getDbId());
+            esClient.deleteIndexDoc(request);
+            return RestResult.getSuccessResult();
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return RestResult.getFailResult(500,"删除文档失败");
+    }
 
-    /**
-     * 传入：子类POJO的Class
-     */
-    public <T> RestResult createDocBulk(Class<T> tClass, List<EsBaseEntity> list){
+
+
+    // 批量操作：
+    // 传入：子类POJO的Class
+    public <T> RestResult processDocBulk(Class<T> tClass, List<EsBaseEntity> createList, List<EsBaseEntity> upDateList, List<EsBaseEntity> deleteList){
         BulkRequest request = new BulkRequest();
         try {
-            for(EsBaseEntity obj : list){
-                IndexRequest indexRequest = new IndexRequest(
-                        tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
-                        tClass.getAnnotation(EsType.class).typeName(),
-                        obj.getDbId()
-                ).source(EsUtils.Class2Array(obj));
-                request.add(indexRequest);
+            if(createList != null) {
+                for (EsBaseEntity obj : createList) {
+                    IndexRequest indexRequest = new IndexRequest(
+                            tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
+                            tClass.getAnnotation(EsType.class).typeName(),
+                            obj.getDbId()
+                    ).source(EsUtils.Class2Array(obj));
+                    request.add(indexRequest);
+                }
             }
-            esClient.createDocBulk(request);
+            if(upDateList != null) {
+                for (EsBaseEntity obj : upDateList) {
+                    UpdateRequest updateRequest = new UpdateRequest(tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
+                            tClass.getAnnotation(EsType.class).typeName(),
+                            obj.getDbId()
+                    ).doc(EsUtils.Class2Array(obj));
+                    request.add(updateRequest);
+                }
+            }
+            if(deleteList != null) {
+                for (EsBaseEntity obj : deleteList) {
+                    DeleteRequest deleteRequest = new DeleteRequest(
+                            tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
+                            tClass.getAnnotation(EsType.class).typeName(),
+                            obj.getDbId());
+                    request.add(deleteRequest);
+                }
+            }
+            esClient.processDocBulk(request);
             return RestResult.getSuccessResult();
         }catch (Exception e){
             log.error(e.getMessage());
@@ -75,9 +118,12 @@ public class EsServiceImpl {
         return RestResult.getFailResult(500,"新增文档失败");
     }
 
+// ***************************************************************************************************
+
     /**
-     * 传入：子类POJO的Class
+     * 查询
      */
+    // 传入：子类POJO的Class
     public <T> RestResult<List<T>> searchMatchByTitle(Class<T> tClass, String title) {
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.indices(tClass.getSuperclass().getAnnotation(EsIndex.class).indexName());

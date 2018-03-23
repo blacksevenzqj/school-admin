@@ -11,7 +11,9 @@ import school.management.elasticsearch.util.EsUtils;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MyTest {
 
@@ -19,8 +21,20 @@ public class MyTest {
 
 //        fangshe(EsHotNew.class);
 
-        class2Array(EsHotNew.class);
+//        class2Array(EsHotNew.class);
 
+        List<String> list = new ArrayList();
+        testList(list);
+
+        testList(null);
+    }
+
+    public static void testList(List<String> list) throws Exception{
+        if(list != null) {
+            for (String str : list) {
+                System.out.println(str);
+            }
+        }
     }
 
     public static void class2Array(Class tClass) throws Exception{

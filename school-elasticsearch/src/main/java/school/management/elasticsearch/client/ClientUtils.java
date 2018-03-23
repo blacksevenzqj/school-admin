@@ -18,6 +18,10 @@ public class ClientUtils {
             log.info("UPDATED" + ":" + index + ":" + type + ":" + id + ":" + version);
         }else if(docWriteResponse.getResult() == DocWriteResponse.Result.DELETED){
             log.info("DELETE" + ":" + index + ":" + type + ":" + id + ":" + version);
+        }else if(docWriteResponse.getResult() == DocWriteResponse.Result.NOT_FOUND){
+            log.info("NOT_FOUND" + ":" + index + ":" + type + ":" + id + ":" + version);
+        }else if(docWriteResponse.getResult() == DocWriteResponse.Result.NOOP){
+            log.info("NOOP" + ":" + index + ":" + type + ":" + id + ":" + version);
         }
         ReplicationResponse.ShardInfo shardInfo = docWriteResponse.getShardInfo();
         if (shardInfo.getTotal() != shardInfo.getSuccessful()) {

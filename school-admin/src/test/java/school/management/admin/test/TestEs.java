@@ -41,7 +41,7 @@ public class TestEs {
     @Test
     public void save() throws Exception{
         EsHotNew obj = new EsHotNew();
-        obj.setTitle("feiji");
+        obj.setTitle("lunchuan");
         obj.setDbId("111");
         obj.setCreateDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         obj.setServiceUrl("http://www.baidu.com");
@@ -51,7 +51,7 @@ public class TestEs {
     }
 
     @Test
-    public void saveBulk() throws Exception{
+    public void processDocBulk() throws Exception{
         List<EsBaseEntity> list = new ArrayList<>();
         EsHotNew obj = new EsHotNew();
         obj.setTitle("feiji");
@@ -65,7 +65,16 @@ public class TestEs {
         obj2.setServiceUrl("http://www.google.com");
         list.add(obj);
         list.add(obj2);
-        esServiceImpl.createDocBulk(EsHotNew.class, list);
+        esServiceImpl.processDocBulk(EsHotNew.class, list, null, null);
+
+        Thread.currentThread().sleep(3000L);
+    }
+
+    @Test
+    public void deleteIndexDoc() throws Exception{
+        EsHotNew obj = new EsHotNew();
+        obj.setDbId("222");
+        esServiceImpl.deleteIndexDoc(EsHotNew.class, obj);
 
         Thread.currentThread().sleep(3000L);
     }
