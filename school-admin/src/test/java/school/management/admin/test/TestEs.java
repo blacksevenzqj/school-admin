@@ -7,9 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import school.management.elasticsearch.client.EsClient;
+import school.management.elasticsearch.common.EsConfig;
 import school.management.elasticsearch.common.RestResult;
 import school.management.elasticsearch.entity.EsHotNew;
+import school.management.elasticsearch.entity.base.EsBaseEntity;
 import school.management.elasticsearch.service.EsServiceImpl;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Slf4j
 @RunWith(SpringRunner.class)
@@ -31,8 +37,20 @@ public class TestEs {
     }
 
     @Test
+    public void save() throws Exception{
+        EsHotNew obj = new EsHotNew();
+        obj.setTitle("feiji");
+        obj.setDbId("111");
+        obj.setCreateDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        obj.setServiceUrl("http://www.baidu.com");
+        esServiceImpl.createIndexDocuments(EsHotNew.class, obj);
+
+        Thread.currentThread().sleep(3000L);
+    }
+
+    @Test
     public void get() throws Exception {
-        RestResult restResult = esServiceImpl.searchMatchByTitle("feiji", EsHotNew.class);
+        RestResult restResult = esServiceImpl.searchMatchByTitle(EsHotNew.class, "feiji");
         System.out.println(restResult);
     }
 

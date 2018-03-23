@@ -4,23 +4,34 @@ import school.management.elasticsearch.annotation.EsFieldData;
 import school.management.elasticsearch.annotation.EsIndex;
 import school.management.elasticsearch.annotation.EsType;
 import school.management.elasticsearch.entity.EsHotNew;
+import school.management.elasticsearch.entity.base.EsBaseEntity;
 import school.management.elasticsearch.entity.group.EsIndexGroup;
+import school.management.elasticsearch.util.EsUtils;
 
 import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class MyTest {
 
-    public static void main(String args[]){
+    public static void main(String args[])throws Exception{
 
-        System.out.println(EsIndexGroup.class.getAnnotation(EsIndex.class).indexName());
-        System.out.println(EsHotNew.class.getAnnotation(EsType.class).typeName());
-        System.out.println(EsHotNew.class.getAnnotation(EsType.class).routingName());
-        System.out.println(EsIndexGroup.class.getAnnotation(EsIndex.class).numberOfShards());
-        System.out.println(EsIndexGroup.class.getAnnotation(EsIndex.class).numberOfReplicas());
+//        fangshe(EsHotNew.class);
 
-        fangshe(EsHotNew.class);
+        class2Array(EsHotNew.class);
+    }
 
-        System.out.println(EsHotNew.class.getSuperclass());
+    public static void class2Array(Class tClass) throws Exception{
+        EsHotNew obj = new EsHotNew();
+        obj.setTitle("feiji");
+        obj.setDbId("111");
+        obj.setCreateDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        obj.setServiceUrl("http://www.baidu.com");
+        String[] strs = EsUtils.Class2Array(obj);
+        for(String str : strs) {
+            System.out.println(str);
+        }
     }
 
 

@@ -1,6 +1,7 @@
 package school.management.elasticsearch.service;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -14,10 +15,12 @@ import school.management.elasticsearch.common.EsConfig;
 import school.management.elasticsearch.common.RestResult;
 import school.management.elasticsearch.entity.base.EsBaseEntity;
 import school.management.elasticsearch.entity.group.EsIndexGroup;
+import school.management.elasticsearch.util.EsUtils;
 
 import java.util.List;
 
 @Component
+@Slf4j
 public class EsServiceImpl {
 
     @Autowired
@@ -36,12 +39,18 @@ public class EsServiceImpl {
     }
 
     public <T> RestResult createIndexDocuments(Class<T> tClass, EsBaseEntity obj){
-        IndexRequest indexRequest = new IndexRequest(tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
-                tClass.getAnnotation(EsType.class).typeName(), obj.getDbId())
-                .source(obj);
-
-
-        return RestResult.getSuccessResult();
+        try {
+            IndexRequest indexRequest = new IndexRequest(
+                    tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
+                    tClass.getAnnotation(EsType.class).typeName(),
+                    obj.getDbId()
+            ).source(EsUtils.Class2Array(obj));
+            esClient.createIndexDocuments(indexRequest);
+            return RestResult.getSuccessResult();
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return RestResult.getFailResult(500,"新增文档失败");
     }
 
     public <T> RestResult createEsHotNewIndexMapping(Class<T> tClass) {

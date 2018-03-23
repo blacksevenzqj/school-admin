@@ -29,4 +29,8 @@ public interface EsConfig {
         String SEARCH_TITLE = "title";
     }
 
+    interface EsTimeFormatConfig{
+        String DEFAULT_FORMAT = "yyyy-MM-dd";
+    }
+
 }

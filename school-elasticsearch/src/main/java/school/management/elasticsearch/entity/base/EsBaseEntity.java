@@ -9,19 +9,10 @@ import java.util.Date;
 @Data
 public class EsBaseEntity {
 
-    @EsFieldData(dataName= EsConfig.El_STRING)
-    public String title;
-
     @EsFieldData(dataName= EsConfig.El_KEYWORD)
     public String dbId;
 
-    @EsFieldData(dataName= EsConfig.El_KEYWORD)
-    public String esId;
-
-    @EsFieldData(dataName= EsConfig.El_KEYWORD)
-    public String serviceUrl;
-
     @EsFieldData(dataName=EsConfig.EL_DATE)
-    public Date postDate;
+    public String createDate;
 
 }

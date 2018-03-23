@@ -4,10 +4,14 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.support.replication.ReplicationResponse;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.settings.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,10 +76,42 @@ public class EsClient {
     }
 
 
+    public void createIndexDocuments(IndexRequest indexRequest){
+        ActionListener<IndexResponse> listener = new ActionListener<IndexResponse>(){
+            @Override
+            public void onResponse(IndexResponse indexResponse) {
+                String index = indexResponse.getIndex();
+                String type = indexResponse.getType();
+                String id = indexResponse.getId();
+                long version = indexResponse.getVersion();
+                if (indexResponse.getResult() == DocWriteResponse.Result.CREATED) {
+                    log.info("CREATED");
+                } else if (indexResponse.getResult() == DocWriteResponse.Result.UPDATED) {
+                    log.info("UPDATED");
+                }
+                ReplicationResponse.ShardInfo shardInfo = indexResponse.getShardInfo();
+                if (shardInfo.getTotal() != shardInfo.getSuccessful()) {
+                    log.info("shardInfo.getTotal() != shardInfo.getSuccessful()");
+                }
+                if (shardInfo.getFailed() > 0) {
+                    for (ReplicationResponse.ShardInfo.Failure failure : shardInfo.getFailures()) {
+                        String reason = failure.reason();
+                        log.error(reason);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Exception e) {
+                log.error(e.getMessage());
+            }
+        };
+        client.indexAsync(indexRequest, listener);
+    }
 
 
-
-
+    /**
+     * 传入：子类POJO的Class
+     */
     public <T> List<T> search(SearchRequest request, Class<T> tClass) {
         List<T> list = new ArrayList<>();
         try {
