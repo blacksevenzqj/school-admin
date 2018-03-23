@@ -116,3 +116,10 @@ mediaconf:
   namespace: luckyaircar
   urlprefix: http://luckyaircar.image.alimmdn.com
 
+
+elasticsearch:
+  server:
+    cluster-name: elasticsearch_xiamo
+    cluster-nodes: localhost
+    port: 9200
+

@@ -16,17 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>xiamo.school</groupId>
-            <artifactId>school-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>xiamo.school</groupId>
-            <artifactId>school-db</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>xiamo.school</groupId>
-            <artifactId>school-business</artifactId>
+            <artifactId>school-elasticsearch</artifactId>
             <version>${project.version}</version>
         </dependency>
 
