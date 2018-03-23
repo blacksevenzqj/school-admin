@@ -63,7 +63,6 @@ public class EsClient {
                 boolean shardsAcknowledged = createIndexResponse.isShardsAcknowledged();
                 log.info(String.valueOf(acknowledged) + ":" + String.valueOf(shardsAcknowledged));
             }
-
             @Override
             public void onFailure(Exception e) {
                 log.error(e.getMessage());
@@ -71,6 +70,9 @@ public class EsClient {
         };
         client.indices().createAsync(request, listener);
     }
+
+
+
 
 
 
