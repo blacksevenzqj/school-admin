@@ -159,7 +159,6 @@ public class EsServiceImpl {
         searchSourceBuilder.size(pageSize == 0 ? 10 : pageSize);
         searchSourceBuilder.sort(EsUtils.createSortBuilder(tClass, orderField, orderType));
         searchRequest.source(searchSourceBuilder);
-
         return RestResult.getSuccessResult(esClient.search(searchRequest, tClass));
     }
 
