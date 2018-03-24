@@ -41,11 +41,30 @@ public class TestEs {
     @Test
     public void save() throws Exception{
         EsHotNew obj = new EsHotNew();
-        obj.setTitle("lunchuan");
+        obj.setTitle("ppp");
         obj.setDbId("111");
         obj.setCreateDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         obj.setServiceUrl("http://www.baidu.com");
         esServiceImpl.createIndexDoc(EsHotNew.class, obj);
+
+        Thread.currentThread().sleep(3000L);
+    }
+    @Test
+    public void upDate() throws Exception{
+        EsHotNew obj = new EsHotNew();
+        obj.setTitle("taideng");
+        obj.setDbId("111");
+        obj.setCreateDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        obj.setServiceUrl("http://www.aiqiyi.com");
+        esServiceImpl.upDateIndexDoc(EsHotNew.class, obj);
+
+        Thread.currentThread().sleep(3000L);
+    }
+    @Test
+    public void deleteIndexDoc() throws Exception{
+        EsHotNew obj = new EsHotNew();
+        obj.setDbId("222");
+        esServiceImpl.deleteIndexDoc(EsHotNew.class, obj);
 
         Thread.currentThread().sleep(3000L);
     }
@@ -71,14 +90,10 @@ public class TestEs {
     }
 
     @Test
-    public void deleteIndexDoc() throws Exception{
-        EsHotNew obj = new EsHotNew();
-        obj.setDbId("222");
-        esServiceImpl.deleteIndexDoc(EsHotNew.class, obj);
-
-        Thread.currentThread().sleep(3000L);
+    public void getById() throws Exception {
+        RestResult<EsHotNew> restResult = esServiceImpl.getById(EsHotNew.class, "111");
+        System.out.println(restResult.getData());
     }
-
     @Test
     public void searchMatchByTitle() throws Exception {
         RestResult<List<EsHotNew>> restResult = esServiceImpl.searchMatchByTitle(EsHotNew.class, "feiji");

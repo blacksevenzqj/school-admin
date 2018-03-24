@@ -4,6 +4,7 @@ package school.management.elasticsearch.service;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -59,6 +60,22 @@ public class EsServiceImpl {
         }
         return RestResult.getFailResult(500,"新增文档失败");
     }
+    // 更新文档：
+    // 传入：子类POJO的Class
+    public <T> RestResult upDateIndexDoc(Class<T> tClass, EsBaseEntity obj){
+        try {
+            UpdateRequest updateRequest = new UpdateRequest(
+                    tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
+                    tClass.getAnnotation(EsType.class).typeName(),
+                    obj.getDbId()
+            ).doc(EsUtils.Class2Array(obj));
+            esClient.upDateIndexDoc(updateRequest);
+            return RestResult.getSuccessResult();
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return RestResult.getFailResult(500,"更新文档失败");
+    }
     // 删除文档：
     // 传入：子类POJO的Class
     public <T> RestResult deleteIndexDoc(Class<T> tClass, EsBaseEntity obj) {
@@ -74,8 +91,6 @@ public class EsServiceImpl {
         }
         return RestResult.getFailResult(500,"删除文档失败");
     }
-
-
 
     // 批量操作：
     // 传入：子类POJO的Class
@@ -123,6 +138,15 @@ public class EsServiceImpl {
     /**
      * 查询
      */
+    // 传入：子类POJO的Class
+    public <T> RestResult<T> getById(Class<T> tClass, String id) {
+        GetRequest getRequest = new GetRequest(
+                tClass.getSuperclass().getAnnotation(EsIndex.class).indexName(),
+                tClass.getAnnotation(EsType.class).typeName(),
+                id
+        );
+        return RestResult.getSuccessResult(esClient.getById(getRequest, tClass));
+    }
     // 传入：子类POJO的Class
     public <T> RestResult<List<T>> searchMatchByTitle(Class<T> tClass, String title) {
         SearchRequest searchRequest = new SearchRequest();
