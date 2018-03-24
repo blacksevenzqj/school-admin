@@ -11,9 +11,6 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.ScoreSortBuilder;
-import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import school.management.elasticsearch.annotation.EsIndex;
@@ -22,7 +19,6 @@ import school.management.elasticsearch.client.EsClient;
 import school.management.elasticsearch.common.EsConfig;
 import school.management.elasticsearch.common.RestResult;
 import school.management.elasticsearch.entity.base.EsBaseEntity;
-import school.management.elasticsearch.entity.group.EsIndexGroup;
 import school.management.elasticsearch.util.EsUtils;
 
 import java.util.List;
