@@ -1,6 +1,5 @@
 package school.management.elasticsearch.service;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
@@ -10,6 +9,9 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.ScoreSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import school.management.elasticsearch.annotation.EsIndex;
@@ -148,12 +150,16 @@ public class EsServiceImpl {
         return RestResult.getSuccessResult(esClient.getById(getRequest, tClass));
     }
     // 传入：子类POJO的Class
-    public <T> RestResult<List<T>> searchMatchByTitle(Class<T> tClass, String title) {
+    public <T> RestResult<List<T>> searchMatchByTitle(Class<T> tClass, String title, int pageNum, int pageSize, String orderField, String orderType) {
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.indices(tClass.getSuperclass().getAnnotation(EsIndex.class).indexName());
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchQuery(EsConfig.EsSearchConfig.SEARCH_TITLE, title));
+        searchSourceBuilder.from(pageNum);
+        searchSourceBuilder.size(pageSize == 0 ? 10 : pageSize);
+        searchSourceBuilder.sort(EsUtils.createSortBuilder(tClass, orderField, orderType));
         searchRequest.source(searchSourceBuilder);
+
         return RestResult.getSuccessResult(esClient.search(searchRequest, tClass));
     }
 

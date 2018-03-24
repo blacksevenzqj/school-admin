@@ -41,9 +41,10 @@ public class TestEs {
     @Test
     public void save() throws Exception{
         EsHotNew obj = new EsHotNew();
-        obj.setTitle("ppp");
-        obj.setDbId("111");
-        obj.setCreateDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        obj.setTitle("feiji buhui fei");
+        obj.setDbId("333");
+//        obj.setCreateDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        obj.setCreateDate("2018-03-20");
         obj.setServiceUrl("http://www.baidu.com");
         esServiceImpl.createIndexDoc(EsHotNew.class, obj);
 
@@ -96,7 +97,8 @@ public class TestEs {
     }
     @Test
     public void searchMatchByTitle() throws Exception {
-        RestResult<List<EsHotNew>> restResult = esServiceImpl.searchMatchByTitle(EsHotNew.class, "feiji");
+        RestResult<List<EsHotNew>> restResult = esServiceImpl.searchMatchByTitle(EsHotNew.class, "feiji",
+                0, 5, null, null);
         for(EsHotNew obj : restResult.getData()){
             System.out.println(obj);
         }
