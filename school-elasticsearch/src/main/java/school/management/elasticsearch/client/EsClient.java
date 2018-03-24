@@ -18,14 +18,16 @@ import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.*;
 import org.elasticsearch.action.support.replication.ReplicationResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.search.Scroll;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import school.management.elasticsearch.annotation.EsFieldData;
@@ -199,16 +201,46 @@ public class EsClient {
         List<T> list = new ArrayList<>();
         try {
             SearchResponse response = client.search(request);
-            if (response.getHits() == null) {
-                return null;
+            if (response.getHits() != null) {
+                response.getHits().forEach(item -> list.add(JSON.parseObject(item.getSourceAsString(), tClass)));
             }
-            response.getHits().forEach(item -> list.add(JSON.parseObject(item.getSourceAsString(), tClass)));
-            return list;
         }catch (Exception e){
             log.error(e.getMessage());
         }
-        return null;
+        return list;
     }
-
+    public <T> List<T> searchScroll(SearchRequest searchRequest, Class<T> tClass, Scroll scroll) {
+        List<T> list = new ArrayList<>();
+        try {
+            SearchResponse searchResponse = client.search(searchRequest);
+            String scrollId = searchResponse.getScrollId();
+            SearchHit[] searchHits = searchResponse.getHits().getHits();
+            if(searchHits != null && searchHits.length > 0){
+                for(SearchHit searchHit : searchHits){
+                    list.add(JSON.parseObject(searchHit.getSourceAsString(), tClass));
+                }
+            }
+            while (searchHits != null && searchHits.length > 0) {
+                SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
+                scrollRequest.scroll(scroll);
+                searchResponse = client.searchScroll(scrollRequest);
+                scrollId = searchResponse.getScrollId();
+                searchHits = searchResponse.getHits().getHits();
+                if(searchHits != null && searchHits.length > 0){
+                    for(SearchHit searchHit : searchHits){
+                        list.add(JSON.parseObject(searchHit.getSourceAsString(), tClass));
+                    }
+                }
+            }
+            ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
+            clearScrollRequest.addScrollId(scrollId);
+            ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest);
+            boolean succeeded = clearScrollResponse.isSucceeded();
+            log.info("clearScrollResponse.isSucceeded() is " + succeeded);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return list;
+    }
 
 }
