@@ -27,6 +27,14 @@ public class MyTest {
         testList(list);
 
         testList(null);
+
+        System.out.println("a".getBytes("utf-8"));
+        System.out.println("a".getBytes("utf-8").length);
+        byte[] bytes = "a".getBytes("utf-8");
+        for(byte b : bytes){
+            System.out.println(b);
+        }
+
     }
 
     public static void testList(List<String> list) throws Exception{
