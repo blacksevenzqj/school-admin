@@ -33,4 +33,13 @@ public interface EsConfig {
         String DEFAULT_FORMAT = "yyyy-MM-dd";
     }
 
+    interface AnalyzerConfig{
+        String ANALYZER = "analyzer";
+        String SEARCH_ANALYZER = "search_analyzer";
+
+        String IK = "ik_max_word";
+        String IK_SEARCH = "ik_max_word";
+
+    }
+
 }

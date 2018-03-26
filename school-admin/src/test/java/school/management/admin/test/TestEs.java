@@ -35,7 +35,7 @@ public class TestEs {
 //        esClient.createIndexMapping(EsHotNew.class);
         esServiceImpl.createIndexMapping(EsHotNew.class);
 
-        Thread.currentThread().sleep(3000L);
+        Thread.currentThread().sleep(10000L);
     }
 
     @Test

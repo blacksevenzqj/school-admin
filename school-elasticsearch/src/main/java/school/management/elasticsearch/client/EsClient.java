@@ -63,7 +63,17 @@ public class EsClient {
             if (field.getAnnotation(EsFieldData.class) == null || StringUtils.isBlank(field.getAnnotation(EsFieldData.class).dataName())) {
                 mapField.put(field.getName(), ESClientDecorator.getMapType().get(EsConfig.El_STRING));
             } else {
-                mapField.put(field.getName(), ESClientDecorator.getMapType().get(field.getAnnotation(EsFieldData.class).dataName()));
+                if(StringUtils.isNotBlank(field.getAnnotation(EsFieldData.class).analyzerType()) &&
+                        StringUtils.isNotBlank(field.getAnnotation(EsFieldData.class).analyzerSearchType())){
+                    Map dataMap = ESClientDecorator.getMapType().get(field.getAnnotation(EsFieldData.class).dataName());
+                    Map analyzerIkMap = ESClientDecorator.getMapType().get(field.getAnnotation(EsFieldData.class).analyzerType());
+                    Map analyzerIkSearchMap = ESClientDecorator.getMapType().get(field.getAnnotation(EsFieldData.class).analyzerSearchType());
+                    dataMap.putAll(analyzerIkMap);
+                    dataMap.putAll(analyzerIkSearchMap);
+                    mapField.put(field.getName(), dataMap);
+                }else {
+                    mapField.put(field.getName(), ESClientDecorator.getMapType().get(field.getAnnotation(EsFieldData.class).dataName()));
+                }
             }
         }
 

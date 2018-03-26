@@ -19,7 +19,7 @@ public class ESClientDecorator implements InitializingBean, DisposableBean {
 
     private HttpHost httpHost;
 
-    private static Map mapType = new HashMap();
+    private static Map<String, Map> mapType = new HashMap<>();
 
     public ESClientDecorator(HttpHost httpHost) {
         this.httpHost = httpHost;
@@ -49,6 +49,11 @@ public class ESClientDecorator implements InitializingBean, DisposableBean {
         Map mapLong= new HashMap();
         mapLong.put(EsConfig.EL_TYPE, EsConfig.El_LONG);
 
+        Map mapAnalyzerIk= new HashMap();
+        mapAnalyzerIk.put(EsConfig.AnalyzerConfig.ANALYZER, EsConfig.AnalyzerConfig.IK);
+        Map mapAnalyzerIkSearch= new HashMap();
+        mapAnalyzerIkSearch.put(EsConfig.AnalyzerConfig.SEARCH_ANALYZER, EsConfig.AnalyzerConfig.IK_SEARCH);
+
         mapType.put(EsConfig.El_STRING, mapString);
         mapType.put(EsConfig.El_INTEGER, mapInteger);
         mapType.put(EsConfig.El_DOUBLE, mapDouble);
@@ -56,6 +61,9 @@ public class ESClientDecorator implements InitializingBean, DisposableBean {
         mapType.put(EsConfig.EL_DATE, mapDate);
         mapType.put(EsConfig.El_KEYWORD, mapKeyWord);
         mapType.put(EsConfig.El_LONG, mapLong);
+
+        mapType.put(EsConfig.AnalyzerConfig.IK, mapAnalyzerIk);
+        mapType.put(EsConfig.AnalyzerConfig.IK_SEARCH, mapAnalyzerIkSearch);
     }
 
     @Override
@@ -64,7 +72,7 @@ public class ESClientDecorator implements InitializingBean, DisposableBean {
         mapType = null;
     }
 
-    public static Map getMapType(){
+    public static Map<String, Map> getMapType(){
         return mapType;
     }
 

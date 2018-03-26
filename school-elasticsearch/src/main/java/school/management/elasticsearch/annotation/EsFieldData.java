@@ -11,4 +11,8 @@ public @interface EsFieldData {
 
     String dataName() default "";
 
+    String analyzerType() default "";
+
+    String analyzerSearchType() default "";
+
 }
