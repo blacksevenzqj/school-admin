@@ -44,7 +44,7 @@ public class TodayNewsController extends AbstractController {
     @RequestMapping(value = "/todaynews/save", method = RequestMethod.POST)
     @RequiresPermissions("business:hot:todaynews:save")
     @SysLog(SysLogConfig.ADD + SysLogConfig.COLON  + SysLogConfig.HOT + SysLogConfig.COLON + SysLogConfig.TODAYNEWS)
-    public R saveHeadlines(@RequestBody TodayNews todayNews){
+    public R saveTodayNews(@RequestBody TodayNews todayNews){
         ValidatorUtils.validateEntity(todayNews);
         hotAdminServiceImpl.saveOrUpDateTodayNews(todayNews);
         return R.ok();
