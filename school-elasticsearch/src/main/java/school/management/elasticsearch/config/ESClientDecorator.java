@@ -62,8 +62,8 @@ public class ESClientDecorator implements InitializingBean, DisposableBean {
         mapType.put(EsConfig.El_KEYWORD, mapKeyWord);
         mapType.put(EsConfig.El_LONG, mapLong);
 
-        mapType.put(EsConfig.AnalyzerConfig.IK, mapAnalyzerIk);
-        mapType.put(EsConfig.AnalyzerConfig.IK_SEARCH, mapAnalyzerIkSearch);
+        mapType.put(EsConfig.AnalyzerConfig.ANALYZER, mapAnalyzerIk);
+        mapType.put(EsConfig.AnalyzerConfig.SEARCH_ANALYZER, mapAnalyzerIkSearch);
     }
 
     @Override

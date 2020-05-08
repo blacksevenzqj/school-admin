@@ -11,6 +11,7 @@ import school.management.elasticsearch.entity.base.EsBaseEntity;
 public class EsIndexGroup extends EsBaseEntity {
 
     @EsFieldData(dataName= EsConfig.El_STRING, analyzerType= EsConfig.AnalyzerConfig.IK, analyzerSearchType= EsConfig.AnalyzerConfig.IK_SEARCH)
+//    @EsFieldData(dataName= EsConfig.El_STRING)
     public String title;
 
     @EsFieldData(dataName= EsConfig.El_KEYWORD)
