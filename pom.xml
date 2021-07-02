@@ -53,7 +53,7 @@
         <lombok.version>1.16.8</lombok.version>
         <media.version>1.2.7</media.version>
 
-        <elasticsearch.version>6.2.2</elasticsearch.version>
+        <elasticsearch.version>6.8.15</elasticsearch.version>
         <elasticsearch-rest-high-level-client.version>6.2.2</elasticsearch-rest-high-level-client.version>
     </properties>
 
